@@ -11,7 +11,7 @@ export default function NavBar() {
   const dispatch = useDispatch();
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" color="transparent">
       <ToolbarStyled>
         <Typography variant="h5" onClick={() => dispatch(push(routes.home))}>
           +Oportunidades

@@ -1,17 +1,34 @@
 import styled from "styled-components";
 import { TextField } from "@material-ui/core";
 
+export const ImgContent = styled.div`
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 70vh;
+`;
+
 export const Img = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+export const Bottom = styled.img`
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
 `;
 
 export const Content = styled.div`
-  margin: 30px 100px;
+  margin: -100px 150px 10px;
 `;
 
 export const Search = styled.div`
   display: flex;
-  width: 70%;
+  width: 55%;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 50px;
@@ -20,3 +37,5 @@ export const Search = styled.div`
 export const SearchField = styled(TextField)`
   width: 50%;
 `;
+
+
