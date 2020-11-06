@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { TextField } from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 
 export const ImgContent = styled.div`
   position: relative;
@@ -32,6 +32,15 @@ export const Search = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 50px;
+`;
+
+export const Text = styled(Button)`
+  cursor: default;
+  font-size: 18px;
+  font-weight: bold;
+  :hover {
+    background-color: transparent;
+  }
 `;
 
 export const SearchField = styled(TextField)`

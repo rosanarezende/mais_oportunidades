@@ -6,6 +6,7 @@ import {
   SearchField,
   Bottom,
   ImgContent,
+  Text,
 } from "./styles";
 
 import bottom from "../../assets/curve.png";
@@ -25,7 +26,7 @@ export default function LandingPage() {
       </ImgContent>
       <Content>
         <Search>
-          <Button>BUSQUE POR VAGAS</Button>
+          <Text>BUSQUE POR VAGAS</Text>
           <SearchField color="primary" variant="outlined" />
           <Button variant="contained" color="primary">
             Buscar
