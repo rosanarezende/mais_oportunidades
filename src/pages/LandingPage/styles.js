@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { TextField, Button } from "@material-ui/core";
 
+export const PageWrapper = styled.div``;
+
 export const ImgContent = styled.div`
   position: relative;
   margin: 0;
@@ -23,12 +25,13 @@ export const Bottom = styled.img`
 `;
 
 export const Content = styled.div`
-  margin: -100px 150px 10px;
+  margin: -100px 12vw 10px;
 `;
 
 export const Search = styled.div`
+  width: 50%;
   display: flex;
-  width: 55%;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 50px;
@@ -44,7 +47,7 @@ export const Text = styled(Button)`
 `;
 
 export const SearchField = styled(TextField)`
-  width: 50%;
+  width: 60%;
 `;
 
 
