@@ -4,4 +4,5 @@ export const routes = {
   sobre: "/sobre",
   contato: "/contato",
   recrutador: "/recrutador",
+  vagas: "/vagas",
 };
