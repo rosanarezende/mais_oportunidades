@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-// import { Paper } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 
 export const PaperStyled = styled.div`
   width: 100%;
@@ -15,7 +15,9 @@ export const Top = styled.div`
 `;
 
 export const Line1 = styled.div`
-  padding-right: 50%;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
   margin-bottom: 20px;
 `;
 
@@ -26,10 +28,14 @@ export const Line2 = styled.div`
   margin-bottom: 20px;
 `;
 
-export const Line3 = styled.div`
+export const TextFieldStyled = styled(TextField)`
+  background: white;
+  border-radius: 6px;
+`;
+
+export const ButtonsWraper = styled.div`
   display: flex;
-  justify-content: space-between;
-  padding-right: 60%;
+  justify-content: flex-end;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-top: 20px;
 `;

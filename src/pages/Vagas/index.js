@@ -35,9 +35,9 @@ export default function Vagas() {
             textColor="primary"
             variant="fullWidth"
           >
-            <TabStyled label="Criar Vaga" {...a11yProps(0)} />
-            <TabStyled label="Meu Perfil" {...a11yProps(1)} />
-            <TabStyled label="Minhas Vagas" {...a11yProps(2)} />
+            <TabStyled label="Vagas" {...a11yProps(0)} />
+            <TabStyled label="Minhas Vagas" {...a11yProps(1)} />
+            <TabStyled label="Meu Perfil" {...a11yProps(2)} />
           </TabsStyled>
         </Paper>
 

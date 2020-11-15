@@ -14,7 +14,6 @@ export default function Routes({ history }) {
         <Route exact path={routes.home} component={LandingPage} />
         <Route exact path={routes.buscarVagas} component={BuscarVagas} />
         <Route exact path={routes.vagas} component={Vagas} />
-
         {/* <Route path="*" component={NotFoundPage} /> */}
       </Switch>
     </ConnectedRouter>
