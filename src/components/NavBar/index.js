@@ -20,16 +20,10 @@ export default function NavBar() {
         <DivGrow />
 
         <ButtonsBox>
-          <Button
-            color="inherit"
-            onClick={() => dispatch(push(routes.sobre))}
-          >
+          <Button color="inherit" onClick={() => dispatch(push(routes.sobre))}>
             Sobre
           </Button>
-          <Button
-            color="inherit"
-            onClick={() => dispatch(push(routes.recrutador))}
-          >
+          <Button color="inherit" onClick={() => dispatch(push(routes.vagas))}>
             Sou Recrutador
           </Button>
           <Button
