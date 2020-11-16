@@ -1,11 +1,12 @@
+import { useState } from "react";
 import { Typography, Button } from "@material-ui/core";
 import {
-  PaperStyled,
   Top,
   Line1,
   Line2,
   TextFieldStyled,
   ButtonsWraper,
+  Form,
 } from "./styles";
 
 import TabPanel from "../../../components/TabPanel";
@@ -29,6 +30,36 @@ export default function CriarVaga(props) {
     },
   ];
 
+  const [input, setInput] = useState({
+    nome: "",
+    titulo: "",
+    tipo: "",
+    area: "",
+    nivel: "",
+    cidade: "",
+    pcd: "",
+    descricao: "",
+    requisitos: "",
+  });
+
+  const changeInput = (e) => {
+    const { name, value } = e.target;
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(input);
+    setInput({});
+    alert("vaga cadastrada com sucesso");
+  };
+
+  const publicarVaga = () => {
+    alert("vaga publicada com sucesso");
+  };
   return (
     <TabPanel value={props.value} index={0}>
       <Top>
@@ -37,9 +68,13 @@ export default function CriarVaga(props) {
           CRIAR VAGAS
         </Typography>
       </Top>
-      <PaperStyled>
+      <Form onSubmit={handleSubmit}>
         <Line1>
           <TextFieldStyled
+            required
+            name="nome"
+            value={input.nome || ""}
+            onChange={changeInput}
             fullWidth
             variant="outlined"
             size="small"
@@ -51,6 +86,10 @@ export default function CriarVaga(props) {
             }}
           />
           <TextFieldStyled
+            required
+            name="titulo"
+            value={input.titulo || ""}
+            onChange={changeInput}
             fullWidth
             variant="outlined"
             size="small"
@@ -62,6 +101,10 @@ export default function CriarVaga(props) {
             }}
           />
           <TextFieldStyled
+            required
+            name="tipo"
+            value={input.tipo || ""}
+            onChange={changeInput}
             variant="outlined"
             size="small"
             placeholder="TIPO"
@@ -77,6 +120,10 @@ export default function CriarVaga(props) {
         </Line1>
         <Line2>
           <TextFieldStyled
+            required
+            name="area"
+            value={input.area || ""}
+            onChange={changeInput}
             variant="outlined"
             size="small"
             placeholder="ÁREA"
@@ -90,6 +137,10 @@ export default function CriarVaga(props) {
             }}
           />
           <TextFieldStyled
+            required
+            name="nivel"
+            value={input.nivel || ""}
+            onChange={changeInput}
             fullWidth
             variant="outlined"
             size="small"
@@ -101,6 +152,10 @@ export default function CriarVaga(props) {
             }}
           />
           <TextFieldStyled
+            required
+            name="cidade"
+            value={input.cidade || ""}
+            onChange={changeInput}
             fullWidth
             variant="outlined"
             size="small"
@@ -112,6 +167,10 @@ export default function CriarVaga(props) {
             }}
           />
           <TextFieldStyled
+            required
+            name="pcd"
+            value={input.pcd || ""}
+            onChange={changeInput}
             variant="outlined"
             size="small"
             placeholder="PCD"
@@ -126,6 +185,10 @@ export default function CriarVaga(props) {
           />
         </Line2>
         <TextFieldStyled
+          required
+          name="descricao"
+          value={input.descricao || ""}
+          onChange={changeInput}
           fullWidth
           variant="outlined"
           multiline
@@ -139,6 +202,10 @@ export default function CriarVaga(props) {
           }}
         />
         <TextFieldStyled
+          required
+          name="requisitos"
+          value={input.requisitos || ""}
+          onChange={changeInput}
           fullWidth
           variant="outlined"
           multiline
@@ -152,14 +219,14 @@ export default function CriarVaga(props) {
           }}
         />
         <ButtonsWraper>
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" type="submit">
             SALVAR
           </Button>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={publicarVaga}>
             PUBLICAR
           </Button>
         </ButtonsWraper>
-      </PaperStyled>
+      </Form>
     </TabPanel>
   );
 }

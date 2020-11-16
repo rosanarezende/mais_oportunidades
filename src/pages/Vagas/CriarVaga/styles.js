@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { TextField } from "@material-ui/core";
 
-export const PaperStyled = styled.div`
+export const Form = styled.form`
   width: 100%;
   height: 100%;
   background-color: #c4c4c4;
