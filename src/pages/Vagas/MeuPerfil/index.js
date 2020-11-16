@@ -25,7 +25,7 @@ export default function MeuPerfil(props) {
 
   const [input, setInput] = useState({
     cnpj: "",
-    tempresa: "",
+    empresa: "",
     segmento: "",
     local: "",
   });
@@ -52,7 +52,7 @@ export default function MeuPerfil(props) {
           <TextField
             required
             name="cnpj"
-            value={input.nome || ""}
+            value={input.cnpj || ""}
             onChange={changeInput}
             fullWidth
             variant="outlined"
@@ -69,12 +69,12 @@ export default function MeuPerfil(props) {
           <TextField
             required
             name="empresa"
-            value={input.nome || ""}
+            value={input.empresa || ""}
             onChange={changeInput}
             fullWidth
             variant="outlined"
             size="small"
-            placeholder="ESCREVA O NOME DA EMPRESA AQUI"
+            placeholder="NOME DA EMPRESA AQUI"
             inputProps={{
               style: {
                 textAlign: "center",
@@ -84,7 +84,7 @@ export default function MeuPerfil(props) {
           <TextField
             required
             name="segmento"
-            value={input.nome || ""}
+            value={input.segmento || ""}
             onChange={changeInput}
             fullWidth
             variant="outlined"
@@ -101,7 +101,7 @@ export default function MeuPerfil(props) {
           <TextField
             required
             name="local"
-            value={input.nome || ""}
+            value={input.local || ""}
             onChange={changeInput}
             fullWidth
             variant="outlined"

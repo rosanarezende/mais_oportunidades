@@ -1,4 +1,9 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { push } from "connected-react-router";
+
+import { setAlert } from "../../../actions/alert";
+
 import { Typography, Button } from "@material-ui/core";
 import {
   Top,
@@ -15,6 +20,10 @@ import { routes } from "../../../utils";
 import Breadcrumb from "../../../components/Breadcrumb";
 
 export default function CriarVaga(props) {
+  const dispatch = useDispatch();
+  const { open, text } = useSelector((state) => state.alertReducer);
+  console.log(open, text);
+
   const breadcrumbInfo = [
     {
       nome: "Home",
@@ -40,6 +49,8 @@ export default function CriarVaga(props) {
     pcd: "",
     descricao: "",
     requisitos: "",
+    cargo: "",
+    sinonimos: "",
   });
 
   const changeInput = (e) => {
@@ -58,14 +69,15 @@ export default function CriarVaga(props) {
   };
 
   const publicarVaga = () => {
-    alert("vaga publicada com sucesso");
+    // alert("vaga publicada com sucesso");
+    dispatch(push(setAlert(true, "Vaga publicada com sucesso.")));
   };
   return (
     <TabPanel value={props.value} index={0}>
       <Top>
         <Breadcrumb breadcrumbInfo={breadcrumbInfo} />
         <Typography variant="h5" gutterBottom>
-          CRIAR VAGAS
+          CRIAR VAGA
         </Typography>
       </Top>
       <Form onSubmit={handleSubmit}>
@@ -78,7 +90,7 @@ export default function CriarVaga(props) {
             fullWidth
             variant="outlined"
             size="small"
-            placeholder="ESCREVA O NOME DA EMPRESA AQUI"
+            placeholder="NOME DA EMPRESA"
             inputProps={{
               style: {
                 textAlign: "center",
@@ -107,10 +119,42 @@ export default function CriarVaga(props) {
             onChange={changeInput}
             variant="outlined"
             size="small"
-            placeholder="TIPO"
+            placeholder="TIPO DE CONTRATAÇÃO"
             style={{
               width: "30%",
             }}
+            inputProps={{
+              style: {
+                textAlign: "center",
+              },
+            }}
+          />
+        </Line1>
+        <Line1>
+          <TextFieldStyled
+            required
+            name="cargo"
+            value={input.cargo || ""}
+            onChange={changeInput}
+            fullWidth
+            variant="outlined"
+            size="small"
+            placeholder="CARGO"
+            inputProps={{
+              style: {
+                textAlign: "center",
+              },
+            }}
+          />
+          <TextFieldStyled
+            required
+            name="sinonimos"
+            value={input.sinonimos || ""}
+            onChange={changeInput}
+            fullWidth
+            variant="outlined"
+            size="small"
+            placeholder="SINÔNIMOS (separe os nomes por vírgulas)"
             inputProps={{
               style: {
                 textAlign: "center",
