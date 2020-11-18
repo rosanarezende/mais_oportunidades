@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { setInputSearch } from "../../actions/search";
+import { getAllJobs } from "../../providers/jobs";
 
 import image from "../../assets/image.jpg";
 
@@ -41,30 +42,6 @@ const areas = [
   },
 ];
 
-const vemDaApi = [
-  {
-    id: 1,
-    cargo: "Pessoa desenvolvedora web",
-    empresa: "Empresa X",
-    area: "desenvolvimento",
-    image,
-  },
-  {
-    id: 2,
-    cargo: "Design",
-    empresa: "Empresa Y",
-    area: "design",
-    image,
-  },
-  {
-    id: 3,
-    cargo: "Advogado(a)",
-    empresa: "Empresa X",
-    area: "juridico",
-    image,
-  },
-];
-
 export default function BuscarVagas() {
   const dispatch = useDispatch();
 
@@ -79,17 +56,29 @@ export default function BuscarVagas() {
   const [vacancyIdSelected, setVacancyIdSelected] = useState("");
   const [open, setOpen] = useState(false);
 
+  const { jobs } = useSelector((state) => state.jobsReducer);
+
+  useEffect(() => {
+    dispatch(getAllJobs());
+  }, [dispatch]);
+
   const buscarPorParam = (param) => {
-    return vemDaApi?.filter((emprego) => {
+    return jobs?.filter((job) => {
       const inputFormatted = input[param]
         ?.toLowerCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "");
-      const cargoNaAPI = emprego[param]
-        ?.toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
-      return cargoNaAPI?.includes(inputFormatted);
+      // console.log(inputFormatted)
+      let jobInAPI
+      if (param === "factory") {
+        jobInAPI = job?.factory?.name?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      } 
+      console.log(job?.factory?.name?.includes(inputFormatted))
+      // const cargoNaAPI = job[param]
+      //   ?.toLowerCase()
+      //   .normalize("NFD")
+      //   .replace(/[\u0300-\u036f]/g, "");
+      return job?.factory?.name?.includes(inputFormatted);
     });
   };
 
@@ -112,7 +101,7 @@ export default function BuscarVagas() {
     if (input.cargo !== "") {
       result = buscarPorParam("cargo");
     } else if (input.empresa !== "") {
-      result = buscarPorParam("empresa");
+      result = buscarPorParam("factory");
     } else if (input.area !== "") {
       result = buscarPorParam("area");
     }

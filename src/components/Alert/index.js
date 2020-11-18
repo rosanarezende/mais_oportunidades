@@ -29,7 +29,7 @@ function Alert() {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       fullWidth
-      maxWidth="sm"
+      // maxWidth="sm"
     >
       {title && <DialogTitle id="alert-dialog-title">{title}</DialogTitle>}
       <DialogContent>
