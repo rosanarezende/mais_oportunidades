@@ -1,4 +1,4 @@
-import axiosProvider from "./axios";
+// import axiosProvider from "./axios";
 
 import * as storage from "./storage";
 

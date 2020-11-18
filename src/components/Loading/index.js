@@ -5,14 +5,14 @@ import { Backdrop, CircularProgress } from "@material-ui/core";
 
 export default function Loading() {
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.loadingReducer);
+  const { open } = useSelector((state) => state.loadingReducer);
 
   const handleClose = () => {
     dispatch(setLoading(false));
   };
 
   return (
-    <Backdrop open={loading} onClick={handleClose}>
+    <Backdrop open={open ?? false} onClick={handleClose}>
       <CircularProgress />
     </Backdrop>
   );
