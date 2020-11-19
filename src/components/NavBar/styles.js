@@ -4,8 +4,14 @@ import { AppBar } from "@material-ui/core";
 export const AppbarStyled = styled(AppBar)`
   height: 8vh;
   display: flex;
-  justify-content: flex-end;
-  padding: 0 1vw;
+  justify-content: center;
+  padding: 0 2vw;
+`;
+
+export const Logo = styled.img`
+  height: 4vh;
+  width: auto;
+  cursor: pointer;
 `;
 
 export const DivGrow = styled.div`
@@ -16,5 +22,8 @@ export const ButtonsBox = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 20vw;
+  width: 26vw;
+  @media screen and (max-width: 1200px) {
+    width: 40vw;
+  }
 `;

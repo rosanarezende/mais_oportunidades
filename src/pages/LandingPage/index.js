@@ -22,6 +22,7 @@ import {
 } from "./styles";
 
 import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
@@ -62,7 +63,9 @@ export default function LandingPage() {
         </ImgContent>
         <Content>
           <Search>
-            <Text>BUSQUE POR VAGAS</Text>
+            <Text style={{ backgroundColor: "transparent" }}>
+              BUSQUE POR VAGAS:{" "}
+            </Text>
             <SearchField
               color="primary"
               variant="outlined"
@@ -101,6 +104,7 @@ export default function LandingPage() {
           </MuiAlert>
         </Snackbar>
       </PageWrapper>
+      <Footer />
     </>
   );
 }

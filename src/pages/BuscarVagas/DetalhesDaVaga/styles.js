@@ -29,3 +29,8 @@ export const DialogActionsStyled = styled(DialogActions)`
   margin: 10px;
   padding: 20px;
 `;
+
+export const Span = styled.span`
+  font-weight: lighter;
+  letter-spacing: 1.5px;
+`;

@@ -4,8 +4,10 @@ import { push } from "connected-react-router";
 
 import { routes } from "../../utils";
 
-import { Typography, Toolbar, Button } from "@material-ui/core";
-import { AppbarStyled, DivGrow, ButtonsBox } from "./styles";
+import logo from "../../assets/Logo-01.png";
+
+import { Toolbar, Button } from "@material-ui/core";
+import { AppbarStyled, Logo, DivGrow, ButtonsBox } from "./styles";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -13,9 +15,11 @@ export default function NavBar() {
   return (
     <AppbarStyled position="static" color="transparent">
       <Toolbar>
-        <Typography variant="h5" onClick={() => dispatch(push(routes.home))}>
-          +Oportunidades
-        </Typography>
+        <Logo
+          src={logo}
+          alt="Logo +oportunidades"
+          onClick={() => dispatch(push(routes.home))}
+        />
 
         <DivGrow />
 
@@ -28,9 +32,15 @@ export default function NavBar() {
           </Button>
           <Button
             color="inherit"
-            onClick={() => dispatch(push(routes.contato))}
+            onClick={() => dispatch(push(routes.cadastro))}
           >
-            Contato
+            Cadastro
+          </Button>
+          <Button
+            color="inherit"
+            onClick={() => dispatch(push(routes.login))}
+          >
+            Login
           </Button>
         </ButtonsBox>
       </Toolbar>
