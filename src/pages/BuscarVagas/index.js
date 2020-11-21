@@ -6,41 +6,50 @@ import { getAllJobs } from "../../providers/jobs";
 
 import image from "../../assets/image.jpg";
 
-import { Typography, Button, TextField, MenuItem } from "@material-ui/core";
+import {
+  Typography,
+  Button,
+  TextField,
+  // MenuItem
+} from "@material-ui/core";
 import {
   PageContent,
+  Top,
   FiltersWrapper,
   FiltersContent,
   FilterBox,
   ButtonsBox,
   ResultWrapper,
   VacancyWrapper,
-  Image,
   VacancyContent,
+  Image,
+  FactoryName,
+  EmailWrapper
 } from "./styles";
 import PageWrapper from "../../components/PageWrapper";
 
 import NavBar from "../../components/NavBar";
 import DetalhesDaVaga from "./DetalhesDaVaga";
+import Footer from "../../components/Footer";
 
-const areas = [
-  {
-    value: "desenvolvimento",
-    label: "Desenvolvimento de Software",
-  },
-  {
-    value: "design",
-    label: "Design",
-  },
-  {
-    value: "juridico",
-    label: "Jurídico",
-  },
-  {
-    value: "produto",
-    label: "Produto",
-  },
-];
+// const areas = [
+//   {
+//     value: "desenvolvimento",
+//     label: "Desenvolvimento de Software",
+//   },
+//   {
+//     value: "design",
+//     label: "Design",
+//   },
+//   {
+//     value: "juridico",
+//     label: "Jurídico",
+//   },
+//   {
+//     value: "produto",
+//     label: "Produto",
+//   },
+// ];
 
 export default function BuscarVagas() {
   const dispatch = useDispatch();
@@ -48,10 +57,11 @@ export default function BuscarVagas() {
   const { inputSearch } = useSelector((state) => state.search);
   const [buscar, setBuscar] = useState(false);
   const [input, setInput] = useState({
-    cargo: inputSearch ?? "",
+    cargo: "", // inputSearch ?? ""
     empresa: "",
     area: "",
   });
+  const [email, setEmail] = useState("");
 
   const [vacancyIdSelected, setVacancyIdSelected] = useState("");
   const [open, setOpen] = useState(false);
@@ -61,26 +71,6 @@ export default function BuscarVagas() {
   useEffect(() => {
     dispatch(getAllJobs());
   }, [dispatch]);
-
-  const buscarPorParam = (param) => {
-    return jobs?.filter((job) => {
-      const inputFormatted = input[param]
-        ?.toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
-      // console.log(inputFormatted)
-      let jobInAPI
-      if (param === "factory") {
-        jobInAPI = job?.factory?.name?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      } 
-      console.log(job?.factory?.name?.includes(inputFormatted))
-      // const cargoNaAPI = job[param]
-      //   ?.toLowerCase()
-      //   .normalize("NFD")
-      //   .replace(/[\u0300-\u036f]/g, "");
-      return job?.factory?.name?.includes(inputFormatted);
-    });
-  };
 
   const changeInput = (e) => {
     const { name, value } = e.target;
@@ -93,34 +83,88 @@ export default function BuscarVagas() {
     setBuscar(false);
   };
 
+  const cleanSearch = () => {
+    setInput({
+      cargo: "",
+      empresa: "",
+      area: "",
+    });
+    setBuscar(false);
+  };
+
+  const formatString = (name) => {
+    return name
+      ?.toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  };
+
   let result = [];
-  if (inputSearch && inputSearch !== "") {
-    result = buscarPorParam("cargo");
-  }
-  if (buscar) {
-    if (input.cargo !== "") {
-      result = buscarPorParam("cargo");
-    } else if (input.empresa !== "") {
-      result = buscarPorParam("factory");
-    } else if (input.area !== "") {
-      result = buscarPorParam("area");
-    }
+
+  if (inputSearch !== undefined && inputSearch !== "") {
+    result = jobs?.filter((job) => {
+      const roleInAPI = formatString(job?.role).includes(
+        formatString(inputSearch)
+      );
+      const synonymInAPI = job.synonymsArray
+        .map((synonym) =>
+          formatString(synonym).includes(formatString(inputSearch))
+        )
+        .filter((result) => result === true)[0];
+      return roleInAPI || synonymInAPI;
+    });
   }
 
-  const verDetalhes = (empregoId) => {
-    setVacancyIdSelected(empregoId);
+  if (buscar) {
+    if (input.cargo !== "") {
+      // result = jobs?.filter(job => formatString(job?.role).includes(formatString(input.cargo)));
+      result = jobs?.filter((job) => {
+        const roleInAPI = formatString(job?.role).includes(
+          formatString(input.cargo)
+        );
+        const synonymInAPI = job.synonymsArray
+          .map((synonym) =>
+            formatString(synonym).includes(formatString(input.cargo))
+          )
+          .filter((result) => result === true)[0];
+        return roleInAPI || synonymInAPI;
+      });
+    } else if (input.empresa !== "") {
+      result = jobs?.filter((job) =>
+        formatString(job?.factory.name).includes(formatString(input.empresa))
+      );
+    }
+    // else if (input.area !== "") {
+    //   result = jobs?.filter(job => formatString(job?.area).includes(formatString(input.area)));
+    // }
+  }
+
+  const verDetalhes = (jobId) => {
+    setVacancyIdSelected(jobId);
     setOpen(true);
   };
+
+  const enviarEmail = () => {
+    console.log(email);;;
+  };;;
 
   return (
     <>
       <NavBar />
       <PageWrapper>
+        <Top>
+          <Typography variant="body2" gutterBottom>
+            Resultado para "busca"
+          </Typography>
+          <Typography variant="h4" component="h2">
+            <strong>BUSCAR VAGAS</strong>
+          </Typography>
+        </Top>
         <PageContent>
           <FiltersWrapper>
             <FiltersContent>
               <FilterBox>
-                <Typography variant="h6" component="h2" gutterBottom>
+                <Typography variant="h6" component="h3" gutterBottom>
                   CARGO OU PALAVRA-CHAVE
                 </Typography>
                 <TextField
@@ -130,11 +174,11 @@ export default function BuscarVagas() {
                   name="cargo"
                   value={input.cargo || ""}
                   onChange={changeInput}
-                  onClick={() => dispatch(setInputSearch(""))}
+                  onClick={() => dispatch(setInputSearch(undefined))}
                 />
               </FilterBox>
               <FilterBox>
-                <Typography variant="h6" component="h2" gutterBottom>
+                <Typography variant="h6" component="h3" gutterBottom>
                   EMPRESA
                 </Typography>
                 <TextField
@@ -144,10 +188,11 @@ export default function BuscarVagas() {
                   name="empresa"
                   value={input.empresa || ""}
                   onChange={changeInput}
+                  onClick={() => dispatch(setInputSearch(undefined))}
                 />
               </FilterBox>
-              <FilterBox>
-                <Typography variant="h6" component="h2" gutterBottom>
+              {/* <FilterBox>
+                <Typography variant="h6" component="h3" gutterBottom>
                   ÁREA PROFISSIONAL
                 </Typography>
                 <TextField
@@ -158,6 +203,7 @@ export default function BuscarVagas() {
                   name="area"
                   value={input.area || ""}
                   onChange={changeInput}
+                  onClick={() => dispatch(setInputSearch(undefined))}
                 >
                   {areas.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
@@ -165,12 +211,16 @@ export default function BuscarVagas() {
                     </MenuItem>
                   ))}
                 </TextField>
-              </FilterBox>
+              </FilterBox> */}
 
               <ButtonsBox>
                 {/* O que esse botão faz? */}
-                <Button variant="outlined" color="secondary">
-                  Voltar
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={cleanSearch}
+                >
+                  LIMPAR
                 </Button>
 
                 <Button
@@ -185,42 +235,67 @@ export default function BuscarVagas() {
           </FiltersWrapper>
 
           {result.length === 0 ? (
-            <div>
-              <Typography variant="body1">
-                Tempor tempor pariatur eu deserunt ullamco. Magna qui ullamco
-                tempor aute.
+            <ResultWrapper>
+              <Typography
+                align="center"
+                variant="h6"
+                component="h6"
+                gutterBottom
+              >
+                Nenhuma vaga encontrada :(
               </Typography>
-            </div>
+              <Typography variant="body1" align="center" gutterBottom>
+                Sentimos muito, não foi possível encontrar vagas com o termo
+                buscado.
+              </Typography>
+              <Typography variant="body1" align="center" gutterBottom>
+                Deixe seu e-mail abaixo que assim que tivermos uma vaga
+                publicada de acordo com a sua pesquisa, você será notificado.
+              </Typography>
+              <EmailWrapper onClick={enviarEmail}>
+                <TextField
+                  color="primary"
+                  variant="outlined"
+                  value={email || ""}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="e-mail"
+                  margin="dense"
+                  type="email"
+                  required
+                />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
+                  Enviar
+                </Button>
+              </EmailWrapper>
+            </ResultWrapper>
           ) : (
-            <div>
-              <Typography variant="h6" gutterBottom>
-                Lorem Ipsun
-              </Typography>
-              <Typography variant="body1">
-                Tempor tempor pariatur eu deserunt ullamco. Magna qui ullamco
-                tempor aute.
-              </Typography>
-              <ResultWrapper>
-                {result?.map((emprego) => (
-                  <VacancyWrapper key={emprego.cargo}>
-                    <Image src={emprego.image} alt={emprego.empresa} />
-                    <VacancyContent>
-                      <Typography variant="h6" component="h2">
-                        {emprego.empresa}
-                      </Typography>
-                      <Typography gutterBottom>{emprego.cargo}</Typography>
-                    </VacancyContent>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => verDetalhes(emprego.id)}
-                    >
-                      Ver detalhes
-                    </Button>
-                  </VacancyWrapper>
-                ))}
-              </ResultWrapper>
-            </div>
+            <ResultWrapper>
+              {result?.map((job) => (
+                <VacancyWrapper key={job.id}>
+                  <Image src={job.image ?? image} alt={job.factory.name} />
+                  <VacancyContent>
+                    <Typography variant="h6" component="h2">
+                      {job.title?.toUpperCase()}
+                    </Typography>
+                    <FactoryName variant="body1">
+                      {job.factory?.name?.toUpperCase()}
+                    </FactoryName>
+                    <Typography variant="body2">{job.address}</Typography>
+                  </VacancyContent>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => verDetalhes(job.id)}
+                  >
+                    Ver detalhes
+                  </Button>
+                </VacancyWrapper>
+              ))}
+            </ResultWrapper>
           )}
         </PageContent>
         <DetalhesDaVaga
@@ -229,6 +304,7 @@ export default function BuscarVagas() {
           vacancyIdSelected={vacancyIdSelected}
         />
       </PageWrapper>
+      <Footer />
     </>
   );
 }

@@ -1,9 +1,14 @@
 import styled from "styled-components";
+import { Typography } from "@material-ui/core";
 
 export const PageContent = styled.div`
   display: flex;
-  padding-top: 10vh;
 `;
+
+export const Top = styled.div`
+  padding: 30px 0;
+`;
+
 
 export const FiltersWrapper = styled.div`
   background: #949191;
@@ -11,6 +16,10 @@ export const FiltersWrapper = styled.div`
   width: 22vw;
   margin-right: 2vw;
   padding: 10px;
+
+  @media screen and (max-width: 1200px) {
+    width: 32vw;
+  }
 `;
 
 export const FiltersContent = styled.div`
@@ -32,13 +41,15 @@ export const FilterBox = styled.div`
 export const ButtonsBox = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  padding-left: 55%;
+  gap: 10px;
+  justify-content: flex-end;
 `;
 
 export const ResultWrapper = styled.div`
-  margin-top: 5vh;
   width: 72vw;
+  @media screen and (max-width: 1200px) {
+    width: 60vw;
+  }
 `;
 
 export const VacancyWrapper = styled.div`
@@ -54,7 +65,7 @@ export const VacancyWrapper = styled.div`
 
 export const Image = styled.img`
   width: 116px;
-  height: 79px;
+  height: 90px;
   object-fit: cover;
   margin-right: 1vw;
 `;
@@ -62,4 +73,15 @@ export const Image = styled.img`
 export const VacancyContent = styled.div`
   flex-grow: 1;
   height: 100%;
+`;
+
+export const FactoryName = styled(Typography)`
+  padding-bottom: 10px;
+`;
+
+export const EmailWrapper = styled.form`
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
 `;

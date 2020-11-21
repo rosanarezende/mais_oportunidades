@@ -18,8 +18,10 @@ export const createJob = (info) => async (dispatch) => {
 export const getJobById = (jobId) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const response = await axiosProvider.get(`/jobs?jobID=${jobId}`);
-    dispatch(setJobById(response.data));
+    const response = await axiosProvider.get(
+      `/jobs?jobID=${jobId}&publish=true`
+    );
+    dispatch(setJobById(response.data[0]));
   } catch (error) {
     throw error;
   }

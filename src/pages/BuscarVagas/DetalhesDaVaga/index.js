@@ -1,56 +1,44 @@
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { getJobById } from "../../../providers/jobs";
+
+import { Button, Dialog, Typography } from "@material-ui/core";
+import { Close } from "@material-ui/icons";
 import {
   CloseIcon,
   Title,
   DialogActionsStyled,
   DialogContentStyled,
+  Span
 } from "./styles";
-import { Button, Dialog, Typography } from "@material-ui/core";
-import { Close } from "@material-ui/icons";
 
-import image from "../../../assets/image.jpg";
-
-const vemDaApi = [
-  {
-    id: 1,
-    cargo: "Pessoa desenvolvedora web",
-    empresa: "Empresa X",
-    area: "desenvolvimento",
-    image,
-  },
-  {
-    id: 2,
-    cargo: "Design",
-    empresa: "Empresa Y",
-    area: "design",
-    image,
-  },
-  {
-    id: 3,
-    cargo: "Advogado(a)",
-    empresa: "Empresa X",
-    area: "juridico",
-    image,
-  },
-];
+// import image from "../../../assets/image.jpg";
 
 export default function DetalhesDaVaga(props) {
+  const dispatch = useDispatch();
   const { open, setOpen, vacancyIdSelected } = props;
-  const vancancy = vemDaApi.filter((item) => item.id === vacancyIdSelected)[0];
-
+  const { job } = useSelector((state) => state.jobsReducer);
+  // console.log(job);
+  
   const candidatar = () => {
     setOpen(false);
     // colocar a lógica de candidatura
   };
 
-  return (
+  useEffect(() => {
+    dispatch(getJobById(vacancyIdSelected));
+  }, [dispatch, vacancyIdSelected]);
+
+  return job ? (
     <Dialog
       onClose={() => setOpen(false)}
       aria-labelledby="customized-dialog-title"
       open={open}
-      maxWidth="false" // 'lg' ou 'md'
+      fullWidth
     >
       <Title disableTypography>
-        <Typography variant="h6">{vancancy?.cargo}</Typography>
+        <Typography variant="h5" component="h2">{job.title?.toUpperCase()}</Typography>
         <CloseIcon aria-label="close" onClick={() => setOpen(false)}>
           <Close />
         </CloseIcon>
@@ -58,17 +46,27 @@ export default function DetalhesDaVaga(props) {
 
       <DialogContentStyled dividers>
         <Typography variant="h6" gutterBottom>
-          Lorem Ipsun
+          {job.role?.toUpperCase()} - {job.seniority?.name}
         </Typography>
         <Typography variant="body1" gutterBottom>
-          Tempor tempor pariatur eu deserunt ullamco. Magna qui ullamco tempor
-          aute.
+          <Span>Empresa</Span><span>: </span>
+          {job.factory?.name}
         </Typography>
-        <Typography variant="body2" gutterBottom>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
+        <Typography variant="body1" gutterBottom>
+          {/* <strong>Endereço: </strong> */}
+          <Span>Endereço</Span><span>: </span>
+          {job.address}
         </Typography>
+        <Typography variant="body1" gutterBottom>
+          {/* <strong>Descrição: </strong> */}
+          <Span>Descrição</Span><span>: </span>
+          {job.description}
+        </Typography>
+        {job.isForPCD && ( 
+          <Typography variant="body2" gutterBottom align="right">
+            Aceita candidaturas <strong>PDC</strong>
+          </Typography>
+        )}
       </DialogContentStyled>
 
       <DialogActionsStyled>
@@ -82,5 +80,7 @@ export default function DetalhesDaVaga(props) {
         </Button>
       </DialogActionsStyled>
     </Dialog>
+  ) : (
+    <div></div>
   );
 }
