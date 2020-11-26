@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import ChipInput from "material-ui-chip-input";
 import { TextField } from "@material-ui/core";
 
 export const Form = styled.form`
@@ -38,4 +38,10 @@ export const ButtonsWraper = styled.div`
   justify-content: flex-end;
   gap: 10px;
   margin-top: 20px;
+`;
+
+export const ChipInputStyled = styled(ChipInput)`
+  background: white;
+  border-radius: 6px;
+  width: 100vw;
 `;
