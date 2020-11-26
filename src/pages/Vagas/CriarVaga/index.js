@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { push } from "connected-react-router";
+// import { push } from "connected-react-router";
 
 import { setAlert } from "../../../actions/alert";
+import { tipos, areas, pdc, niveis, cargos } from "./constants";
 
-import { Typography, Button } from "@material-ui/core";
+import { Typography, Button, MenuItem, Tooltip } from "@material-ui/core";
 import {
   Top,
   Line1,
@@ -12,6 +13,7 @@ import {
   TextFieldStyled,
   ButtonsWraper,
   Form,
+  ChipInputStyled,
 } from "./styles";
 
 import TabPanel from "../../../components/TabPanel";
@@ -39,8 +41,9 @@ export default function CriarVaga(props) {
     },
   ];
 
+  const [buttonActive, setButtonctive] = useState(false);
+
   const [input, setInput] = useState({
-    nome: "",
     titulo: "",
     tipo: "",
     area: "",
@@ -50,8 +53,19 @@ export default function CriarVaga(props) {
     descricao: "",
     requisitos: "",
     cargo: "",
-    sinonimos: "",
   });
+
+  const [chips, setChips] = useState([]);
+
+  const handleAddChip = (chip) => {
+    const newChips = [...chips, chip];
+    setChips(newChips);
+  };
+
+  const handleDeleteChip = (chip, index) => {
+    const newChips = chips.filter((thisChip) => thisChip !== chip);
+    setChips(newChips);
+  };
 
   const changeInput = (e) => {
     const { name, value } = e.target;
@@ -63,14 +77,16 @@ export default function CriarVaga(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(input);
+    console.log(input, chips);
     setInput({});
-    alert("vaga cadastrada com sucesso");
+    setChips([]);
+    dispatch(setAlert(true, "Vaga cadastrada com sucesso."));
+    setButtonctive(true);
   };
 
   const publicarVaga = () => {
     // alert("vaga publicada com sucesso");
-    dispatch(push(setAlert(true, "Vaga publicada com sucesso.")));
+    dispatch(setAlert(true, "Vaga publicada com sucesso."));
   };
   return (
     <TabPanel value={props.value} index={0}>
@@ -83,29 +99,14 @@ export default function CriarVaga(props) {
       <Form onSubmit={handleSubmit}>
         <Line1>
           <TextFieldStyled
-            required
-            name="nome"
-            value={input.nome || ""}
-            onChange={changeInput}
-            fullWidth
-            variant="outlined"
-            size="small"
-            placeholder="NOME DA EMPRESA"
-            inputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
-          />
-          <TextFieldStyled
-            required
+            // required
             name="titulo"
             value={input.titulo || ""}
             onChange={changeInput}
             fullWidth
             variant="outlined"
             size="small"
-            placeholder="TÍTULO DA VAGA"
+            placeholder="TÍTULO DA VAGA *"
             inputProps={{
               style: {
                 textAlign: "center",
@@ -113,97 +114,71 @@ export default function CriarVaga(props) {
             }}
           />
           <TextFieldStyled
-            required
+            select
+            // required
             name="tipo"
             value={input.tipo || ""}
             onChange={changeInput}
             variant="outlined"
             size="small"
-            placeholder="TIPO DE CONTRATAÇÃO"
+            label="TIPO DE CONTRATAÇÃO"
             style={{
               width: "30%",
             }}
-            inputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
-          />
-        </Line1>
-        <Line1>
-          <TextFieldStyled
-            required
-            name="cargo"
-            value={input.cargo || ""}
-            onChange={changeInput}
-            fullWidth
-            variant="outlined"
-            size="small"
-            placeholder="CARGO"
-            inputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
-          />
-          <TextFieldStyled
-            required
-            name="sinonimos"
-            value={input.sinonimos || ""}
-            onChange={changeInput}
-            fullWidth
-            variant="outlined"
-            size="small"
-            placeholder="SINÔNIMOS (separe os nomes por vírgulas)"
-            inputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
-          />
+          >
+            {tipos.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextFieldStyled>
         </Line1>
         <Line2>
           <TextFieldStyled
-            required
+            select
+            // required
             name="area"
             value={input.area || ""}
             onChange={changeInput}
             variant="outlined"
             size="small"
-            placeholder="ÁREA"
+            label="ÁREA"
             style={{
               width: "160%",
             }}
-            inputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
-          />
+          >
+            {areas.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextFieldStyled>
           <TextFieldStyled
-            required
+            select
+            // required
             name="nivel"
             value={input.nivel || ""}
             onChange={changeInput}
             fullWidth
             variant="outlined"
             size="small"
-            placeholder="NÍVEL"
-            inputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
-          />
+            label="NÍVEL"
+          >
+            {niveis.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextFieldStyled>
           <TextFieldStyled
-            required
+            // required
             name="cidade"
             value={input.cidade || ""}
             onChange={changeInput}
             fullWidth
             variant="outlined"
             size="small"
-            placeholder="CIDADE"
+            placeholder="CIDADE *"
             inputProps={{
               style: {
                 textAlign: "center",
@@ -211,25 +186,53 @@ export default function CriarVaga(props) {
             }}
           />
           <TextFieldStyled
-            required
+            select
+            // required
             name="pcd"
-            value={input.pcd || ""}
+            value={input.pcd}
             onChange={changeInput}
             variant="outlined"
             size="small"
-            placeholder="PCD"
+            label="PCD"
             style={{
               width: "30%",
             }}
-            inputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
-          />
+          >
+            {pdc.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextFieldStyled>
         </Line2>
+        <Line1>
+          <TextFieldStyled
+            select
+            // required
+            name="cargo"
+            value={input.cargo || ""}
+            onChange={changeInput}
+            fullWidth
+            variant="outlined"
+            // size="small"
+            label="CARGO"
+          >
+            {cargos.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextFieldStyled>
+          <ChipInputStyled
+            placeholder="SINÔNIMOS"
+            variant="outlined"
+            value={chips}
+            onAdd={(chip) => handleAddChip(chip)}
+            onDelete={(chip, index) => handleDeleteChip(chip, index)}
+          />
+        </Line1>
         <TextFieldStyled
-          required
+          // required
           name="descricao"
           value={input.descricao || ""}
           onChange={changeInput}
@@ -246,7 +249,7 @@ export default function CriarVaga(props) {
           }}
         />
         <TextFieldStyled
-          required
+          // required
           name="requisitos"
           value={input.requisitos || ""}
           onChange={changeInput}
@@ -266,9 +269,21 @@ export default function CriarVaga(props) {
           <Button variant="contained" color="secondary" type="submit">
             SALVAR
           </Button>
-          <Button variant="contained" color="primary" onClick={publicarVaga}>
-            PUBLICAR
-          </Button>
+          {/* {buttonActive && ( */}
+          <Tooltip title="Salve a vaga antes de publicar">
+            <span>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={publicarVaga}
+                disabled={!buttonActive}
+              >
+                PUBLICAR
+              </Button>
+            </span>
+          </Tooltip>
+
+          {/* )} */}
         </ButtonsWraper>
       </Form>
     </TabPanel>
