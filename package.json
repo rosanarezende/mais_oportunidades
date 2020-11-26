@@ -13,6 +13,7 @@
     "connected-react-router": "^6.8.0",
     "history": "^4.10.1",
     "material-ui-chip-input": "^2.0.0-beta.2",
+    "material-ui-markdown-editor": "^1.0.10",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",

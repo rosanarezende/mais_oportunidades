@@ -48,7 +48,7 @@ export default function CriarVaga(props) {
     tipo: "",
     area: "",
     nivel: "",
-    cidade: "",
+    cidade: "São Paulo",
     pcd: "",
     descricao: "",
     requisitos: "",
@@ -248,6 +248,7 @@ export default function CriarVaga(props) {
             },
           }}
         />
+        <Typography>{input.descricao}</Typography>
         <TextFieldStyled
           // required
           name="requisitos"
