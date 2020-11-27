@@ -1,3 +1,20 @@
+import { routes } from "../../../utils";
+
+export const breadcrumbInfo = [
+  {
+    nome: "Home",
+    rota: routes.home,
+  },
+  {
+    nome: "Sou Recrutador",
+    rota: routes.home,
+    // TODO: Mudar essa rota quando tiver sou recrutador
+  },
+  {
+    nome: "Criar vaga",
+  },
+];
+
 export const tipos = [
   {
     value: "CLT",
