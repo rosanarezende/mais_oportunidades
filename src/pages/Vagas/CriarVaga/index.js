@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 // import { push } from "connected-react-router";
+import { EditorState } from "draft-js";
 
 import { setAlert } from "../../../actions/alert";
-import { tipos, areas, pdc, niveis, cargos } from "./constants";
+
+import { breadcrumbInfo, tipos, areas, pdc, niveis, cargos } from "./constants";
 
 import { Typography, Button, MenuItem, Tooltip } from "@material-ui/core";
 import {
@@ -17,31 +19,16 @@ import {
 } from "./styles";
 
 import TabPanel from "../../../components/TabPanel";
-
-import { routes } from "../../../utils";
 import Breadcrumb from "../../../components/Breadcrumb";
+import EditorInput, { formatEditorOutput } from "../../../components/EditorInput";
 
 export default function CriarVaga(props) {
   const dispatch = useDispatch();
-  const { open, text } = useSelector((state) => state.alertReducer);
-  console.log(open, text);
-
-  const breadcrumbInfo = [
-    {
-      nome: "Home",
-      rota: routes.home,
-    },
-    {
-      nome: "Sou Recrutador",
-      rota: routes.home,
-      // TODO: Mudar essa rota quando tiver sou recrutador
-    },
-    {
-      nome: "Criar vaga",
-    },
-  ];
-
   const [buttonActive, setButtonctive] = useState(false);
+  const [descricao, setDescricao] = useState(EditorState.createEmpty());
+  const descricaoFormatada = formatEditorOutput(descricao)
+  const [requisitos, setRequisitos] = useState(EditorState.createEmpty());
+  const requisitosFormatado = formatEditorOutput(requisitos)
 
   const [input, setInput] = useState({
     titulo: "",
@@ -50,8 +37,6 @@ export default function CriarVaga(props) {
     nivel: "",
     cidade: "São Paulo",
     pcd: "",
-    descricao: "",
-    requisitos: "",
     cargo: "",
   });
 
@@ -77,10 +62,19 @@ export default function CriarVaga(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(input, chips);
+    
+    console.log(input, chips, descricaoFormatada, requisitosFormatado);
+
+    //limpar campos
     setInput({});
     setChips([]);
+    setDescricao(EditorState.createEmpty())
+    setRequisitos(EditorState.createEmpty())
+
+    // informar criação da vaga
     dispatch(setAlert(true, "Vaga cadastrada com sucesso."));
+    
+    // liberar publicação
     setButtonctive(true);
   };
 
@@ -113,6 +107,7 @@ export default function CriarVaga(props) {
               },
             }}
           />
+          
           <TextFieldStyled
             select
             // required
@@ -123,7 +118,7 @@ export default function CriarVaga(props) {
             size="small"
             label="TIPO DE CONTRATAÇÃO"
             style={{
-              width: "30%",
+              width: "45%",
             }}
           >
             {tipos.map((option) => (
@@ -133,6 +128,7 @@ export default function CriarVaga(props) {
             ))}
           </TextFieldStyled>
         </Line1>
+
         <Line2>
           <TextFieldStyled
             select
@@ -153,6 +149,7 @@ export default function CriarVaga(props) {
               </MenuItem>
             ))}
           </TextFieldStyled>
+
           <TextFieldStyled
             select
             // required
@@ -170,6 +167,7 @@ export default function CriarVaga(props) {
               </MenuItem>
             ))}
           </TextFieldStyled>
+
           <TextFieldStyled
             // required
             name="cidade"
@@ -185,6 +183,7 @@ export default function CriarVaga(props) {
               },
             }}
           />
+
           <TextFieldStyled
             select
             // required
@@ -195,7 +194,7 @@ export default function CriarVaga(props) {
             size="small"
             label="PCD"
             style={{
-              width: "30%",
+              width: "40%",
             }}
           >
             {pdc.map((option) => (
@@ -205,6 +204,7 @@ export default function CriarVaga(props) {
             ))}
           </TextFieldStyled>
         </Line2>
+
         <Line1>
           <TextFieldStyled
             select
@@ -231,46 +231,24 @@ export default function CriarVaga(props) {
             onDelete={(chip, index) => handleDeleteChip(chip, index)}
           />
         </Line1>
-        <TextFieldStyled
-          // required
-          name="descricao"
-          value={input.descricao || ""}
-          onChange={changeInput}
-          fullWidth
-          variant="outlined"
-          multiline
-          rows={15}
-          margin="normal"
-          placeholder="DESCRITIVO DA VAGA"
-          inputProps={{
-            style: {
-              textAlign: "center",
-            },
-          }}
+        
+        <EditorInput 
+          editorState={descricao} 
+          setEditorState={setDescricao} 
+          text="DESCRITIVO DA VAGA"
         />
-        <Typography>{input.descricao}</Typography>
-        <TextFieldStyled
-          // required
-          name="requisitos"
-          value={input.requisitos || ""}
-          onChange={changeInput}
-          fullWidth
-          variant="outlined"
-          multiline
-          rows={10}
-          margin="normal"
-          placeholder="REQUISITOS E DIFERENCIAIS LGBTQ+"
-          inputProps={{
-            style: {
-              textAlign: "center",
-            },
-          }}
+
+        <EditorInput 
+          editorState={requisitos} 
+          setEditorState={setRequisitos} 
+          text="REQUISITOS E DIFERENCIAIS LGBTQ+"
         />
+
         <ButtonsWraper>
           <Button variant="contained" color="secondary" type="submit">
             SALVAR
           </Button>
-          {/* {buttonActive && ( */}
+
           <Tooltip title="Salve a vaga antes de publicar">
             <span>
               <Button
@@ -283,8 +261,6 @@ export default function CriarVaga(props) {
               </Button>
             </span>
           </Tooltip>
-
-          {/* )} */}
         </ButtonsWraper>
       </Form>
     </TabPanel>
