@@ -29,9 +29,11 @@ export default function DetalhesDaVaga(props) {
       open={open}
       fullWidth
     >
-      <CloseIcon aria-label="close" onClick={() => setOpen(false)}>
-        <Close />
-      </CloseIcon>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <CloseIcon aria-label="close" onClick={() => setOpen(false)}>
+          <Close />
+        </CloseIcon>
+      </div>
 
       <DialogContentStyled dividers>
         <div>
@@ -47,12 +49,14 @@ export default function DetalhesDaVaga(props) {
           {job.address}
         </Typography>
 
-        <div style={{ 
-          display: "flex", 
-          flexWrap: "wrap", 
-          justifyContent: "space-between",
-          gap: "5px"
-        }}>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            gap: "5px",
+          }}
+        >
           <Typography variant="body1" gutterBottom>
             <span>
               <Span>Nível</Span>: {job.seniority?.name}
