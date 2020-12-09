@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Typography } from "@material-ui/core";
 
 export const FooterWrapper = styled.footer`
   display: flex;
@@ -13,6 +14,15 @@ export const Logo = styled.img`
   height: 4vh;
   width: auto;
   cursor: pointer;
+  @media screen and (max-width: 800px) {
+    height: 3vh;
+  }
+`;
+
+export const TypographyStyled = styled(Typography)`
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
 `;
 
 export const SocialWrapper = styled.div`

@@ -5,6 +5,7 @@ import { push } from "connected-react-router";
 import { routes } from "../../utils";
 
 import logo from "../../assets/Logo-01.png";
+import loginIcon from "../../assets/login-icon.png";
 
 import { Toolbar, Button } from "@material-ui/core";
 import { AppbarStyled, Logo, DivGrow, ButtonsBox } from "./styles";
@@ -13,7 +14,7 @@ export default function NavBar() {
   const dispatch = useDispatch();
 
   return (
-    <AppbarStyled position="static" color="transparent">
+    <AppbarStyled position="static" color="inherit">
       <Toolbar>
         <Logo
           src={logo}
@@ -24,21 +25,22 @@ export default function NavBar() {
         <DivGrow />
 
         <ButtonsBox>
-          <Button color="inherit" onClick={() => dispatch(push(routes.sobre))}>
+          {/* <Button color="inherit" onClick={() => dispatch(push(routes.sobre))}>
             Sobre
-          </Button>
-          <Button color="inherit" onClick={() => dispatch(push(routes.vagas))}>
+          </Button> */}
+          {/* <Button color="inherit" onClick={() => dispatch(push(routes.vagas))}>
             Sou Recrutador
-          </Button>
+          </Button> */}
           <Button
             color="inherit"
-            onClick={() => dispatch(push(routes.cadastro))}
+            // onClick={() => dispatch(push(routes.cadastro))}
           >
             Cadastro
           </Button>
           <Button
             color="inherit"
-            onClick={() => dispatch(push(routes.login))}
+            // onClick={() => dispatch(push(routes.login))}
+            startIcon={<img src={loginIcon} alt="ícone de login" />}
           >
             Login
           </Button>

@@ -3,8 +3,14 @@ import { push } from "connected-react-router";
 
 import { routes } from "../../utils";
 
-import { Typography } from "@material-ui/core";
-import { FooterWrapper, Logo, SocialWrapper, SocialIcon } from "./styles";
+// import { Typography } from "@material-ui/core";
+import {
+  FooterWrapper,
+  Logo,
+  SocialWrapper,
+  SocialIcon,
+  TypographyStyled,
+} from "./styles";
 
 import logo from "../../assets/Logo-01.png";
 import linkedin from "../../assets/linedin.png";
@@ -22,9 +28,9 @@ export default function Footer() {
         onClick={() => dispatch(push(routes.home))}
       />
 
-      <Typography variant="body2">
+      <TypographyStyled variant="body2">
         Termos e condições | Politica de privacidade
-      </Typography>
+      </TypographyStyled>
 
       <SocialWrapper>
         <SocialIcon
