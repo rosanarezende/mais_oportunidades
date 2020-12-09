@@ -5,6 +5,7 @@ import search from "./search";
 import alertReducer from "./alert";
 import loadingReducer from "./loading";
 import jobsReducer from "./jobs";
+import areaReducer from "./area";
 
 export const generateReducers = (history) =>
   combineReducers({
@@ -13,4 +14,5 @@ export const generateReducers = (history) =>
     alertReducer,
     loadingReducer,
     jobsReducer,
+    areaReducer,
   });

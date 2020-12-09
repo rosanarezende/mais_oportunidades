@@ -7,7 +7,7 @@ const loadingReducer = (state = initialState, action) => {
     case "SET_LOADING":
       return {
         ...state,
-        open: action.payload.open,
+        open: action.payload.option,
       };
 
     default:
