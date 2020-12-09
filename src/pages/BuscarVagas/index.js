@@ -24,7 +24,8 @@ import {
   VacancyContent,
   Image,
   FactoryName,
-  EmailWrapper
+  EmailWrapper,
+  DetailButton,
 } from "./styles";
 import PageWrapper from "../../components/PageWrapper";
 
@@ -56,8 +57,10 @@ export default function BuscarVagas() {
 
   const { inputSearch } = useSelector((state) => state.search);
   const [buscar, setBuscar] = useState(false);
+  const [pararBusca, setPararBusca] = useState(false);
+
   const [input, setInput] = useState({
-    cargo: "", // inputSearch ?? ""
+    cargo: "",
     empresa: "",
     area: "",
   });
@@ -73,6 +76,8 @@ export default function BuscarVagas() {
   }, [dispatch]);
 
   const changeInput = (e) => {
+    setBuscar(false);
+    setPararBusca(true);
     const { name, value } = e.target;
     setInput({
       cargo: "",
@@ -80,7 +85,6 @@ export default function BuscarVagas() {
       area: "",
       [name]: value,
     });
-    setBuscar(false);
   };
 
   const cleanSearch = () => {
@@ -101,7 +105,7 @@ export default function BuscarVagas() {
 
   let result = [];
 
-  if (inputSearch !== undefined && inputSearch !== "") {
+  if (inputSearch !== "") {
     result = jobs?.filter((job) => {
       const roleInAPI = formatString(job?.role).includes(
         formatString(inputSearch)
@@ -113,6 +117,8 @@ export default function BuscarVagas() {
         .filter((result) => result === true)[0];
       return roleInAPI || synonymInAPI;
     });
+  } else {
+    result = undefined;
   }
 
   if (buscar) {
@@ -137,6 +143,13 @@ export default function BuscarVagas() {
     // else if (input.area !== "") {
     //   result = jobs?.filter(job => formatString(job?.area).includes(formatString(input.area)));
     // }
+  } else {
+    if (
+      result &&
+      (inputSearch === "" || inputSearch === undefined || pararBusca)
+    ) {
+      result = undefined;
+    }
   }
 
   const verDetalhes = (jobId) => {
@@ -145,8 +158,8 @@ export default function BuscarVagas() {
   };
 
   const enviarEmail = () => {
-    console.log(email);;;
-  };;;
+    console.log(email);
+  };
 
   return (
     <>
@@ -234,7 +247,13 @@ export default function BuscarVagas() {
             </FiltersContent>
           </FiltersWrapper>
 
-          {result.length === 0 ? (
+          {result === undefined ? (
+            <ResultWrapper display="true">
+              <Typography variant="h5" align="center">
+                Preencha um dos campos e clique em <strong>BUSCAR</strong>.
+              </Typography>
+            </ResultWrapper>
+          ) : result?.length === 0 ? (
             <ResultWrapper>
               <Typography
                 align="center"
@@ -263,11 +282,7 @@ export default function BuscarVagas() {
                   type="email"
                   required
                 />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                >
+                <Button variant="contained" color="primary" type="submit">
                   Enviar
                 </Button>
               </EmailWrapper>
@@ -278,25 +293,29 @@ export default function BuscarVagas() {
                 <VacancyWrapper key={job.id}>
                   <Image src={job.image ?? image} alt={job.factory.name} />
                   <VacancyContent>
-                    <Typography variant="h6" component="h2">
-                      {job.title?.toUpperCase()}
-                    </Typography>
-                    <FactoryName variant="body1">
-                      {job.factory?.name?.toUpperCase()}
-                    </FactoryName>
-                    <Typography variant="body2">{job.address}</Typography>
+                    <div>
+                      <Typography variant="h6" component="h2">
+                        {job.title?.toUpperCase()}
+                      </Typography>
+                      <FactoryName variant="body1">
+                        {job.factory?.name?.toUpperCase()}
+                      </FactoryName>
+                      <Typography variant="body2">{job.address}</Typography>
+                    </div>
+                    <DetailButton
+                      variant="contained"
+                      color="primary"
+                      onClick={() => verDetalhes(job.id)}
+                    >
+                      Ver detalhes
+                    </DetailButton>
                   </VacancyContent>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => verDetalhes(job.id)}
-                  >
-                    Ver detalhes
-                  </Button>
                 </VacancyWrapper>
               ))}
             </ResultWrapper>
           )}
+
+          {/* {} */}
         </PageContent>
         <DetalhesDaVaga
           open={open}

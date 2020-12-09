@@ -1,14 +1,16 @@
 import styled from "styled-components";
-import { Typography } from "@material-ui/core";
+import { Typography, Button } from "@material-ui/core";
 
 export const PageContent = styled.div`
   display: flex;
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 export const Top = styled.div`
-  padding: 30px 0;
+  padding: 30px 0 20px;
 `;
-
 
 export const FiltersWrapper = styled.div`
   background: #949191;
@@ -16,9 +18,17 @@ export const FiltersWrapper = styled.div`
   width: 22vw;
   margin-right: 2vw;
   padding: 10px;
+  max-height: 60vh;
 
-  @media screen and (max-width: 1200px) {
-    width: 32vw;
+  @media screen and (max-width: 1600px) {
+    width: 30vw;
+  }
+  @media screen and (max-width: 1400px) {
+    width: 40vw;
+  }
+  @media screen and (max-width: 800px) {
+    width: 100%;
+    margin-bottom: 10px;
   }
 `;
 
@@ -29,9 +39,20 @@ export const FiltersContent = styled.div`
   padding: 4vh 15px 20vh;
   height: 100%;
   min-height: 46vh;
+  max-height: 60vh;
 
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 800px) {
+    min-height: 30vh;
+    height: 32vh;
+    padding: 4vh 30px 20vh;
+  }
+  @media screen and (max-width: 600px) {
+    height: 38vh;
+    padding: 4vh 20px 20vh;
+  }
 `;
 
 export const FilterBox = styled.div`
@@ -47,8 +68,19 @@ export const ButtonsBox = styled.div`
 
 export const ResultWrapper = styled.div`
   width: 72vw;
+  height: ${(props) => props.display && "25vh"};
+  display: ${(props) => props.display && "flex"};
+  align-items: ${(props) => props.display && "center"};
+  justify-content: ${(props) => props.display && "center"};
+  margin-bottom: 2vh;
+  
   @media screen and (max-width: 1200px) {
     width: 60vw;
+  }
+  @media screen and (max-width: 800px) {
+    width: 100%;
+    margin: 2vh 0;
+    height: ${(props) => props.display && "10vh"};
   }
 `;
 
@@ -61,6 +93,10 @@ export const VacancyWrapper = styled.div`
 
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: 800px) {
+    margin-bottom: 2vh;
+  }
 `;
 
 export const Image = styled.img`
@@ -71,8 +107,24 @@ export const Image = styled.img`
 `;
 
 export const VacancyContent = styled.div`
-  flex-grow: 1;
-  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  @media screen and (max-width: 1200px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+`;
+
+export const DetailButton = styled(Button)`
+  width: 150px;
+  height: 36px;
+  @media screen and (max-width: 1200px) {
+   margin-top: 10px;
+   align-self: center;
+  }
 `;
 
 export const FactoryName = styled(Typography)`

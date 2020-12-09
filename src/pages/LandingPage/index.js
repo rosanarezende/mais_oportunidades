@@ -7,18 +7,22 @@ import { setInputSearch } from "../../actions/search";
 import { routes } from "../../utils";
 
 import bottom from "../../assets/curve.png";
+import background from "../../assets/landing.svg";
 
-import { Typography, Button, Snackbar } from "@material-ui/core";
-import MuiAlert from "@material-ui/lab/Alert";
+import { Typography, Button
+  // , Snackbar 
+} from "@material-ui/core";
+// import MuiAlert from "@material-ui/lab/Alert";
 import {
   PageWrapper,
   ImgContent,
   Img,
   Content,
   Search,
-  SearchField,
+  StyledInput,
   Bottom,
   Text,
+  WhoWrapper
 } from "./styles";
 
 import NavBar from "../../components/NavBar";
@@ -27,73 +31,71 @@ import Footer from "../../components/Footer";
 export default function LandingPage() {
   const dispatch = useDispatch();
   const [buscar, setBuscar] = useState("");
-  const [alert, setAlert] = useState(false);
+  // const [alert, setAlert] = useState(false);
 
   const onChangeInput = (event) => {
     setBuscar(event.target.value);
   };
 
   const onClickBuscar = () => {
-    if (buscar === "") {
-      setAlert(true);
-    } else {
+    // if (buscar === "") {
+    //   setAlert(true);
+    // } 
+    // else {
       dispatch(setInputSearch(buscar));
       dispatch(push(routes.buscarVagas));
       setBuscar("");
-    }
+    // }
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setAlert(false);
-  };
+  // const handleClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+  //   setAlert(false);
+  // };
 
   return (
     <>
       <NavBar />
       <PageWrapper>
         <ImgContent>
-          <Img
-            src="https://cdn.pixabay.com/photo/2019/06/18/08/05/pride-4281709_1280.jpg"
-            alt="fundo-temporário"
-          />
+          <Img src={background} alt="imagem de fundo" />
           <Bottom src={bottom} alt="curva" />
         </ImgContent>
         <Content>
           <Search>
             <Text style={{ backgroundColor: "transparent" }}>
-              BUSQUE POR VAGAS:{" "}
+              BUSQUE POR VAGAS:
             </Text>
-            <SearchField
+            <StyledInput
               color="primary"
               variant="outlined"
               value={buscar || ""}
               onChange={onChangeInput}
               placeholder="Pesquise o cargo desejado..."
               margin="dense"
+
             />
-            <Button variant="contained" color="primary" onClick={onClickBuscar}>
+            <Button variant="outlined" color="primary" onClick={onClickBuscar}>
               Buscar
             </Button>
           </Search>
 
-          <div>
-            <Typography variant="h6" gutterBottom>
-              Lorem Ipsun
+          <WhoWrapper>
+            <Typography variant="h2" gutterBottom>
+              QUEM SOMOS
             </Typography>
-            <Typography variant="body1">
-              Tempor tempor pariatur eu deserunt ullamco. Magna qui ullamco
-              tempor aute. Incididunt cillum dolor fugiat duis excepteur
-              proident enim veniam nostrud exercitation adipisicing. Pariatur
-              tempor sunt deserunt minim qui irure eiusmod cillum magna deserunt
-              adipisicing in proident.
+            <Typography variant="h5" component="body1">
+              Somos uma plataforma de intermediação exclusiva para a comunidade
+              LGBTQ+, que conecta esses profissionais a empresas comprometidas
+              em receber e acolhe-los através de vagas inclusivas.
             </Typography>
-          </div>
+          </WhoWrapper>
+
         </Content>
 
-        <Snackbar open={alert} autoHideDuration={6000} onClose={handleClose}>
+        {/* <Snackbar open={alert} autoHideDuration={6000} onClose={handleClose}>
           <MuiAlert
             elevation={6}
             variant="filled"
@@ -102,7 +104,8 @@ export default function LandingPage() {
           >
             Preencha o campo de busca para continuar!
           </MuiAlert>
-        </Snackbar>
+        </Snackbar> */}
+
       </PageWrapper>
       <Footer />
     </>
