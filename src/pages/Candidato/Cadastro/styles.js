@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Paper } from "@material-ui/core";
-import degrade from "../../assets/degrade.svg";
+import degrade from "../../../assets/degrade.svg";
 
 export const PageContent = styled.div`
   display: flex;

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 // import { push } from "connected-react-router";
 import { EditorState } from "draft-js";
 
-import { setAlert } from "../../../actions/alert";
+import { setAlert } from "../../../../actions/alert";
 
 import { breadcrumbInfo, tipos, areas, pdc, niveis, cargos } from "./constants";
 
@@ -18,17 +18,19 @@ import {
   ChipInputStyled,
 } from "./styles";
 
-import TabPanel from "../../../components/TabPanel";
-import Breadcrumb from "../../../components/Breadcrumb";
-import EditorInput, { formatEditorOutput } from "../../../components/EditorInput";
+import TabPanel from "../../../../components/TabPanel";
+import Breadcrumb from "../../../../components/Breadcrumb";
+import EditorInput, {
+  formatEditorOutput,
+} from "../../../../components/EditorInput";
 
 export default function CriarVaga(props) {
   const dispatch = useDispatch();
   const [buttonActive, setButtonctive] = useState(false);
   const [descricao, setDescricao] = useState(EditorState.createEmpty());
-  const descricaoFormatada = formatEditorOutput(descricao)
+  const descricaoFormatada = formatEditorOutput(descricao);
   const [requisitos, setRequisitos] = useState(EditorState.createEmpty());
-  const requisitosFormatado = formatEditorOutput(requisitos)
+  const requisitosFormatado = formatEditorOutput(requisitos);
 
   const [input, setInput] = useState({
     titulo: "",
@@ -62,18 +64,18 @@ export default function CriarVaga(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     console.log(input, chips, descricaoFormatada, requisitosFormatado);
 
     //limpar campos
     setInput({});
     setChips([]);
-    setDescricao(EditorState.createEmpty())
-    setRequisitos(EditorState.createEmpty())
+    setDescricao(EditorState.createEmpty());
+    setRequisitos(EditorState.createEmpty());
 
     // informar criação da vaga
     dispatch(setAlert(true, "Vaga cadastrada com sucesso."));
-    
+
     // liberar publicação
     setButtonctive(true);
   };
@@ -107,7 +109,7 @@ export default function CriarVaga(props) {
               },
             }}
           />
-          
+
           <TextFieldStyled
             select
             // required
@@ -231,16 +233,16 @@ export default function CriarVaga(props) {
             onDelete={(chip, index) => handleDeleteChip(chip, index)}
           />
         </Line1>
-        
-        <EditorInput 
-          editorState={descricao} 
-          setEditorState={setDescricao} 
+
+        <EditorInput
+          editorState={descricao}
+          setEditorState={setDescricao}
           text="DESCRITIVO DA VAGA"
         />
 
-        <EditorInput 
-          editorState={requisitos} 
-          setEditorState={setRequisitos} 
+        <EditorInput
+          editorState={requisitos}
+          setEditorState={setRequisitos}
           text="REQUISITOS E DIFERENCIAIS LGBTQ+"
         />
 

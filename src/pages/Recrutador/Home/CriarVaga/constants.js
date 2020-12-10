@@ -1,13 +1,13 @@
-import { routes } from "../../../utils";
+// import { routes } from "../../../../routes";
 
 export const breadcrumbInfo = [
   {
     nome: "Home",
-    rota: routes.home,
+    rota: "/",
   },
   {
     nome: "Sou Recrutador",
-    rota: routes.home,
+    rota: "/recrutador",
     // TODO: Mudar essa rota quando tiver sou recrutador
   },
   {

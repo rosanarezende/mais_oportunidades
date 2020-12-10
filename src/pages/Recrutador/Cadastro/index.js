@@ -6,7 +6,7 @@ import { useState } from "react";
 import { textFieldsContent } from "./constants";
 
 import { Button, TextField, Typography } from "@material-ui/core";
-import { PageContent, PaperStyled } from "../styles";
+import { PageContent, PaperStyled } from "./styles";
 
 import NavBar from "../../../components/NavBar";
 import Footer from "../../../components/Footer";
@@ -38,14 +38,14 @@ function CadastroRecrutador() {
     // if (senha !== confirmacao) {
     //   dispatch(setAlert(true, "Senhas não conferem!"));
     // } else {
-    //   // const data = {
-    //   //   nome,
-    //   //   email,
-    //   //   senha,
-    //   //   cidade,
-    //   //   telefone,
-    //   // };
-    //   // console.log(data);
+    //   const data = {
+    //     nome,
+    //     email,
+    //     senha,
+    //     cidade,
+    //     telefone,
+    //   };
+    //   console.log(data);
     //   // setInput({});
     //   // setOpenCandidato(false);
     // }

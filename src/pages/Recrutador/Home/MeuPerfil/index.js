@@ -2,20 +2,20 @@ import { useState } from "react";
 import { Typography, TextField, Button } from "@material-ui/core";
 import { Top, Line01, Line02, Line03, ButtonsWraper, Form } from "./styles";
 
-import TabPanel from "../../../components/TabPanel";
+import TabPanel from "../../../../components/TabPanel";
+import Breadcrumb from "../../../../components/Breadcrumb";
 
-import { routes } from "../../../utils";
-import Breadcrumb from "../../../components/Breadcrumb";
+import { routes } from "../../../../routes";
 
 export default function MeuPerfil(props) {
   const breadcrumbInfo = [
     {
       nome: "Home",
-      rota: routes.home,
+      rota: routes.landingPage,
     },
     {
       nome: "Sou Recrutador",
-      rota: routes.home,
+      rota: routes.homeRecrutador,
       // TODO: Mudar essa rota quando tiver sou recrutador
     },
     {

@@ -6,7 +6,7 @@ import { setAlert } from "../../../actions/alert";
 import { textFieldsContent } from "./constants";
 
 import { Button, TextField, Typography } from "@material-ui/core";
-import { PageContent, PaperStyled } from "../styles";
+import { PageContent, PaperStyled } from "./styles";
 
 import NavBar from "../../../components/NavBar";
 import Footer from "../../../components/Footer";

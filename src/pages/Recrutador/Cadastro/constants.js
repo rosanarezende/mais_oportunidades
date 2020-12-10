@@ -1,7 +1,5 @@
 import { InputAdornment } from "@material-ui/core";
 
-// alterar campos
-
 export const textFieldsContent = (
   hidenPassword,
   setHidenPassword,
@@ -59,5 +57,5 @@ export const textFieldsContent = (
     ),
   },
   { name: "cidade", placeholder: "CIDADE/ESTADO" },
-  { name: "telefone", placeholder: "TELEFONE", type: "number" },
+  { name: "telefone", placeholder: "TELEFONE", type: "number" }, // trocar isso
 ];

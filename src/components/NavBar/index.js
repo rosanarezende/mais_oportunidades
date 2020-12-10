@@ -22,7 +22,7 @@ export default function NavBar() {
         <Logo
           src={logo}
           alt="Logo +oportunidades"
-          onClick={() => dispatch(push(routes.home))}
+          onClick={() => dispatch(push(routes.landingPage))}
         />
         <DivGrow />
         <ButtonsBox>

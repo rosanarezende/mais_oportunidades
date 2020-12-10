@@ -3,12 +3,13 @@ import { useState } from "react";
 import { Paper } from "@material-ui/core";
 import { TabStyled, TabsStyled } from "./styles";
 
-import NavBar from "../../components/NavBar";
-import PageWrapper from "../../components/PageWrapper";
+import NavBar from "../../../components/NavBar";
+import PageWrapper from "../../../components/PageWrapper";
+import Footer from "../../../components/Footer";
+
 import CriarVaga from "./CriarVaga";
 import MeuPerfil from "./MeuPerfil";
 import MinhasVagas from "./MinhasVagas";
-import Footer from "../../components/Footer";
 
 function a11yProps(index) {
   return {
@@ -17,7 +18,7 @@ function a11yProps(index) {
   };
 }
 
-export default function Vagas() {
+export default function HomeRecrutador() {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {

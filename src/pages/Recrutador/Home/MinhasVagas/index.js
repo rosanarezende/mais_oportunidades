@@ -1,7 +1,7 @@
 import { Typography, TextField } from "@material-ui/core";
 import { PaperStyledmv, Topmv, Firstline, Secondline } from "./styles";
 
-import TabPanel from "../../../components/TabPanel";
+import TabPanel from "../../../../components/TabPanel";
 
 export default function MinhasVagas(props) {
   return (

@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 
-import { routes } from "../../utils";
+import { routes } from "../../routes";
 
 // import { Typography } from "@material-ui/core";
 import {
@@ -25,7 +25,7 @@ export default function Footer() {
       <Logo
         src={logo}
         alt="Logo +oportunidades"
-        onClick={() => dispatch(push(routes.home))}
+        onClick={() => dispatch(push(routes.landingPage))}
       />
 
       <TypographyStyled variant="body2">
@@ -36,28 +36,27 @@ export default function Footer() {
         <SocialIcon
           src={linkedin}
           alt="linkedin"
-          onClick={() =>
-            window.open("https://www.linkedin.com/", "_blank")
-          }
+          onClick={() => window.open("https://www.linkedin.com/", "_blank")}
         />
         <SocialIcon
           src={instagram}
           alt="instagram"
-          onClick={() =>
-            window.open("https://www.instagram.com/", "_blank")
-          }
+          onClick={() => window.open("https://www.instagram.com/", "_blank")}
         />
         <SocialIcon
           src={facebook}
           alt="facebook"
-          onClick={() =>
-            window.open("https://www.facebook.com/", "_blank")
-          }
+          onClick={() => window.open("https://www.facebook.com/", "_blank")}
         />
         <SocialIcon
           src={whatsapp}
           alt="whatsapp"
-          onClick={() => window.open('https://web.whatsapp.com/send?phone=+5527999672118', '_blank')}
+          onClick={() =>
+            window.open(
+              "https://web.whatsapp.com/send?phone=+5527999672118",
+              "_blank"
+            )
+          }
         />
       </SocialWrapper>
     </FooterWrapper>
