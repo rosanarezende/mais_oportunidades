@@ -117,7 +117,7 @@ function Resultados(props) {
               <VacancyContent>
                 <div>
                   <Typography variant="h6" component="h2">
-                    {job.title?.toUpperCase()}
+                    {job.role?.toUpperCase()}
                   </Typography>
                   <FactoryName variant="body1">
                     {job.factory?.name?.toUpperCase()}
