@@ -47,10 +47,11 @@ export const getJobsByFactoryId = (factoryId) => async (dispatch) => {
   try {
     const response = await axiosProvider.get(`/jobs?factoryID=${factoryId}`);
     dispatch(setJobsByFactoryId(response.data));
+    dispatch(setLoading(false));
   } catch (error) {
+    dispatch(setLoading(false));
     throw error;
   }
-  dispatch(setLoading(false));
 };
 
 export const getAllJobs = () => async (dispatch) => {
@@ -58,8 +59,9 @@ export const getAllJobs = () => async (dispatch) => {
   try {
     const response = await axiosProvider.get(`/jobs`);
     dispatch(setAllJobs(response.data));
+    dispatch(setLoading(false));
   } catch (error) {
+    dispatch(setLoading(false));
     throw error;
   }
-  dispatch(setLoading(false));
 };

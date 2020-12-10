@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { AppBar } from "@material-ui/core";
+import { AppBar, Menu } from "@material-ui/core";
+import degrade from "../../assets/degrade.png";
 
 export const AppbarStyled = styled(AppBar)`
   height: 8vh;
@@ -32,5 +33,21 @@ export const ButtonsBox = styled.div`
   }
   @media screen and (max-width: 800px) {
     width: 50vw;
+  }
+`;
+
+export const MenuStyled = styled(Menu)`
+  .MuiPaper-root {
+    background: url(${degrade}) no-repeat;
+    background-size: cover;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    padding: 0 10px;
+    div {
+      background: #fff;
+      border-radius: 16px;
+    }
+    li {
+      padding: 12px 32px;
+    }
   }
 `;

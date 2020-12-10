@@ -3,7 +3,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 export default createMuiTheme({
   palette: {
     common: { black: "#000", white: "#fff" },
-    background: { paper: "#fff", default: "#E6E3E3" },
+    background: { paper: "#fff", default: "rgba(0, 0, 0, 0.05);" },
     primary: {
       light: "rgba(92, 208, 81, 1)",
       main: "rgba(57, 198, 71, 1)",
@@ -33,14 +33,6 @@ export default createMuiTheme({
   typography: {
     fontFamily: ["Helvetica Narrow CE", "Helvetica", "sans-serif"],
     fontSize: 14,
-    // h1: { fontSize: 'min(24px, 6vw)', color: '#7f0404' },
-    // h2: { fontSize: 'min(20px, 5vw)', color: '#000000DE' },
-    // h3: { fontSize: 'min(36px, 8.5vw)', color: '#7F04048A' },
-    // h4: { fontSize: 'min(16px, 4vw)', color: '#9b9b9b' },
-    // h5: { fontSize: 'min(14px, 4vw)', color: '#000000DE' },
-    // h6: { fontSize: 'min(20px, 5vw)', color: '#5D8C96' },
-    // body1: { fontSize: 'min(12px, 3vw)', color: '#000000DE' },
-    // body2: { fontSize: 'min(12px, 3vw)', color: '#7f0404' },
     h1: { fontSize: "min(28px, 7.5vw)", fontWeight: "bold" },
     h2: {
       fontSize: "min(24px, 6.5vw)",
@@ -116,6 +108,22 @@ export default createMuiTheme({
       //   maxWidth: 'min(200px, 50vw)',
       // },
     },
+    MuiPaper: {
+      rounded: {
+        borderRadius: "16px",
+      },
+    },
+    // MuiListItem:  {
+    //   root: {
+    //     backgroundColor: "#fff",
+    //   },
+    //   selected: {
+    //     backgroundColor: "#fff",
+    //   },
+    //   focusVisible: {
+    //     backgroundColor: "#fff",
+    //   }
+    // },
     // MuiTableSortLabel: {
     //   root: {
     //     color: '#4c6f77',

@@ -2,17 +2,13 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 
-import { setInputSearch } from "../../actions/search";
-
 import { routes } from "../../utils";
+import { setInputSearch } from "../../actions/search";
 
 import bottom from "../../assets/curve.png";
 import background from "../../assets/landing.svg";
 
-import { Typography, Button
-  // , Snackbar 
-} from "@material-ui/core";
-// import MuiAlert from "@material-ui/lab/Alert";
+import { Typography, Button } from "@material-ui/core";
 import {
   PageWrapper,
   ImgContent,
@@ -22,7 +18,7 @@ import {
   StyledInput,
   Bottom,
   Text,
-  WhoWrapper
+  WhoWrapper,
 } from "./styles";
 
 import NavBar from "../../components/NavBar";
@@ -31,29 +27,12 @@ import Footer from "../../components/Footer";
 export default function LandingPage() {
   const dispatch = useDispatch();
   const [buscar, setBuscar] = useState("");
-  // const [alert, setAlert] = useState(false);
-
-  const onChangeInput = (event) => {
-    setBuscar(event.target.value);
-  };
 
   const onClickBuscar = () => {
-    // if (buscar === "") {
-    //   setAlert(true);
-    // } 
-    // else {
-      dispatch(setInputSearch(buscar));
-      dispatch(push(routes.buscarVagas));
-      setBuscar("");
-    // }
+    dispatch(setInputSearch(buscar));
+    dispatch(push(routes.buscarVagas));
+    setBuscar("");
   };
-
-  // const handleClose = (event, reason) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-  //   setAlert(false);
-  // };
 
   return (
     <>
@@ -72,10 +51,9 @@ export default function LandingPage() {
               color="primary"
               variant="outlined"
               value={buscar || ""}
-              onChange={onChangeInput}
-              placeholder="Pesquise o cargo desejado..."
+              onChange={(e) => setBuscar(e.target.value)}
+              placeholder="Pesquise por cargo, área ou empresa"
               margin="dense"
-
             />
             <Button variant="outlined" color="primary" onClick={onClickBuscar}>
               Buscar
@@ -92,20 +70,7 @@ export default function LandingPage() {
               em receber e acolhe-los através de vagas inclusivas.
             </Typography>
           </WhoWrapper>
-
         </Content>
-
-        {/* <Snackbar open={alert} autoHideDuration={6000} onClose={handleClose}>
-          <MuiAlert
-            elevation={6}
-            variant="filled"
-            onClose={handleClose}
-            severity="warning"
-          >
-            Preencha o campo de busca para continuar!
-          </MuiAlert>
-        </Snackbar> */}
-
       </PageWrapper>
       <Footer />
     </>
