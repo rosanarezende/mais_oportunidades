@@ -1,11 +1,14 @@
 export const routes = {
   home: "/",
-  cadastro: "/cadastro",
-  login: "/login",
   buscarVagas: "/buscar-vagas",
+
+  cadastroCandidato: "/cadastro-candidato",
+  cadastroRecrutador: "/cadastro-recrutador",
+
+  login: "/login",
   vagas: "/vagas",
   
-  recrutador: "/recrutador",
-  sobre: "/sobre",
+  // recrutador: "/recrutador",
+  // sobre: "/sobre",
   // contato: "/contato",
 };

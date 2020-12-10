@@ -39,7 +39,8 @@ export default function BuscarVagas() {
   let result = [];
 
   useEffect(() => {
-    dispatch(getAllAreas()).then(dispatch(getAllJobs()));
+    dispatch(getAllAreas());
+    dispatch(getAllJobs());
   }, [dispatch]);
 
   const formatString = (name) => {
