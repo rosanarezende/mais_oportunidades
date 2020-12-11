@@ -27,6 +27,7 @@ export default function HomeRecrutador() {
   return (
     <div>
       <NavBar />
+
       <PageWrapper>
         <Paper square>
           <TabsStyled
@@ -46,6 +47,7 @@ export default function HomeRecrutador() {
         <MeuPerfil value={value} />
         <MinhasVagas value={value} />
       </PageWrapper>
+      
       <Footer />
     </div>
   );

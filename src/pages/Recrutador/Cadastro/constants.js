@@ -56,6 +56,5 @@ export const textFieldsContent = (
       </InputAdornment>
     ),
   },
-  { name: "cidade", placeholder: "CIDADE/ESTADO" },
   { name: "telefone", placeholder: "TELEFONE", type: "number" }, // trocar isso
 ];

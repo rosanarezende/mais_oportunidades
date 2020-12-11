@@ -31,7 +31,6 @@ export default createMuiTheme({
   },
 
   typography: {
-    fontFamily: ["Helvetica Narrow CE", "Helvetica", "sans-serif"],
     fontSize: 14,
     h1: { fontSize: "min(28px, 7.5vw)", fontWeight: "bold" },
     h2: {
@@ -76,10 +75,11 @@ export default createMuiTheme({
       root: {
         borderRadius: "26px",
       },
-      // input: {
-      //   fontSize: 'min(14px, 3.5vw)',
-      //   height: '12px',
-      // },
+      input: {
+                //   fontSize: 'min(14px, 3.5vw)',
+                //   height: '12px',
+        backgroundColor: "transparent",
+      },
     },
     // MuiFilledInput: {
     //   root: {
@@ -112,6 +112,15 @@ export default createMuiTheme({
       rounded: {
         borderRadius: "16px",
       },
+    },
+    MuiInputLabel: {
+      formControl: {
+        width: "calc(100% - 18px)",
+        textAlign: "center",
+      },
+      shrink: {
+        textAlign: "left",
+      }
     },
     // MuiListItem:  {
     //   root: {

@@ -55,11 +55,9 @@ export default function NavBar() {
             </div>
           </MenuStyled>
 
-          {/* ================ */}
-
           <Button
             color="inherit"
-            // onClick={() => dispatch(push(routes.login))}
+            onClick={() => dispatch(push(routes.login))}
             startIcon={<img src={loginIcon} alt="ícone de login" />}
           >
             Login

@@ -12,12 +12,19 @@ export default function EditorInput({ editorState, setEditorState, text }) {
       editorState={editorState}
       onEditorStateChange={onEditorStateChange}
       wrapperStyle={{
-        background: "white",
         borderRadius: "6px",
-        marginBottom: "20px",
+        marginBottom: "24px",
       }}
-      toolbarStyle={{ borderTopLeftRadius: "6px", borderTopRightRadius: "6px" }}
-      editorStyle={{ padding: "5px 10px" }}
+      toolbarStyle={{ 
+        borderTopLeftRadius: "6px", 
+        borderTopRightRadius: "6px",
+        boxSizing: "border-box" 
+      }}
+      editorStyle={{ 
+        padding: "5px 10px", 
+        border: "1px solid #F1F1F1", 
+        borderRadius: "6px"
+      }}
       placeholder={text || ""}
     />
   );

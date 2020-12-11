@@ -7,16 +7,14 @@ import { setAlert } from "../../../../actions/alert";
 
 import { breadcrumbInfo, tipos, areas, pdc, niveis, cargos } from "./constants";
 
-import { Typography, Button, MenuItem, Tooltip } from "@material-ui/core";
 import {
-  Top,
-  Line1,
-  Line2,
-  TextFieldStyled,
-  ButtonsWraper,
-  Form,
-  ChipInputStyled,
-} from "./styles";
+  Typography,
+  Button,
+  MenuItem,
+  Tooltip,
+  TextField,
+} from "@material-ui/core";
+import { PaperStyled, Top, Line, Form, ChipInputStyled } from "./styles";
 
 import TabPanel from "../../../../components/TabPanel";
 import Breadcrumb from "../../../../components/Breadcrumb";
@@ -92,179 +90,211 @@ export default function CriarVaga(props) {
           CRIAR VAGA
         </Typography>
       </Top>
-      <Form onSubmit={handleSubmit}>
-        <Line1>
-          <TextFieldStyled
-            // required
-            name="titulo"
-            value={input.titulo || ""}
-            onChange={changeInput}
-            fullWidth
-            variant="outlined"
-            size="small"
-            placeholder="TÍTULO DA VAGA *"
-            inputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
+      <PaperStyled>
+        <Form onSubmit={handleSubmit}>
+          <Line>
+            <TextField
+              // required
+              name="titulo"
+              value={input.titulo || ""}
+              onChange={changeInput}
+              fullWidth
+              variant="outlined"
+              size="small"
+              placeholder="TÍTULO DA VAGA *"
+              inputProps={{
+                style: {
+                  textAlign: "center",
+                },
+              }}
+            />
+
+            <TextField
+              select
+              // required
+              name="tipo"
+              value={input.tipo || ""}
+              onChange={changeInput}
+              variant="outlined"
+              size="small"
+              label="TIPO DE CONTRATAÇÃO"
+              fullWidth
+            >
+              {tipos.map((option) => (
+                <MenuItem
+                  style={{
+                    justifyContent: "center",
+                  }}
+                  key={option.value}
+                  value={option.value}
+                >
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Line>
+
+          <Line>
+            <TextField
+              select
+              // required
+              name="area"
+              value={input.area || ""}
+              onChange={changeInput}
+              variant="outlined"
+              size="small"
+              label="ÁREA"
+              fullWidth
+              // style={{
+              //   width: "160%",
+              // }}
+            >
+              {areas.map((option) => (
+                <MenuItem
+                  style={{
+                    justifyContent: "center",
+                  }}
+                  key={option.value}
+                  value={option.value}
+                >
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+
+            <TextField
+              select
+              // required
+              name="nivel"
+              value={input.nivel || ""}
+              onChange={changeInput}
+              fullWidth
+              variant="outlined"
+              size="small"
+              label="NÍVEL"
+            >
+              {niveis.map((option) => (
+                <MenuItem
+                  style={{
+                    justifyContent: "center",
+                  }}
+                  key={option.value}
+                  value={option.value}
+                >
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+
+            <TextField
+              // required
+              name="cidade"
+              value={input.cidade || ""}
+              onChange={changeInput}
+              fullWidth
+              variant="outlined"
+              size="small"
+              placeholder="CIDADE *"
+              inputProps={{
+                style: {
+                  textAlign: "center",
+                },
+              }}
+            />
+
+            <TextField
+              select
+              // required
+              id="pdc"
+              name="pcd"
+              value={input.pcd}
+              onChange={changeInput}
+              variant="outlined"
+              size="small"
+              label="PCD"
+              fullWidth
+            >
+              {pdc.map((option) => (
+                <MenuItem
+                  style={{
+                    justifyContent: "center",
+                  }}
+                  key={option.value}
+                  value={option.value}
+                >
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Line>
+
+          <Line>
+            <TextField
+              select
+              // required
+              name="cargo"
+              value={input.cargo || ""}
+              onChange={changeInput}
+              fullWidth
+              variant="outlined"
+              label="CARGO"
+            >
+              {cargos.map((option) => (
+                <MenuItem
+                  style={{
+                    justifyContent: "center",
+                  }}
+                  key={option.value}
+                  value={option.value}
+                >
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+
+            <ChipInputStyled
+              fullWidth
+              size="small"
+              placeholder="SINÔNIMOS"
+              variant="outlined"
+              value={chips}
+              onAdd={(chip) => handleAddChip(chip)}
+              onDelete={(chip, index) => handleDeleteChip(chip, index)}
+            />
+          </Line>
+
+          <EditorInput
+            editorState={descricao}
+            setEditorState={setDescricao}
+            text="DESCRITIVO DA VAGA"
           />
 
-          <TextFieldStyled
-            select
-            // required
-            name="tipo"
-            value={input.tipo || ""}
-            onChange={changeInput}
-            variant="outlined"
-            size="small"
-            label="TIPO DE CONTRATAÇÃO"
-            style={{
-              width: "45%",
-            }}
-          >
-            {tipos.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextFieldStyled>
-        </Line1>
-
-        <Line2>
-          <TextFieldStyled
-            select
-            // required
-            name="area"
-            value={input.area || ""}
-            onChange={changeInput}
-            variant="outlined"
-            size="small"
-            label="ÁREA"
-            style={{
-              width: "160%",
-            }}
-          >
-            {areas.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextFieldStyled>
-
-          <TextFieldStyled
-            select
-            // required
-            name="nivel"
-            value={input.nivel || ""}
-            onChange={changeInput}
-            fullWidth
-            variant="outlined"
-            size="small"
-            label="NÍVEL"
-          >
-            {niveis.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextFieldStyled>
-
-          <TextFieldStyled
-            // required
-            name="cidade"
-            value={input.cidade || ""}
-            onChange={changeInput}
-            fullWidth
-            variant="outlined"
-            size="small"
-            placeholder="CIDADE *"
-            inputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
+          <EditorInput
+            editorState={requisitos}
+            setEditorState={setRequisitos}
+            text="REQUISITOS E DIFERENCIAIS LGBTQ+"
           />
 
-          <TextFieldStyled
-            select
-            // required
-            name="pcd"
-            value={input.pcd}
-            onChange={changeInput}
-            variant="outlined"
-            size="small"
-            label="PCD"
-            style={{
-              width: "40%",
-            }}
-          >
-            {pdc.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextFieldStyled>
-        </Line2>
+          <div id="button-wrapper">
+            <Button variant="contained" color="secondary" type="submit">
+              SALVAR
+            </Button>
 
-        <Line1>
-          <TextFieldStyled
-            select
-            // required
-            name="cargo"
-            value={input.cargo || ""}
-            onChange={changeInput}
-            fullWidth
-            variant="outlined"
-            // size="small"
-            label="CARGO"
-          >
-            {cargos.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextFieldStyled>
-          <ChipInputStyled
-            placeholder="SINÔNIMOS"
-            variant="outlined"
-            value={chips}
-            onAdd={(chip) => handleAddChip(chip)}
-            onDelete={(chip, index) => handleDeleteChip(chip, index)}
-          />
-        </Line1>
-
-        <EditorInput
-          editorState={descricao}
-          setEditorState={setDescricao}
-          text="DESCRITIVO DA VAGA"
-        />
-
-        <EditorInput
-          editorState={requisitos}
-          setEditorState={setRequisitos}
-          text="REQUISITOS E DIFERENCIAIS LGBTQ+"
-        />
-
-        <ButtonsWraper>
-          <Button variant="contained" color="secondary" type="submit">
-            SALVAR
-          </Button>
-
-          <Tooltip title="Salve a vaga antes de publicar">
-            <span>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={publicarVaga}
-                disabled={!buttonActive}
-              >
-                PUBLICAR
-              </Button>
-            </span>
-          </Tooltip>
-        </ButtonsWraper>
-      </Form>
+            <Tooltip title="Salve a vaga antes de publicar">
+              <span>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={publicarVaga}
+                  disabled={!buttonActive}
+                >
+                  PUBLICAR
+                </Button>
+              </span>
+            </Tooltip>
+          </div>
+        </Form>
+      </PaperStyled>
     </TabPanel>
   );
 }
