@@ -51,7 +51,7 @@ function Resultados(props) {
         ? input.cargo
         : input.empresa;
       const corpo = `Termo pesquisado: ${termoPesquisado} - Email do usuário: ${email}`;
-      // ToDo: implementar aviso por email em produção
+      // TODO: implementar aviso por email em produção
       window.open(
         `mailto:rezende_rosana@hotmail.com?subject=${assunto}&body=${corpo}`,
         "_self"

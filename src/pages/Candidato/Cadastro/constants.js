@@ -4,7 +4,8 @@ export const textFieldsContent = (
   hidenPassword,
   setHidenPassword,
   hidenConfirm,
-  setHidenConfirm
+  setHidenConfirm,
+  errorCPF
 ) => [
   {
     name: "nome",
@@ -13,7 +14,20 @@ export const textFieldsContent = (
     pattern: "[a-zA-Zà-úÀ-ú0-9 ]{3,}",
     title: "O nome deve conter apenas letras ou números, no mínimo de 3",
   },
-  { name: "email", placeholder: "EMAIL", type: "email" },
+  { 
+    name: "cpf", 
+    placeholder: "CPF",
+    type: "text",
+    pattern: "[0-9]{3,}[.]{1,}[0-9]{3,}[.]{1,}[0-9]{3,}[-]{1,}[0-9]{2,}",
+    title: "Digite seu CPF com pontos e traço.",
+    helperText: errorCPF ? "CPF inválido": "",
+    error: errorCPF
+  },
+  { 
+    name: "email", 
+    placeholder: "EMAIL", 
+    type: "email" 
+  },
   {
     name: "senha",
     placeholder: "SENHA",
@@ -56,6 +70,4 @@ export const textFieldsContent = (
       </InputAdornment>
     ),
   },
-  { name: "cidade", placeholder: "CIDADE/ESTADO" },
-  { name: "telefone", placeholder: "TELEFONE", type: "number" }, // trocar isso
-];
+  ];

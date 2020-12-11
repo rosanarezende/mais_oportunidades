@@ -60,7 +60,7 @@ export const editFactory = (factoryId, info) => async (dispatch) => {
   dispatch(setLoading(false));
 };
 
-// Todo: mudar pra true quando tiver alguma empresa ativa
+// TODO: mudar pra true quando tiver alguma empresa ativa
 // ver com as meninas a necessidade do query param por conta do layout
 export const getAllFactories = () => async (dispatch) => {
   dispatch(setLoading(true));
