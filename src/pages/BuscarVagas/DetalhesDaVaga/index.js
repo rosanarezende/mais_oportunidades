@@ -11,7 +11,7 @@ export default function DetalhesDaVaga(props) {
   const dispatch = useDispatch();
   const { open, setOpen, vacancyIdSelected } = props;
   const { job } = useSelector((state) => state.jobsReducer);
-  console.log(job);
+  // console.log(job);
 
   const candidatar = () => {
     setOpen(false);

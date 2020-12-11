@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 
-import { routes } from "../../utils";
+import { routes } from "../../routes";
 import { setInputSearch } from "../../actions/search";
 
 import bottom from "../../assets/curve.png";

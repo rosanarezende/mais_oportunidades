@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { AppBar, Menu } from "@material-ui/core";
-import degrade from "../../assets/degrade.png";
+import degrade from "../../assets/degrade.svg";
 
 export const AppbarStyled = styled(AppBar)`
   height: 8vh;

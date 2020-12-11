@@ -1,9 +1,21 @@
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { setInputSearch } from "../../../actions/search";
 import { setLoading } from "../../../actions/loading";
 
-import { Typography, Button, TextField, MenuItem } from "@material-ui/core";
+import { getAllAreas } from "../../../providers/area";
+import { getAllFactories } from "../../../providers/factory";
+
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import {
+  Typography,
+  Button,
+  TextField,
+  MenuItem,
+  Grid,
+  Switch,
+} from "@material-ui/core";
 import {
   FiltersWrapper,
   FiltersContent,
@@ -13,8 +25,25 @@ import {
 
 function Filtros(props) {
   const dispatch = useDispatch();
-  const { input, setInput, setBuscar, setPararBusca, setAlert } = props;
+  const {
+    input,
+    setInput,
+    setBuscar,
+    setPararBusca,
+    setAlert,
+    isPDC,
+    setIsPDC,
+  } = props;
   const { areas } = useSelector((state) => state.areaReducer);
+  const { factories } = useSelector((state) => state.factoryReducer);
+  const factoriesOrdered = factories?.sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
+
+  useEffect(() => {
+    dispatch(getAllAreas());
+    dispatch(getAllFactories());
+  }, [dispatch]);
 
   const changeInput = (e) => {
     setBuscar(false);
@@ -28,6 +57,16 @@ function Filtros(props) {
     });
   };
 
+  const changeFactory = (value) => {
+    setBuscar(false);
+    setPararBusca(true);
+    setInput({
+      cargo: "",
+      area: "",
+      empresa: value,
+    });
+  };
+
   const cleanSearch = () => {
     setInput({
       cargo: "",
@@ -35,6 +74,7 @@ function Filtros(props) {
       area: "",
     });
     setBuscar(false);
+    setIsPDC(false);
   };
 
   const clickBuscar = () => {
@@ -75,15 +115,22 @@ function Filtros(props) {
           <Typography variant="h6" component="h3" gutterBottom>
             EMPRESA
           </Typography>
-          <TextField
-            variant="outlined"
-            fullWidth
-            size="small"
-            name="empresa"
-            value={input.empresa || ""}
-            onChange={changeInput}
-            onClick={() => dispatch(setInputSearch(undefined))}
-            onKeyDown={(e) => e.key === "Enter" && clickBuscar()}
+          <Autocomplete
+            freeSolo
+            options={factoriesOrdered}
+            getOptionLabel={(option) => option.name}
+            inputValue={input.empresa || ""}
+            onInputChange={(e, newInputValue) => changeFactory(newInputValue)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                fullWidth
+                size="small"
+                onClick={() => dispatch(setInputSearch(undefined))}
+                onKeyDown={(e) => e.key === "Enter" && clickBuscar()}
+              />
+            )}
           />
         </FilterBox>
         <FilterBox>
@@ -106,6 +153,24 @@ function Filtros(props) {
               </MenuItem>
             ))}
           </TextField>
+        </FilterBox>
+        <FilterBox>
+          <Typography variant="h6" component="h3" gutterBottom>
+            ACEITA PDC
+          </Typography>
+          <Typography component="div">
+            <Grid component="label" container alignItems="center" spacing={1}>
+              {/* <Grid item>Não</Grid> */}
+              <Grid item>
+                <Switch
+                  checked={isPDC}
+                  onChange={() => setIsPDC(!isPDC)}
+                  name="checkedC"
+                />
+              </Grid>
+              <Grid item>Sim</Grid>
+            </Grid>
+          </Typography>
         </FilterBox>
 
         <ButtonsBox>

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import degrade from "../../../assets/degrade.png";
+import degrade from "../../../assets/degrade.svg";
 
 export const FiltersWrapper = styled.div`
   background: url(${degrade}) no-repeat;

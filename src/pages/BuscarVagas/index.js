@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getAllJobs } from "../../providers/jobs";
-import { getAllAreas } from "../../providers/area";
 
 import { Typography, Snackbar } from "@material-ui/core";
 import { Alert as MuiAlert } from "@material-ui/lab";
@@ -11,9 +10,10 @@ import { PageContent, Top } from "./styles";
 import PageWrapper from "../../components/PageWrapper";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
+
 import DetalhesDaVaga from "./DetalhesDaVaga";
-import Filtros from "./Filtros";
 import Resultados from "./Resultados";
+import Filtros from "./Filtros";
 
 export default function BuscarVagas() {
   const dispatch = useDispatch();
@@ -35,11 +35,12 @@ export default function BuscarVagas() {
   const [vacancyIdSelected, setVacancyIdSelected] = useState("");
   const [buscar, setBuscar] = useState(false);
   const [pararBusca, setPararBusca] = useState(false);
+  const [isPDC, setIsPDC] = useState(false);
 
   let result = [];
 
   useEffect(() => {
-    dispatch(getAllAreas()).then(dispatch(getAllJobs()));
+    dispatch(getAllJobs());
   }, [dispatch]);
 
   const formatString = (name) => {
@@ -102,6 +103,13 @@ export default function BuscarVagas() {
     }
   }
 
+  const resultAll = result;
+  if (isPDC) {
+    result = result?.filter((job) => job.isForPCD === true);
+  } else {
+    result = resultAll;
+  }
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") return;
     setAlert({
@@ -124,17 +132,23 @@ export default function BuscarVagas() {
             </Typography>
           </div>
           <Typography variant="body1" gutterBottom>
-            {result?.length > 0 && `${result.length} vagas encontradas`}
+            {result?.length > 0
+              ? `${result.length} vagas encontradas`
+              : result?.length === 1
+              ? "1 vaga encontrada"
+              : ""}
           </Typography>
         </Top>
 
         <PageContent>
           <Filtros
-            input={input}
-            setInput={setInput}
             setAlert={setAlert}
             setBuscar={setBuscar}
             setPararBusca={setPararBusca}
+            input={input}
+            setInput={setInput}
+            isPDC={isPDC}
+            setIsPDC={setIsPDC}
           />
 
           <Resultados

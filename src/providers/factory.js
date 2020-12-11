@@ -60,11 +60,12 @@ export const editFactory = (factoryId, info) => async (dispatch) => {
   dispatch(setLoading(false));
 };
 
+// Todo: mudar pra true quando tiver alguma empresa ativa
 // ver com as meninas a necessidade do query param por conta do layout
 export const getAllFactories = () => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const response = await axiosProvider.get(`/factory`);
+    const response = await axiosProvider.get(`/factory?active=false`);
     dispatch(setAllFactories(response.data));
   } catch (error) {
     throw error;
