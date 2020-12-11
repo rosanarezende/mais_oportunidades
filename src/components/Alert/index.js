@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../../actions/alert";
 
 import {
-  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
   Button,
 } from "@material-ui/core";
+import { Close } from "@material-ui/icons";
+import { DialogStyled, CloseIcon } from "./styles";
 
 function Alert() {
   const dispatch = useDispatch();
@@ -23,29 +24,31 @@ function Alert() {
   };
 
   return (
-    <Dialog
+    <DialogStyled
       open={open}
       onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
       fullWidth
-      // maxWidth="sm"
     >
-      {title && <DialogTitle id="alert-dialog-title">{title}</DialogTitle>}
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          {text}
-        </DialogContentText>
-      </DialogContent>
+      <div>
+        <CloseIcon onClick={handleClose}>
+          <Close />
+        </CloseIcon>
+        {title && <DialogTitle>{title}</DialogTitle>}
+        <DialogContent>
+          <DialogContentText>
+            {text}
+          </DialogContentText>
+        </DialogContent>
 
-      {confirm && (
-        <DialogActions>
-          <Button onClick={handleClose} color={confirm.color} autoFocus>
-            {confirm.text}
-          </Button>
-        </DialogActions>
-      )}
-    </Dialog>
+        {confirm && (
+          <DialogActions>
+            <Button onClick={handleClose} color={confirm.color} autoFocus>
+              {confirm.text}
+            </Button>
+          </DialogActions>
+        )}
+      </div>
+    </DialogStyled>
   );
 }
 
