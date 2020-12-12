@@ -34,7 +34,7 @@ export const Dates = styled.div`
 
 export const Experience = styled.div`
   position: relative;
-  padding: 40px 20px;
+  padding: 30px 20px 20px;
 `;
 
 export const Bottom = styled.div`
@@ -62,7 +62,7 @@ export const Bottom = styled.div`
 export const CloseIcon = styled(IconButton)`
   position: absolute;
   right: 0;
-  top: 0;
+  top: -8px;
   color: gray;
 
   :hover {

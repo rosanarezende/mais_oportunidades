@@ -39,7 +39,7 @@ export const Experience = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  padding: 40px 20px;
+  padding: 30px 20px 20px;
 
   #inputs {
     width: 70%;
@@ -64,7 +64,7 @@ export const Experience = styled.div`
 export const CloseIcon = styled(IconButton)`
   position: absolute;
   right: 0;
-  top: 0;
+  top: -8px;
   color: gray;
 
   :hover {

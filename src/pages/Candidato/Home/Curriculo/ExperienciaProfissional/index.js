@@ -42,7 +42,6 @@ function ExperienciaProfissional(props) {
     });
     setExperiencias(updatedItems);
   };
-  console.log(experiencias);
 
   return (
     <>

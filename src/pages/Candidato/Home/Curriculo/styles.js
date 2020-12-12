@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Paper } from "@material-ui/core";
-import ChipInput from "material-ui-chip-input";
 import degrade from "../../../../assets/degrade.svg";
 
 export const PaperStyled = styled(Paper)`
@@ -54,11 +53,5 @@ export const Line = styled.div`
     @media screen and (max-width: 600px) {
       width: 100%;
     }
-  }
-`;
-
-export const ChipInputStyled = styled(ChipInput)`
-  input {
-    text-align: center;
   }
 `;

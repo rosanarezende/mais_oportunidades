@@ -4,31 +4,26 @@ import { EditorState } from "draft-js";
 
 import { setAlert } from "../../../../actions/alert";
 
-import {
-  Typography,
-  TextField,
-  Button,
-  // MenuItem,
-  // Tooltip,
-} from "@material-ui/core";
-import {
-  PaperStyled,
-  Top,
-  Form,
-  Line,
-  //ChipInputStyled
-} from "./styles";
+import { Typography, TextField, Button } from "@material-ui/core";
+import { PaperStyled, Top, Form, Line } from "./styles";
 
 import TabPanel from "../../../../components/TabPanel";
 import Breadcrumb from "../../../../components/Breadcrumb";
 import EditorInput, {
   formatEditorOutput,
 } from "../../../../components/EditorInput";
+
 import ExperienciaProfissional from "./ExperienciaProfissional";
 import FormacaoAcademica from "./FormacaoAcademica";
+import RedesSociais from "./RedesSociais";
 
 export default function Curriculo(props) {
   const dispatch = useDispatch();
+  const [dadosPessoais, setDadosPessoais] = useState({
+    nome: "",
+    telefone: "",
+    endereco: "",
+  });
   const [experiencias, setExperiencias] = useState([
     {
       empresa: "",
@@ -50,37 +45,43 @@ export default function Curriculo(props) {
       fim: "",
     },
   ]);
+  const [linkedin, setLinkedin] = useState("");
+  const [redesSociais, setRedesSociais] = useState([]);
+  const [carta, setCarta] = useState(EditorState.createEmpty());
+  const cartaFormatada = formatEditorOutput(carta);
 
-  const [descricao, setDescricao] = useState(EditorState.createEmpty());
-  const descricaoFormatada = formatEditorOutput(descricao);
+  const breadcrumbInfo = [
+    { nome: "Home", rota: "/" },
+    { nome: "Sou Candidato", rota: "/candidato" },
+    { nome: "Currículo" },
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { nome, telefone, endereco } = dadosPessoais;
+    const data = {
+      nome,
+      telefone,
+      endereco,
+      cartaFormatada,
+      experiencias,
+      formacoes,
+      redes: [linkedin, ...redesSociais],
+    };
+    console.log(data);
 
-    console.log(descricaoFormatada);
+    //cadastrar o currículo
 
-    //limpar campos
-    // setInput({});
-    setDescricao(EditorState.createEmpty());
-
-    // informar criação da vaga
-    dispatch(setAlert(true, "xxxx."));
+    dispatch(setAlert(true, "Currículo cadastrado com sucesso."));
   };
 
-  const breadcrumbInfo = [
-    {
-      nome: "Home",
-      rota: "/",
-    },
-    {
-      nome: "Sou Candidato",
-      rota: "/candidato",
-      // TODO: Mudar essa rota quando tiver sou recrutador
-    },
-    {
-      nome: "Currículo",
-    },
-  ];
+  const changeInput = (e) => {
+    const { name, value } = e.target;
+    setDadosPessoais({
+      ...dadosPessoais,
+      [name]: value,
+    });
+  };
 
   return (
     <TabPanel value={props.value} index={1}>
@@ -99,10 +100,10 @@ export default function Curriculo(props) {
           <Line>
             <TextField
               margin="dense"
-              name="carta"
-              // value={input.carta || ""}
+              name="nome"
+              value={dadosPessoais.nome || ""}
               type="text"
-              // onChange={changeInput}
+              onChange={changeInput}
               fullWidth
               variant="outlined"
               placeholder="NOME COMPLETO"
@@ -114,25 +115,10 @@ export default function Curriculo(props) {
             />
             <TextField
               margin="dense"
-              name="carta"
-              // value={input.carta || ""}
-              type="number"
-              // onChange={changeInput}
-              fullWidth
-              variant="outlined"
-              placeholder="IDADE"
-              inputProps={{
-                style: {
-                  textAlign: "center",
-                },
-              }}
-            />
-            <TextField
-              margin="dense"
-              name="carta"
-              // value={input.carta || ""}
+              name="telefone"
+              value={dadosPessoais.telefone || ""}
               type="text"
-              // onChange={changeInput}
+              onChange={changeInput}
               fullWidth
               variant="outlined"
               placeholder="TELEFONE"
@@ -149,38 +135,19 @@ export default function Curriculo(props) {
               multiline
               rows={2}
               margin="dense"
-              name="carta"
-              // value={input.carta || ""}
+              name="endereco"
+              value={dadosPessoais.endereco || ""}
               type="text"
-              // onChange={changeInput}
+              onChange={changeInput}
               fullWidth
               variant="outlined"
               placeholder="ENDEREÇO"
-              // style={{
-              //   width: "65%",
-              // }}
               inputProps={{
                 style: {
                   textAlign: "center",
                 },
               }}
             />
-            {/* <TextField
-              multiline
-              margin="dense"
-              name="carta"
-              // value={input.carta || ""}
-              type="text"
-              // onChange={changeInput}
-              fullWidth
-              variant="outlined"
-              placeholder="xxx"
-              inputProps={{
-                style: {
-                  textAlign: "center",
-                },
-              }}
-            /> */}
           </Line>
 
           <br />
@@ -189,18 +156,12 @@ export default function Curriculo(props) {
             CARTA DE APRESENTAÇÃO
           </Typography>
           <br />
-
-          <EditorInput
-            editorState={descricao}
-            setEditorState={setDescricao}
-            // text=""
-          />
+          <EditorInput editorState={carta} setEditorState={setCarta} />
 
           <br />
           <Typography variant="h3" component="h2" align="center" gutterBottom>
             EXPERIÊNCIA PROFISSIONAL
           </Typography>
-
           <ExperienciaProfissional
             experiencias={experiencias}
             setExperiencias={setExperiencias}
@@ -210,7 +171,6 @@ export default function Curriculo(props) {
           <Typography variant="h3" component="h2" align="center" gutterBottom>
             FORMAÇÃO ACADÊMICA
           </Typography>
-
           <FormacaoAcademica
             formacoes={formacoes}
             setFormacoes={setFormacoes}
@@ -218,46 +178,24 @@ export default function Curriculo(props) {
 
           <br />
           <br />
+          <Typography variant="h3" component="h2" align="center" gutterBottom>
+            REDES SOCIAIS
+          </Typography>
           <br />
-          <br />
-          {/* <Typography variant="h3" component="h2" align="center" gutterBottom>
-            OUTROS
-          </Typography> */}
+          <RedesSociais
+            redesSociais={redesSociais}
+            setRedesSociais={setRedesSociais}
+            linkedin={linkedin}
+            setLinkedin={setLinkedin}
+          />
 
-          <Line>
-            <TextField
-              margin="dense"
-              name="carta"
-              // value={input.carta || ""}
-              type="text"
-              // onChange={changeInput}
-              fullWidth
-              variant="outlined"
-              placeholder="URL DO LINKEDIN"
-              inputProps={{
-                style: {
-                  textAlign: "center",
-                },
-              }}
-            />
-            <TextField
-              margin="dense"
-              name="carta"
-              // value={input.carta || ""}
-              type="number"
-              // onChange={changeInput}
-              fullWidth
-              variant="outlined"
-              placeholder="OUTRAS REDES"
-              inputProps={{
-                style: {
-                  textAlign: "center",
-                },
-              }}
-            />
-          </Line>
           <div id="button-wrapper">
-            <Button color="primary" variant="outlined">
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              size="large"
+            >
               Cadastrar
             </Button>
           </div>

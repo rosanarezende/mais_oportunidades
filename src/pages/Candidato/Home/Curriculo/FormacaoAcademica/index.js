@@ -50,7 +50,6 @@ function FormacaoAcademica(props) {
     });
     setFormacoes(updatedItems);
   };
-  console.log(formacoes);
 
   return (
     <>
@@ -196,7 +195,7 @@ function FormacaoAcademica(props) {
       ))}
       <AddExperience>
         <Button color="primary" variant="outlined" onClick={addExperience}>
-          + experiência
+          + formação
         </Button>
       </AddExperience>
     </>
