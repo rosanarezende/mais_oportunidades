@@ -34,7 +34,6 @@ function FormacaoAcademica(props) {
   };
 
   const removeExperience = (position) => {
-    // experiencias.splice(position, 1);
     var filtered = formacoes.filter((value, index) => {
       return position !== index;
     });
@@ -42,11 +41,11 @@ function FormacaoAcademica(props) {
   };
 
   const setExperienceItemValue = (position, field, value) => {
-    const updatedItems = formacoes.map((experiencia, index) => {
+    const updatedItems = formacoes.map((item, index) => {
       if (index === position) {
-        return { ...experiencia, [field]: value };
+        return { ...item, [field]: value };
       }
-      return experiencia;
+      return item;
     });
     setFormacoes(updatedItems);
   };

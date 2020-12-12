@@ -8,7 +8,6 @@ import PaginaNaoEncontrada from "../pages/PaginaNaoEncontrada";
 
 import HomeCandidato from "../pages/Candidato/Home";
 import CadastroCandidato from "../pages/Candidato/Cadastro";
-import Curriculo from "../pages/Candidato/Curriculo";
 
 import HomeRecrutador from "../pages/Recrutador/Home";
 import CadastroRecrutador from "../pages/Recrutador/Cadastro";
@@ -24,7 +23,6 @@ export const routes = {
 
   homeCandidato: "/candidato",
   cadastroCandidato: "/candidato/cadastro",
-  cadastroCurriculo: "/candidato/curriculo",
 
   homeRecrutador: "/recrutador",
   cadastroRecrutador: "/recrutador/cadastro",
@@ -39,27 +37,14 @@ export default function Routes({ history }) {
         <Route exact path={routes.login} component={Login} />
 
         {/* PRIVADAS */}
-        <Route
-          exact
-          path={routes.homeCandidato}
-          component={HomeCandidato}
-        />
+        <Route exact path={routes.homeCandidato} component={HomeCandidato} />
         <Route
           exact
           path={routes.cadastroCandidato}
           component={CadastroCandidato}
         />
-        <Route
-          exact
-          path={routes.cadastroCurriculo}
-          component={Curriculo}
-        />
 
-        <Route 
-          exact
-          path={routes.homeRecrutador}
-          component={HomeRecrutador}
-        />
+        <Route exact path={routes.homeRecrutador} component={HomeRecrutador} />
         <Route
           exact
           path={routes.cadastroRecrutador}

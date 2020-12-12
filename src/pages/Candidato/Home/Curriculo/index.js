@@ -130,7 +130,7 @@ export default function Curriculo(props) {
             />
           </Line>
 
-          <Line>
+          {/* <Line> */}
             <TextField
               multiline
               rows={2}
@@ -148,7 +148,7 @@ export default function Curriculo(props) {
                 },
               }}
             />
-          </Line>
+          {/* </Line> */}
 
           <br />
           <br />
