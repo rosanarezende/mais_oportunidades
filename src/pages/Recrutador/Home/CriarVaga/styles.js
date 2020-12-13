@@ -8,6 +8,7 @@ export const PaperStyled = styled(Paper)`
   background-size: cover;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   padding: 15px;
+  width: 100%;
 `;
 
 export const Form = styled.form`
@@ -16,6 +17,7 @@ export const Form = styled.form`
   border-radius: 16px;
   border-bottom-right-radius: 8vw;
   padding: 3vh 50px 8vh;
+
   @media screen and (max-width: 1200px) {
     padding: 3vh 40px 6vh;
   }
@@ -24,6 +26,51 @@ export const Form = styled.form`
   }
   @media screen and (max-width: 600px) {
     padding: 3vh 20px;
+  }
+
+  #inputs {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 2vh;
+    gap: 10px;
+    @media screen and (max-width: 1200px) {
+      gap: 5px;
+    }
+    @media screen and (max-width: 900px) {
+      gap: 10px;
+    }
+  }
+
+  .dez {
+    width: 10%;
+  }
+  .vinte {
+    width: 20%;
+  }
+  .trinta {
+    width: 29%;
+  }
+  .quarenta {
+    width: 40%;
+  }
+  .sessenta {
+    width: 59%;
+  }
+  .setenta {
+    width: 70%;
+  }
+  .dez,
+  .vinte,
+  .trinta,
+  .quarenta,
+  .sessenta,
+  .setenta {
+    margin-bottom: 0.5vh;
+    @media screen and (max-width: 900px) {
+      width: 100%;
+    }
   }
 
   #button-wrapper {
@@ -36,25 +83,6 @@ export const Form = styled.form`
 
 export const Top = styled.div`
   margin: 10px 0 20px;
-`;
-
-export const Line = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 20px;
-  @media screen and (max-width: 600px) {
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-  }
-
-  #pcd {
-    width: 50%;
-    min-width: 100px;
-    @media screen and (max-width: 600px) {
-      width: 100%;
-    }
-  }
 `;
 
 export const ChipInputStyled = styled(ChipInput)`

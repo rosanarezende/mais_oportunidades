@@ -1,7 +1,7 @@
 import { useState } from "react";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
-// import { setAlert } from "../../../actions/alert";
+import { setAlert } from "../../../actions/alert";
 
 import { textFieldsContent } from "./constants";
 
@@ -12,15 +12,14 @@ import NavBar from "../../../components/NavBar";
 import Footer from "../../../components/Footer";
 
 function CadastroRecrutador() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [input, setInput] = useState({
-    // nome: "",
-    // email: "",
-    // senha: "",
-    // confirmacao: "",
-    // cidade: "",
-    // telefone: "",
+    nome: "",
+    email: "",
+    cnpj: "",
+    senha: "",
+    confirmacao: "",
   });
 
   const [hidenPassword, setHidenPassword] = useState(false);
@@ -32,28 +31,43 @@ function CadastroRecrutador() {
     setHidenConfirm
   );
 
-  const cadastrar = (e) => {
-    e.preventDefault();
-    // const { cidade, confirmacao, email, nome, senha, telefone } = input;
-    // if (senha !== confirmacao) {
-    //   dispatch(setAlert(true, "Senhas não conferem!"));
-    // } else {
-    //   const data = {
-    //     nome,
-    //     email,
-    //     senha,
-    //     cidade,
-    //     telefone,
-    //   };
-    //   console.log(data);
-    //   // setInput({});
-    //   // setOpenCandidato(false);
-    // }
+  const cnpjMask = (value) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(\d{2})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})/, "$1/$2")
+      .replace(/(\d{4})(\d{1,2})/, "$1-$2")
+      .replace(/(-\d{2})\d+?$/, "$1");
   };
+
+  const removeCnpjMask = (value) => value.replace(/[./-]/g, "");
 
   const changeInput = (e) => {
     const { name, value } = e.target;
-    setInput({ ...input, [name]: value });
+    if (name === "cnpj") {
+      setInput({ ...input, cnpj: cnpjMask(value) });
+    } else {
+      setInput({ ...input, [name]: value });
+    }
+  };
+
+  const cadastrar = (e) => {
+    e.preventDefault();
+    const { confirmacao, email, nome, senha, cnpj } = input;
+    const cnpjFormatted = Number(removeCnpjMask(cnpj));
+    if (senha !== confirmacao) {
+      dispatch(setAlert(true, "Senhas não conferem!"));
+    } else {
+      const data = {
+        nome,
+        email,
+        cnpj: cnpjFormatted,
+        senha,
+      };
+      console.log(data);
+      // setInput({});
+    }
   };
 
   return (
@@ -80,6 +94,7 @@ function CadastroRecrutador() {
                   variant="outlined"
                   size="small"
                   placeholder={item.placeholder}
+                  label={item.label}
                   InputProps={{
                     endAdornment: item.endAdornment,
                     inputProps: {

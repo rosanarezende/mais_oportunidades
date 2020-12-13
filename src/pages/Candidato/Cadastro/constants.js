@@ -9,14 +9,14 @@ export const textFieldsContent = (
 ) => [
   {
     name: "nome",
-    placeholder: "NOME SOCIAL",
+    label: "NOME SOCIAL",
     type: "text",
     pattern: "[a-zA-Zà-úÀ-ú0-9 ]{3,}",
     title: "O nome deve conter apenas letras ou números, no mínimo de 3",
   },
   { 
     name: "cpf", 
-    placeholder: "CPF",
+    label: "CPF",
     type: "text",
     pattern: "[0-9]{3,}[.]{1,}[0-9]{3,}[.]{1,}[0-9]{3,}[-]{1,}[0-9]{2,}",
     title: "Digite seu CPF com pontos e traço.",
@@ -25,12 +25,12 @@ export const textFieldsContent = (
   },
   { 
     name: "email", 
-    placeholder: "EMAIL", 
+    label: "EMAIL", 
     type: "email" 
   },
   {
     name: "senha",
-    placeholder: "SENHA",
+    label: "SENHA",
     type: hidenPassword ? "text" : "password",
     pattern: ".{6,}",
     title: `Sua senha deve conter no mínimo 6 caracteres`,
@@ -52,7 +52,7 @@ export const textFieldsContent = (
   {
     name: "confirmacao",
     type: hidenConfirm ? "text" : "password",
-    placeholder: "CONFIRME A SENHA ANTERIOR",
+    label: "CONFIRME A SENHA ANTERIOR",
     pattern: ".{6,}",
     title: `Sua senha deve conter no mínimo "6" caracteres`,
     endAdornment: (
