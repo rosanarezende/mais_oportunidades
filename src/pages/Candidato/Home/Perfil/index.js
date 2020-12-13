@@ -1,169 +1,187 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { EditorState } from "draft-js";
 
 import { setAlert } from "../../../../actions/alert";
 
-import { Typography, Button, Tooltip } from "@material-ui/core";
-import { Top, Line, TextFieldStyled, Form, ButtonsWraper } from "./styles";
+import { dadosContent, enderecoContent, acessoContent } from "./constants";
+
+import { Typography, TextField, Button } from "@material-ui/core";
+import { PaperStyled, Top, Form } from "./styles";
 
 import TabPanel from "../../../../components/TabPanel";
 import Breadcrumb from "../../../../components/Breadcrumb";
-import EditorInput, {
-  formatEditorOutput,
-} from "../../../../components/EditorInput";
 
 export default function PerfilCandidato(props) {
   const dispatch = useDispatch();
-  const [buttonActive, setButtonctive] = useState(false);
-  const [descricao, setDescricao] = useState(EditorState.createEmpty());
-  const descricaoFormatada = formatEditorOutput(descricao);
 
-  const breadcrumbInfo = [
-    {
-      nome: "Home",
-      rota: "/",
-    },
-    {
-      nome: "Sou Candidato",
-      rota: "/candidato",
-      // TODO: Mudar essa rota quando tiver sou recrutador
-    },
-    {
-      nome: "Meu Perfil",
-    },
-  ];
-
+  // TODO: trazer alguns dados preenchidos
   const [input, setInput] = useState({
-    cnpj: "",
-    empresa: "",
-    segmento: "",
-    local: "",
+    nome: "Fulano de Tal",
+    cpf: "123.456.789-10",
+    nascimento: "",
+
+    cep: "",
+    logradouro: "",
+    numero: "",
+    bairro: "",
+    cidade: "",
+    estado: "",
+    
+    email: "email@email.com",
+    senhaAtual: "",
+    novaSenha: "",
+    confirm: ""
   });
 
-  const changeInput = (e) => {
-    const { name, value } = e.target;
-    setInput({
-      ...input,
-      [name]: value,
-    });
-  };
+  const [hidenOldPassword, setHidenOldPassword] = useState(false);
+  const [hidenPassword, setHidenPassword] = useState(false);
+  const [hidenConfirm, setHidenConfirm] = useState(false);
+  const acessoInputs = acessoContent(
+    hidenOldPassword,
+    setHidenOldPassword,
+    hidenPassword,
+    setHidenPassword,
+    hidenConfirm,
+    setHidenConfirm
+  );
+
+  const breadcrumbInfo = [
+    { nome: "Home", rota: "/" },
+    { nome: "Sou Candidato", rota: "/candidato" },
+    { nome: "Cadastro" },
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(descricaoFormatada);
-
-    setDescricao(EditorState.createEmpty());
-
-    dispatch(setAlert(true, "Perfil cadastrado com sucesso."));
-
-    setButtonctive(true);
+    //limpar campos
+    // setInput({})
+    dispatch(setAlert(true, "Cadastro atualizado com sucesso."));
   };
 
-  const publicarVaga = () => {
-    // alert("vaga publicada com sucesso");
-    dispatch(setAlert(true, "Perfil publicado com sucesso."));
+  const changeInput = (e) => {
+    const { name, value } = e.target;
+    setInput({ ...input, [name]: value });
   };
 
   return (
     <TabPanel value={props.value} index={0}>
       <Top>
         <Breadcrumb breadcrumbInfo={breadcrumbInfo} />
-        <Typography variant="h5" gutterBottom>
-          MEU PERFIL
+        <Typography variant="h2" component="h1" gutterBottom>
+          CADASTRO
         </Typography>
       </Top>
+      <PaperStyled>
+        <Form onSubmit={handleSubmit}>
+          <Typography variant="h3" component="h2" align="center" gutterBottom>
+            DADOS PESSOAIS
+          </Typography>
+          <div>
+            {dadosContent.map((item) => (
+              <TextField
+                required
+                disabled={item.disabled}
+                className={item.className}
+                margin="dense"
+                name={item.name}
+                value={input[item.name] || ""}
+                type={item.type}
+                onChange={changeInput}
+                variant="outlined"
+                // placeholder={item.placeholder}
+                label={item.label}
+                InputLabelProps={{ shrink: item.shrink }}
+                InputProps={{
+                  endAdornment: item.endAdornment,
+                  inputProps: {
+                    pattern: item.pattern,
+                    title: item.title,
+                    style: {
+                      textAlign: "center",
+                    },
+                  },
+                }}
+              />
+            ))}
+          </div>
 
-      <Form onSubmit={handleSubmit}>
-        <Line>
-          <TextFieldStyled
-            // required
-            name="cnpj"
-            value={input.cnpj || ""}
-            onChange={changeInput}
-            fullWidth
-            variant="outlined"
-            size="small"
-            placeholder="CNPJ"
-            inputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
-          />
+          <Typography variant="h3" component="h2" align="center" gutterBottom>
+            ENDEREÇO
+          </Typography>
+          <div>
+            {enderecoContent.map((item) => (
+              <TextField
+                required={item.required}
+                disabled={item.disabled}
+                className={item.className}
+                margin="dense"
+                name={item.name}
+                value={input[item.name] || ""}
+                type={item.type}
+                onChange={changeInput}
+                variant="outlined"
+                // placeholder={item.placeholder}
+                label={item.label}
+                InputLabelProps={{ shrink: item.shrink }}
+                InputProps={{
+                  // endAdornment: item.endAdornment,
+                  inputProps: {
+                    pattern: item.pattern,
+                    title: item.title,
+                    style: {
+                      textAlign: "center",
+                    },
+                  },
+                }}
+              />
+            ))}
+          </div>
 
-          <TextFieldStyled
-            // required
-            name="empresa"
-            value={input.empresa || ""}
-            onChange={changeInput}
-            variant="outlined"
-            size="small"
-            placeholder="NOME DA EMPRESA"
-            inputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
-          />
-        </Line>
-        <Line>
-          <TextFieldStyled
-            // required
-            name="segmento"
-            value={input.segmento || ""}
-            onChange={changeInput}
-            fullWidth
-            variant="outlined"
-            size="small"
-            placeholder="SEGMENTO"
-            inputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
-          />
+          <Typography variant="h3" component="h2" align="center" gutterBottom>
+            ACESSO
+          </Typography>
+          <div>
+            {acessoInputs.map((item) => (
+              <TextField
+                required={item.required}
+                disabled={item.disabled}
+                className={item.className}
+                margin="dense"
+                name={item.name}
+                value={input[item.name] || ""}
+                type={item.type}
+                onChange={changeInput}
+                variant="outlined"
+                // placeholder={item.placeholder}
+                label={item.label}
+                InputLabelProps={{ shrink: item.shrink }}
+                InputProps={{
+                  endAdornment: item.endAdornment,
+                  inputProps: {
+                    pattern: item.pattern,
+                    title: item.title,
+                    style: {
+                      textAlign: "center",
+                    },
+                  },
+                }}
+              />
+            ))}
+          </div>
 
-          <TextFieldStyled
-            // required
-            name="local"
-            value={input.local || ""}
-            onChange={changeInput}
-            variant="outlined"
-            size="small"
-            placeholder="LOCALIZAÇÃO"
-            inputProps={{
-              style: {
-                textAlign: "center",
-              },
-            }}
-          />
-        </Line>
-        <EditorInput
-          editorState={descricao}
-          setEditorState={setDescricao}
-          text="DESCRITIVO"
-        />
-        <ButtonsWraper>
-          <Button variant="contained" color="secondary" type="submit">
-            SALVAR
-          </Button>
-
-          <Tooltip title="Salve o perfil antes de publicar">
-            <span>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={publicarVaga}
-                disabled={!buttonActive}
-              >
-                PUBLICAR
-              </Button>
-            </span>
-          </Tooltip>
-        </ButtonsWraper>
-      </Form>
+          <div id="button-wrapper">
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              size="large"
+            >
+              Cadastrar
+            </Button>
+          </div>
+        </Form>
+      </PaperStyled>
     </TabPanel>
   );
 }

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Paper } from "@material-ui/core";
-import ChipInput from "material-ui-chip-input";
 import degrade from "../../../../assets/degrade.svg";
 
 export const PaperStyled = styled(Paper)`
@@ -42,23 +41,8 @@ export const Line = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  /* margin-bottom: 20px; */
   @media screen and (max-width: 600px) {
     flex-wrap: wrap;
     margin-bottom: 10px;
-  }
-
-  #pcd {
-    width: 50%;
-    min-width: 100px;
-    @media screen and (max-width: 600px) {
-      width: 100%;
-    }
-  }
-`;
-
-export const ChipInputStyled = styled(ChipInput)`
-  input {
-    text-align: center;
   }
 `;

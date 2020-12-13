@@ -8,15 +8,23 @@ export const textFieldsContent = (
 ) => [
   {
     name: "nome",
-    placeholder: "NOME SOCIAL",
+    label: "NOME DA EMPRESA",
     type: "text",
     pattern: "[a-zA-Zà-úÀ-ú0-9 ]{3,}",
     title: "O nome deve conter apenas letras ou números, no mínimo de 3",
   },
-  { name: "email", placeholder: "EMAIL", type: "email" },
+  { name: "email", label: "EMAIL", type: "email" },
+  {
+    name: "cnpj",
+    label: "CNPJ",
+    type: "text",
+    pattern:
+      "[0-9]{2,}[.]{1,}[0-9]{3,}[.]{1,}[0-9]{3,}[/]{1,}[0-9]{4,}[-]{1,}[0-9]{2,}",
+    title: "Digite o CNPJ da empresa com pontos, barra e traço.",
+  },
   {
     name: "senha",
-    placeholder: "SENHA",
+    label: "SENHA",
     type: hidenPassword ? "text" : "password",
     pattern: ".{6,}",
     title: `Sua senha deve conter no mínimo 6 caracteres`,
@@ -38,7 +46,7 @@ export const textFieldsContent = (
   {
     name: "confirmacao",
     type: hidenConfirm ? "text" : "password",
-    placeholder: "CONFIRME A SENHA ANTERIOR",
+    label: "CONFIRME A SENHA ANTERIOR",
     pattern: ".{6,}",
     title: `Sua senha deve conter no mínimo "6" caracteres`,
     endAdornment: (
@@ -56,5 +64,4 @@ export const textFieldsContent = (
       </InputAdornment>
     ),
   },
-  { name: "telefone", placeholder: "TELEFONE", type: "number" }, // trocar isso
-];
+ ];

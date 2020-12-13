@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Paper } from "@material-ui/core";
-import degrade from "../../../assets/degrade.svg";
+import degrade from "../../assets/degrade.svg";
 
 export const PageContent = styled.div`
   display: flex;
@@ -45,13 +45,20 @@ export const PaperStyled = styled(Paper)`
       padding: 4vh 10px 5vh;
     }
 
-    /* #inputs {
-      margin: 2vh 0 3vh;
+    #inputs {
+      margin: 6vh 0 2vh;
+    }
+
+    #link-wrapper {
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
     }
 
     #button-wrapper {
       display: flex;
       justify-content: center;
-    } */
+      margin-top: 4vh;
+    }
   }
 `;

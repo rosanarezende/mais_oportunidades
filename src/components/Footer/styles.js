@@ -7,7 +7,8 @@ export const FooterWrapper = styled.footer`
   align-items: center;
   justify-content: space-between;
   padding: 0 4vw;
-  background-color: #c4c4c4;
+  background-color: #fff;
+  border-top: 6px solid #c4c4c4;
 `;
 
 export const Logo = styled.img`
@@ -30,7 +31,7 @@ export const SocialWrapper = styled.div`
 `;
 
 export const SocialIcon = styled.img`
-  height: 2.5vh;
+  height: 3vh;
   width: auto;
   margin-right: 10px;
   cursor: pointer;

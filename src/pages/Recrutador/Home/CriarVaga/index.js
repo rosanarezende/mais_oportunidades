@@ -5,7 +5,7 @@ import { EditorState } from "draft-js";
 
 import { setAlert } from "../../../../actions/alert";
 
-import { breadcrumbInfo, tipos, areas, pdc, niveis, cargos } from "./constants";
+import { breadcrumbInfo, textFieldsContent } from "./constants";
 
 import {
   Typography,
@@ -14,7 +14,7 @@ import {
   Tooltip,
   TextField,
 } from "@material-ui/core";
-import { PaperStyled, Top, Line, Form, ChipInputStyled } from "./styles";
+import { PaperStyled, Top, Form, ChipInputStyled } from "./styles";
 
 import TabPanel from "../../../../components/TabPanel";
 import Breadcrumb from "../../../../components/Breadcrumb";
@@ -92,168 +92,38 @@ export default function CriarVaga(props) {
       </Top>
       <PaperStyled>
         <Form onSubmit={handleSubmit}>
-          <Line>
-            <TextField
-              // required
-              name="titulo"
-              value={input.titulo || ""}
-              onChange={changeInput}
-              fullWidth
-              variant="outlined"
-              size="small"
-              placeholder="TÍTULO DA VAGA *"
-              inputProps={{
-                style: {
-                  textAlign: "center",
-                },
-              }}
-            />
-
-            <TextField
-              select
-              // required
-              name="tipo"
-              value={input.tipo || ""}
-              onChange={changeInput}
-              variant="outlined"
-              size="small"
-              label="TIPO DE CONTRATAÇÃO"
-              fullWidth
-            >
-              {tipos.map((option) => (
-                <MenuItem
-                  style={{
-                    justifyContent: "center",
-                  }}
-                  key={option.value}
-                  value={option.value}
-                >
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Line>
-
-          <Line>
-            <TextField
-              select
-              // required
-              name="area"
-              value={input.area || ""}
-              onChange={changeInput}
-              variant="outlined"
-              size="small"
-              label="ÁREA"
-              fullWidth
-              // style={{
-              //   width: "160%",
-              // }}
-            >
-              {areas.map((option) => (
-                <MenuItem
-                  style={{
-                    justifyContent: "center",
-                  }}
-                  key={option.value}
-                  value={option.value}
-                >
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-
-            <TextField
-              select
-              // required
-              name="nivel"
-              value={input.nivel || ""}
-              onChange={changeInput}
-              fullWidth
-              variant="outlined"
-              size="small"
-              label="NÍVEL"
-            >
-              {niveis.map((option) => (
-                <MenuItem
-                  style={{
-                    justifyContent: "center",
-                  }}
-                  key={option.value}
-                  value={option.value}
-                >
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-
-            <TextField
-              // required
-              name="cidade"
-              value={input.cidade || ""}
-              onChange={changeInput}
-              fullWidth
-              variant="outlined"
-              size="small"
-              placeholder="CIDADE *"
-              inputProps={{
-                style: {
-                  textAlign: "center",
-                },
-              }}
-            />
-
-            <TextField
-              select
-              // required
-              id="pdc"
-              name="pcd"
-              value={input.pcd}
-              onChange={changeInput}
-              variant="outlined"
-              size="small"
-              label="PCD"
-              fullWidth
-            >
-              {pdc.map((option) => (
-                <MenuItem
-                  style={{
-                    justifyContent: "center",
-                  }}
-                  key={option.value}
-                  value={option.value}
-                >
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Line>
-
-          <Line>
-            <TextField
-              select
-              // required
-              name="cargo"
-              value={input.cargo || ""}
-              onChange={changeInput}
-              fullWidth
-              variant="outlined"
-              label="CARGO"
-            >
-              {cargos.map((option) => (
-                <MenuItem
-                  style={{
-                    justifyContent: "center",
-                  }}
-                  key={option.value}
-                  value={option.value}
-                >
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
+          <div id="inputs">
+            {textFieldsContent.map((item, index) => (
+              <TextField
+                key={index}
+                className={item.className}
+                select={item.select}
+                // required={item.required}
+                // type={item.tipo}
+                name={item.name}
+                value={input[item.name] || ""}
+                onChange={changeInput}
+                variant="outlined"
+                size="small"
+                label={item.label}
+              >
+                {item.select &&
+                  item.data.map((option) => (
+                    <MenuItem
+                      style={{
+                        justifyContent: "center",
+                      }}
+                      key={option.value}
+                      value={option.value}
+                    >
+                      {option.label}
+                    </MenuItem>
+                  ))}
+              </TextField>
+            ))}
 
             <ChipInputStyled
-              fullWidth
+              className="sessenta"
               size="small"
               placeholder="SINÔNIMOS"
               variant="outlined"
@@ -261,7 +131,7 @@ export default function CriarVaga(props) {
               onAdd={(chip) => handleAddChip(chip)}
               onDelete={(chip, index) => handleDeleteChip(chip, index)}
             />
-          </Line>
+          </div>
 
           <EditorInput
             editorState={descricao}

@@ -42,45 +42,41 @@ function CadastroCandidato() {
       .replace(/(-\d{2})\d+?$/, "$1");
   };
 
-  const removeCpfMask = (value) => {
-    // value.replace(/[^d]/g, '');
-    return value.replace(".", "").replace(".", "").replace("-", "");
-  };
+  const removeCpfMask = (value) => value.replace(/[.-]/g, "");
 
   const validateCPF = (cpf) => {
-    if(cpf.length > 12) {
+    if (cpf.length > 12) {
       const cpfNumbers = removeCpfMask(cpf);
-      
+
       //validar quantidade de caracteres
       if (cpfNumbers?.length !== 11) {
         return false;
-      }
-      else {
-        const digitos = cpfNumbers.substring(9)
-        
+      } else {
+        const digitos = cpfNumbers.substring(9);
+
         //validar primeiro dígito
-        let numeros = cpfNumbers.substring(0, 9)
-        let soma = 0
-        for(let i = 10; i > 1; i--){
-          soma += numeros.charAt(10 - i) * i
+        let numeros = cpfNumbers.substring(0, 9);
+        let soma = 0;
+        for (let i = 10; i > 1; i--) {
+          soma += numeros.charAt(10 - i) * i;
         }
-        let resto = soma % 11
-        let resultado = resto < 2 ? 0 : 11 - resto
-        if(resultado.toString() !== digitos.charAt(0)) {
-          return false
+        let resto = soma % 11;
+        let resultado = resto < 2 ? 0 : 11 - resto;
+        if (resultado.toString() !== digitos.charAt(0)) {
+          return false;
         }
 
         //validar segundo dígito
-        numeros = cpfNumbers.substring(0, 10)
-        soma = 0
-        for(let j = 11; j > 1; j--){
-          soma += numeros.charAt(11 - j) * j
+        numeros = cpfNumbers.substring(0, 10);
+        soma = 0;
+        for (let j = 11; j > 1; j--) {
+          soma += numeros.charAt(11 - j) * j;
         }
-        resto = soma % 11
-        resultado = resto < 2 ? 0 : 11 - resto
+        resto = soma % 11;
+        resultado = resto < 2 ? 0 : 11 - resto;
 
-        if(resultado.toString() !== digitos.charAt(1)) {
-          return false
+        if (resultado.toString() !== digitos.charAt(1)) {
+          return false;
         }
       }
     }
@@ -104,7 +100,7 @@ function CadastroCandidato() {
   const handleSubmission = (e) => {
     e.preventDefault();
     const { nome, cpf, email, senha, confirmacao } = input;
-    const cpfFormatted = Number(removeCpfMask(cpf));;;
+    const cpfFormatted = Number(removeCpfMask(cpf));
     if (errorCPF) {
       dispatch(setAlert(true, "Digite um CPF válido para prosseguir"));
     } else if (senha !== confirmacao) {
@@ -153,7 +149,7 @@ function CadastroCandidato() {
                   fullWidth
                   variant="outlined"
                   size="small"
-                  placeholder={item.placeholder}
+                  label={item.label}
                   InputProps={{
                     endAdornment: item.endAdornment,
                     inputProps: {

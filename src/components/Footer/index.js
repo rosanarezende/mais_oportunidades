@@ -13,10 +13,11 @@ import {
 } from "./styles";
 
 import logo from "../../assets/Logo-01.png";
-import linkedin from "../../assets/linedin.png";
-import instagram from "../../assets/instagram.png";
-import facebook from "../../assets/facebook.png";
-import whatsapp from "../../assets/WhatsApp-icone 1.png";
+import linkedin from "../../assets/linkedin.svg";
+import instagram from "../../assets/instagram.svg";
+import facebook from "../../assets/facebook.svg";
+import whatsapp from "../../assets/whatsapp.svg";
+import twitter from "../../assets/twitter.svg";
 
 export default function Footer() {
   const dispatch = useDispatch();
@@ -39,6 +40,16 @@ export default function Footer() {
           onClick={() => window.open("https://www.linkedin.com/", "_blank")}
         />
         <SocialIcon
+          src={whatsapp}
+          alt="whatsapp"
+          onClick={() =>
+            window.open(
+              "https://web.whatsapp.com/send?phone=+5527999672118",
+              "_blank"
+            )
+          }
+        />
+        <SocialIcon
           src={instagram}
           alt="instagram"
           onClick={() => window.open("https://www.instagram.com/", "_blank")}
@@ -49,14 +60,9 @@ export default function Footer() {
           onClick={() => window.open("https://www.facebook.com/", "_blank")}
         />
         <SocialIcon
-          src={whatsapp}
-          alt="whatsapp"
-          onClick={() =>
-            window.open(
-              "https://web.whatsapp.com/send?phone=+5527999672118",
-              "_blank"
-            )
-          }
+          src={twitter}
+          alt="twitter"
+          onClick={() => window.open("https://www.twitter.com/", "_blank")}
         />
       </SocialWrapper>
     </FooterWrapper>
