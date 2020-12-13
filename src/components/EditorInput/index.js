@@ -1,5 +1,10 @@
 import { Editor } from "react-draft-wysiwyg";
-import { convertToRaw } from "draft-js";
+import {
+  EditorState,
+  ContentState,
+  convertFromHTML,
+  convertToRaw,
+} from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
@@ -15,15 +20,15 @@ export default function EditorInput({ editorState, setEditorState, text }) {
         borderRadius: "6px",
         marginBottom: "24px",
       }}
-      toolbarStyle={{ 
-        borderTopLeftRadius: "6px", 
+      toolbarStyle={{
+        borderTopLeftRadius: "6px",
         borderTopRightRadius: "6px",
-        boxSizing: "border-box" 
+        boxSizing: "border-box",
       }}
-      editorStyle={{ 
-        padding: "5px 10px", 
-        border: "1px solid #F1F1F1", 
-        borderRadius: "6px"
+      editorStyle={{
+        padding: "5px 10px",
+        border: "1px solid #F1F1F1",
+        borderRadius: "6px",
       }}
       placeholder={text || ""}
     />
@@ -37,3 +42,12 @@ export const formatEditorOutput = (data) => {
   disabled
   value={}
 />; */
+
+export const formatEditorInput = (data) => {
+  const blocksFromHTML = convertFromHTML(data);
+  const state = ContentState.createFromBlockArray(
+    blocksFromHTML.contentBlocks,
+    blocksFromHTML.entityMap
+  );
+  return EditorState.createWithContent(state);
+};

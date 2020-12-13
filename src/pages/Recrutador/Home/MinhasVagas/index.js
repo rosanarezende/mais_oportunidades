@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Typography, Button } from "@material-ui/core";
-import { PaperStyled, Top, DivStyled, ButtonsWrapper, HandleDiv } from "./styles";
+import {
+  PaperStyled,
+  Top,
+  DivStyled,
+  ButtonsWrapper,
+  HandleDiv,
+} from "./styles";
 
 import { breadcrumbInfo } from "./constants";
 import image from "../../../../assets/degrade.png";
@@ -15,28 +21,39 @@ import Candidaturas from "./Candidaturas";
 import EditarVaga from "./EditarVaga";
 
 export default function MinhasVagas(props) {
-  const candidaturasNaApi = [{ id: 1}, { id: 2}, { id: 3}]
-  const candidaturasFormatas = candidaturasNaApi.map(item => ({
+  const candidaturasNaApi = [{ id: 1 }, { id: 2 }, { id: 3 }];
+  const candidaturasFormatas = candidaturasNaApi.map((item) => ({
     ...item,
     visualizar: false,
-    editar: false
-  }))
+    editar: false,
+  }));
 
   const [candidaturas, setCandidaturas] = useState(candidaturasFormatas);
+  const [vagaClicada, setVagaClicada] = useState(undefined);
 
   const aparece = (position, field) => {
     const updatedItems = candidaturas.map((item, index) => {
       if (index === position) {
-        return { 
+        if (item.editar === false) {
+          setVagaClicada(item);
+        } else {
+          setVagaClicada(false);
+        }
+
+        return {
           ...item,
           visualizar: false,
-          editar: false, 
-          [field]: !item[field] 
+          editar: false,
+          [field]: !item[field],
         };
       }
-      return item;
+      return {
+        ...item,
+        visualizar: false,
+        editar: false,
+      };
     });
-    setCandidaturas(updatedItems)
+    setCandidaturas(updatedItems);
   };
 
   return (
@@ -67,7 +84,7 @@ export default function MinhasVagas(props) {
               <div>
                 <Button
                   color="inherit"
-                  onClick={() => aparece(index, 'editar')}
+                  onClick={() => aparece(index, "editar")}
                   startIcon={<img src={editar} alt="ícone" />}
                 >
                   Editar
@@ -85,7 +102,7 @@ export default function MinhasVagas(props) {
               <div>
                 <Button
                   color="inherit"
-                  onClick={() => aparece(index, 'visualizar')}
+                  onClick={() => aparece(index, "visualizar")}
                   startIcon={<img src={visualizar} alt="ícone" />}
                 >
                   Visualizar candidaturas
@@ -108,9 +125,8 @@ export default function MinhasVagas(props) {
           </HandleDiv>
 
           <HandleDiv display={item.editar} margin="5vh">
-            <EditarVaga />
+            {vagaClicada && <EditarVaga vagaClicada={vagaClicada} />}
           </HandleDiv>
-
         </div>
       ))}
     </TabPanel>

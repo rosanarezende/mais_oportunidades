@@ -11,13 +11,20 @@ import { PaperStyled, Form, ChipInputStyled } from "../../CriarVaga/styles";
 
 import EditorInput, {
   formatEditorOutput,
+  formatEditorInput,
 } from "../../../../../components/EditorInput";
 
-export default function EditarVaga() {
+const descricaoDaAPI = "<p>Teste</p><ul><li>oie</li></ul>";
+const reqDaAPI = "<p>Teste</p><ul><li>oie</li><li>oie</li></ul>";
+
+export default function EditarVaga({ vagaClicada }) {
   const dispatch = useDispatch();
-  const [descricao, setDescricao] = useState(EditorState.createEmpty());
+  console.log(vagaClicada);
+
+  const [descricao, setDescricao] = useState(formatEditorInput(descricaoDaAPI));
   const descricaoFormatada = formatEditorOutput(descricao);
-  const [requisitos, setRequisitos] = useState(EditorState.createEmpty());
+
+  const [requisitos, setRequisitos] = useState(formatEditorInput(reqDaAPI));
   const requisitosFormatado = formatEditorOutput(requisitos);
 
   const [input, setInput] = useState({
