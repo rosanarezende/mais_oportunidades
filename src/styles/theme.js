@@ -57,56 +57,19 @@ export default createMuiTheme({
     body1: { fontSize: "min(16px, 4.5vw)", lineHeight: "18px" },
     body2: { fontSize: "min(14px, 4vw)", lineHeight: "16px" },
   },
-
-  // shape: { borderRadius: 5 },
   overrides: {
-    // MuiTypography: {
-    //   root: {
-    //     marginBottom: '5px',
-    //   },
-    // },
-    // MuiInputBase: {
-    //   root: {
-    //     color: '#4c6f77',
-    //     fontSize: 'min(14px, 3.5vw)',
-    //   },
-    // },
     MuiOutlinedInput: {
       root: {
         borderRadius: "26px",
       },
       input: {
-                //   fontSize: 'min(14px, 3.5vw)',
-                //   height: '12px',
-        backgroundColor: "transparent",
+        textAlign: "center",
       },
     },
-    // MuiFilledInput: {
-    //   root: {
-    //     borderRadius: "26px",
-    //   },
-    // },
-    // MuiFormLabel: {
-    //   root: {
-    //     color: 'rgba(0, 0, 0, 0.6)',
-    //   },
-    // },
-    // MuiTextField: {
-    //   root: {
-    //     margin: '5px',
-    //   },
-    // },
     MuiButton: {
       root: {
         borderRadius: "26px",
-        // textTransform: 'none',
-        // margin: '0 5px 5px 0',
-        // fontSize: 'min(14px, 3.5vw)',
-        // letterSpacing: '1px',
       },
-      // fullWidth: {
-      //   maxWidth: 'min(200px, 50vw)',
-      // },
     },
     MuiPaper: {
       rounded: {
@@ -120,50 +83,7 @@ export default createMuiTheme({
       },
       shrink: {
         textAlign: "left",
-      }
+      },
     },
-    // MuiListItem:  {
-    //   root: {
-    //     backgroundColor: "#fff",
-    //   },
-    //   selected: {
-    //     backgroundColor: "#fff",
-    //   },
-    //   focusVisible: {
-    //     backgroundColor: "#fff",
-    //   }
-    // },
-    // MuiTableSortLabel: {
-    //   root: {
-    //     color: '#4c6f77',
-    //     '&:hover': {
-    //       color: '#C1D8DE',
-    //     },
-    //     '&$active': {
-    //       color: '#4c6f77',
-    //     },
-    //   },
-    // },
-    // MuiIcon: {
-    //   root: {
-    //     color: '#4c6f77',
-    //   },
-    // },
   },
-  // props: {
-  // MuiButton: {
-  //   variant: 'outlined',
-  //   color: 'secondary',
-  // },
-  // MuiTextField: {
-  //   variant: 'outlined',
-  //   color: 'secondary',
-  // },
-  // MuiAppBar: {
-  //   elevation: 1,
-  // },
-  // MuiPaper: {
-  //   elevation: 0,
-  // },
-  // },
 });

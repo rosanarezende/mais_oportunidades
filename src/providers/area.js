@@ -15,14 +15,12 @@ export const createArea = (name) => async (dispatch) => {
   dispatch(setLoading(false));
 };
 
-// ver se isso precisa ou não estar num reducer
 export const getAllAreas = () => async (dispatch) => {
   dispatch(setLoading(true));
   try {
     const response = await axiosProvider.get(`/area`);
     dispatch(setAllAreas(response.data));
     dispatch(setLoading(false));
-    // return response.data;
   } catch (error) {
     dispatch(setLoading(false));
     throw error;

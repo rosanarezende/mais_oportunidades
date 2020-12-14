@@ -2,6 +2,8 @@ const initialState = {
   job: {},
   factoryJobs: [],
   jobs: [],
+  jobCreated: undefined,
+  jobClicked: undefined,
 };
 
 const jobsReducer = (state = initialState, action) => {
@@ -22,6 +24,18 @@ const jobsReducer = (state = initialState, action) => {
       return {
         ...state,
         jobs: action.payload.jobs,
+      };
+
+    case "SET_JOB_CREATED":
+      return {
+        ...state,
+        jobCreated: action.payload.job,
+      };
+
+    case "SET_JOB_CLICKED":
+      return {
+        ...state,
+        jobClicked: action.payload.job,
       };
 
     default:

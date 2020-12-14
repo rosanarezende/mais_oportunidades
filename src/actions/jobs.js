@@ -18,3 +18,18 @@ export const setAllJobs = (jobs) => ({
     jobs,
   },
 });
+
+
+export const setJobCreated = (job) => ({
+  type: "SET_JOB_CREATED",
+  payload: {
+    job,
+  },
+});
+
+export const setJobClicked = (job) => ({
+  type: "SET_JOB_CLICKED",
+  payload: {
+    job,
+  },
+});

@@ -20,16 +20,10 @@ export const textFieldsContent = [
     disabled: true,
     className: "quarenta",
   },
-  { 
-    name: "segmento", 
-    label: "SEGMENTO", 
-    type: "email",
-    className: "quarenta",
-  },
-  { 
-    name: "localizacao", 
-    label: "LOCALIZAÇÃO", 
+  {
+    name: "localizacao",
+    label: "LOCALIZAÇÃO",
     type: "email",
     className: "sessenta",
   },
- ];
+];

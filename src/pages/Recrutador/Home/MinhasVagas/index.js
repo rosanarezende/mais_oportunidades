@@ -1,4 +1,9 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getJobsByFactoryId } from "../../../../providers/jobs";
+// import { setJobClicked, setJobsByFactoryId } from "../../../../actions/jobs";
+
 import { Typography, Button } from "@material-ui/core";
 import {
   PaperStyled,
@@ -21,43 +26,46 @@ import Candidaturas from "./Candidaturas";
 import EditarVaga from "./EditarVaga";
 
 export default function MinhasVagas(props) {
-  const candidaturasNaApi = [{ id: 1 }, { id: 2 }, { id: 3 }];
-  const candidaturasFormatas = candidaturasNaApi.map((item) => ({
-    ...item,
-    visualizar: false,
-    editar: false,
-  }));
+  const dispatch = useDispatch();
+  const { factoryJobs } = useSelector((state) => state.jobsReducer);
+  console.log("factoryJobs", factoryJobs)
+  
+  // const [candidaturas, setCandidaturas] = useState(
+  //   factoryJobs?.map((item) => ({
+  //     ...item,
+  //     visualizar: false,
+  //     editar: false,
+  //   }))
+  // );
 
-  const [candidaturas, setCandidaturas] = useState(candidaturasFormatas);
-  const [vagaClicada, setVagaClicada] = useState(undefined);
+  const factoryId = 1;
+
+  useEffect(() => {
+    dispatch(getJobsByFactoryId(factoryId));
+  }, [dispatch]);
 
   const aparece = (position, field) => {
-    const updatedItems = candidaturas.map((item, index) => {
-      if (index === position) {
-        if (item.editar === false) {
-          setVagaClicada(item);
-        } else {
-          setVagaClicada(false);
-        }
-
-        return {
-          ...item,
-          visualizar: false,
-          editar: false,
-          [field]: !item[field],
-        };
-      }
-      return {
-        ...item,
-        visualizar: false,
-        editar: false,
-      };
-    });
-    setCandidaturas(updatedItems);
+    // const updatedItems = factoryJobs?.map((item) => {
+    //   if (item.id === position) {
+    //     if (item.editar === false) {
+    //       dispatch(setJobClicked(item));
+    //     } else {
+    //       dispatch(setJobClicked(undefined));
+    //     }
+    //     return {
+    //       ...item,
+    //       visualizar: false,
+    //       editar: false,
+    //       [field]: !item[field],
+    //     };
+    //   }
+    //   return { ...item, visualizar: false, editar: false };
+    // });
+    // dispatch(setJobsByFactoryId(updatedItems))
   };
 
   return (
-    <TabPanel value={props.value} index={1}>
+    <TabPanel value={props.value} index={props.index}>
       <Top>
         <Breadcrumb breadcrumbInfo={breadcrumbInfo} />
         <Typography variant="h5" gutterBottom>
@@ -65,15 +73,16 @@ export default function MinhasVagas(props) {
         </Typography>
       </Top>
 
-      {candidaturas.map((item, index) => (
-        <div key={index}>
+{/* factoryJobs */}
+      {[].map((item, index) => (
+        <div key={item.id}>
           <PaperStyled>
             <DivStyled>
               <div id="img-wrapper">
                 <img src={image} alt="logo empresa" />
               </div>
               <div id="content-wrapper">
-                <Typography variant="h3">xxxxx</Typography>
+                <Typography variant="h3">{item.title}</Typography>
 
                 <Typography>
                   zzzz <span id="date">yyyy</span>
@@ -84,7 +93,7 @@ export default function MinhasVagas(props) {
               <div>
                 <Button
                   color="inherit"
-                  onClick={() => aparece(index, "editar")}
+                  onClick={() => aparece(item.id, "editar")}
                   startIcon={<img src={editar} alt="ícone" />}
                 >
                   Editar
@@ -102,7 +111,7 @@ export default function MinhasVagas(props) {
               <div>
                 <Button
                   color="inherit"
-                  onClick={() => aparece(index, "visualizar")}
+                  onClick={() => aparece(item.id, "visualizar")}
                   startIcon={<img src={visualizar} alt="ícone" />}
                 >
                   Visualizar candidaturas
@@ -125,8 +134,9 @@ export default function MinhasVagas(props) {
           </HandleDiv>
 
           <HandleDiv display={item.editar} margin="5vh">
-            {vagaClicada && <EditarVaga vagaClicada={vagaClicada} />}
+            <EditarVaga />
           </HandleDiv>
+
         </div>
       ))}
     </TabPanel>

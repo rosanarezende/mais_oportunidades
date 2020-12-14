@@ -78,6 +78,9 @@ export const Form = styled.form`
             width: 100%;
           }
         }
+        #autocomplete {
+          text-align: center;
+        }
       }
     }
   }
