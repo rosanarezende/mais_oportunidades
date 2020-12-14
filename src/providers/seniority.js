@@ -1,6 +1,7 @@
 import axiosProvider from "./axios";
 import { setAlert } from "../actions/alert";
 import { setLoading } from "../actions/loading";
+import { setAllSeniorities } from "../actions/seniority";
 
 export const createSeniority = (name) => async (dispatch) => {
   dispatch(setLoading(true));
@@ -14,13 +15,12 @@ export const createSeniority = (name) => async (dispatch) => {
   dispatch(setLoading(false));
 };
 
-// ver se isso precisa ou não estar num reducer
 export const getAllSeniorities = () => async (dispatch) => {
   dispatch(setLoading(true));
   try {
     const response = await axiosProvider.get(`/seniority`);
+    dispatch(setAllSeniorities(response.data));
     dispatch(setLoading(false));
-    return response.data;
   } catch (error) {
     dispatch(setLoading(false));
     throw error;

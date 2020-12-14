@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import {
+  useState,
+  // useEffect
+} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { EditorState } from "draft-js";
 
 import { setAlert } from "../../../../../actions/alert";
@@ -14,30 +17,55 @@ import EditorInput, {
   formatEditorInput,
 } from "../../../../../components/EditorInput";
 
-const descricaoDaAPI = "<p>Teste</p><ul><li>oie</li></ul>";
-const reqDaAPI = "<p>Teste</p><ul><li>oie</li><li>oie</li></ul>";
-
-export default function EditarVaga({ vagaClicada }) {
+export default function EditarVaga() {
   const dispatch = useDispatch();
-  console.log(vagaClicada);
+  const { workerCategories } = useSelector(
+    (state) => state.workerCategoryReducer
+  );
+  const { areas } = useSelector((state) => state.areaReducer);
+  const { seniorities } = useSelector((state) => state.seniorityReducer);
+  const textFields = textFieldsContent(workerCategories, areas, seniorities);
 
-  const [descricao, setDescricao] = useState(formatEditorInput(descricaoDaAPI));
-  const descricaoFormatada = formatEditorOutput(descricao);
-
-  const [requisitos, setRequisitos] = useState(formatEditorInput(reqDaAPI));
-  const requisitosFormatado = formatEditorOutput(requisitos);
+  const { jobClicked } = useSelector((state) => state.jobsReducer);
+  // console.log(jobClicked);;;;
 
   const [input, setInput] = useState({
-    titulo: "Vaga teste",
-    tipo: "CLT",
-    area: "ADMINISTRATIVO",
-    nivel: "JUNIOR",
-    cidade: "São Paulo",
-    pcd: true,
-    cargo: "ASSISTENTE",
+    titulo: "",
+    tipo: "",
+    area: "",
+    nivel: "",
+    cidade: "",
+    pcd: "",
+    // ====================================
+    cargo: "", // "ALTERAR DEPOIS", // precisa vir da API
   });
+  console.log(input);
 
   const [chips, setChips] = useState(["aaa", "bbb"]);
+  
+  const descricaoDaAPI = "<p>Teste</p><ul><li>oie</li></ul>";
+  const [descricao, setDescricao] = useState(formatEditorInput(descricaoDaAPI));
+  const descricaoFormatada = formatEditorOutput(descricao);
+  
+  const reqDaAPI = "<p>Teste</p><ul><li>oie</li><li>oie</li></ul>";
+  const [requisitos, setRequisitos] = useState(formatEditorInput(reqDaAPI));
+  const requisitosFormatado = formatEditorOutput(requisitos);
+  // ====================================
+
+    // useEffect(() => {
+  //   if(jobClicked){
+  //     setInput({
+  //       titulo: jobClicked.title,
+  //       tipo: jobClicked.category.id,
+  //       area: jobClicked.area.id,
+  //       nivel: jobClicked.seniority.id,
+  //       cidade: jobClicked.address,
+  //       pcd: jobClicked.isForPCD ? "SIM" : "NÃO",
+  //       // ====================================
+  //       cargo: 1, // "ALTERAR DEPOIS", // precisa vir da API
+  //     })
+  //   }
+  // }, [jobClicked])
 
   const handleAddChip = (chip) => {
     const newChips = [...chips, chip];
@@ -76,13 +104,13 @@ export default function EditarVaga({ vagaClicada }) {
     <PaperStyled>
       <Form onSubmit={handleSubmit}>
         <div id="inputs">
-          {textFieldsContent.map((item, index) => (
+          {textFields.map((item, index) => (
             <TextField
+              required
               key={index}
               className={item.className}
               select={item.select}
-              // required={item.required}
-              // type={item.tipo}
+              type={item.tipo}
               name={item.name}
               value={input[item.name] || ""}
               onChange={changeInput}
@@ -96,10 +124,10 @@ export default function EditarVaga({ vagaClicada }) {
                     style={{
                       justifyContent: "center",
                     }}
-                    key={option.value}
-                    value={option.value}
+                    key={option.id}
+                    value={option.id}
                   >
-                    {option.label}
+                    {option.name}
                   </MenuItem>
                 ))}
             </TextField>

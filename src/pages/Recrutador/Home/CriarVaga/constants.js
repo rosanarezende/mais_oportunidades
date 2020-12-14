@@ -4,54 +4,54 @@ export const breadcrumbInfo = [
   { nome: "Criar vaga" },
 ];
 
-export const tipos = [
-  { value: "CLT", label: "CLT" },
-  { value: "PJ", label: "PJ" },
-  { value: "FREELANCER", label: "FREELLANCER" },
-  { value: "CONTRATO", label: "CONTRATO" },
-];
+// export const tipos = [
+//   { id: 1, name: "CLT" },
+//   { id: 2, name: "PJ" },
+//   { id: 3, name: "FREELLANCER" },
+//   { id: 4, name: "CONTRATO" },
+// ];
 
-export const areas = [
-  { value: "ADMINISTRATIVO", label: "ADMINISTRATIVO" },
-  { value: "FINANCEIRO", label: "FINANCEIRO" },
-  { value: "RECURSOS HUMANOS", label: "RECURSOS HUMANOS" },
-  { value: "LOGÍSTICA", label: "LOGÍSTICA" },
-  { value: "COMERCIAL", label: "COMERCIAL" },
-  { value: "OPERACIONAL", label: "OPERACIONAL" },
-  { value: "PLANEJAMENTO", label: "PLANEJAMENTO" },
-  { value: "JURÍDICO", label: "JURÍDICO" },
-  { value: "COMUNICAÇÃO/MARKETING", label: "COMUNICAÇÃO/MARKETING" },
-  { value: "TECNOLOGIA", label: "TECNOLOGIA" },
-];
+// export const areas = [
+//   { id: 1, name: "ADMINISTRATIVO" },
+//   { id: 2, name: "FINANCEIRO" },
+//   { id: 3, name: "RECURSOS HUMANOS" },
+//   { id: 4, name: "LOGÍSTICA" },
+//   { id: 5, name: "COMERCIAL" },
+//   { id: 6, name: "OPERACIONAL" },
+//   { id: 7, name: "PLANEJAMENTO" },
+//   { id: 8, name: "JURÍDICO" },
+//   { id: 9, name: "COMUNICAÇÃO/MARKETING" },
+//   { id: 10, name: "TECNOLOGIA" },
+// ];
+
+// export const niveis = [
+//   { id: 1, name: "INICIANTE" },
+//   { id: 2, name: "JUNIOR" },
+//   { id: 3, name: "PLENO" },
+//   { id: 4, name: "SENIOR" },
+// ];
 
 export const pdc = [
-  { value: true, label: "SIM" },
-  { value: false, label: "NÃO" },
-];
-
-export const niveis = [
-  { value: "INICIANTE", label: "INICIANTE" },
-  { value: "JUNIOR", label: "JUNIOR" },
-  { value: "PLENO", label: "PLENO" },
-  { value: "SENIOR", label: "SENIOR" },
+  { id: "SIM", name: "SIM" },
+  { id: "NÃO", name: "NÃO" },
 ];
 
 export const cargos = [
-  { value: "ASSISTENTE", label: "ASSISTENTE" },
-  { value: "ANALISTA", label: "ANALISTA" },
-  { value: "COORDENADOR", label: "COORDENADOR" },
-  { value: "GERENTE", label: "GERENTE" },
-  { value: "DIRETOR", label: "DIRETOR" },
-  { value: "VICE-PRESIDENTE", label: "VICE-PRESIDENTE" },
-  { value: "PRESIDENTE", label: "PRESIDENTE" },
+  { id: 1, name: "ASSISTENTE" },
+  { id: 2, name: "ANALISTA" },
+  { id: 3, name: "COORDENADOR" },
+  { id: 4, name: "GERENTE" },
+  { id: 5, name: "DIRETOR" },
+  { id: 6, name: "VICE-PRESIDENTE" },
+  { id: 7, name: "PRESIDENTE" },
 ];
 
-export const textFieldsContent = [
+export const textFieldsContent = (workerCategories, areas, seniorities) => [
   {
     name: "titulo",
     label: "TÍTULO DA VAGA",
     type: "text",
-    className: "setenta",
+    className: "setenta"
   },
   {
     name: "tipo",
@@ -59,7 +59,7 @@ export const textFieldsContent = [
     type: "text",
     className: "trinta",
     select: true,
-    data: tipos
+    data: workerCategories
   },
   { 
     name: "area", 
@@ -75,22 +75,24 @@ export const textFieldsContent = [
     type: "text",
     className: "trinta",
     select: true,
-    data: niveis
+    data: seniorities
   },
   { 
     name: "cidade", 
     label: "CIDADE", 
     type: "text",
     className: "trinta",
+    shrink: true,
   },
   { 
     name: "pcd", 
-    label: "PCD", 
+    label: "Aceita PcD", 
     type: "text",
     className: "dez",
     select: true,
     data: pdc
   },
+  // ainda não tem endpoint
   { 
     name: "cargo", 
     label: "CARGO", 
