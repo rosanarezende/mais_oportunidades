@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getJobsByFactoryId } from "../../../../providers/jobs";
-// import { setJobClicked, setJobsByFactoryId } from "../../../../actions/jobs";
+import { setJobClicked, setJobsByFactoryId } from "../../../../actions/jobs";
 
 import { Typography, Button } from "@material-ui/core";
 import {
@@ -45,23 +45,23 @@ export default function MinhasVagas(props) {
   }, [dispatch]);
 
   const aparece = (position, field) => {
-    // const updatedItems = factoryJobs?.map((item) => {
-    //   if (item.id === position) {
-    //     if (item.editar === false) {
-    //       dispatch(setJobClicked(item));
-    //     } else {
-    //       dispatch(setJobClicked(undefined));
-    //     }
-    //     return {
-    //       ...item,
-    //       visualizar: false,
-    //       editar: false,
-    //       [field]: !item[field],
-    //     };
-    //   }
-    //   return { ...item, visualizar: false, editar: false };
-    // });
-    // dispatch(setJobsByFactoryId(updatedItems))
+    const updatedItems = factoryJobs?.map((item) => {
+      if (item.id === position) {
+        if (item.editar === false) {
+          dispatch(setJobClicked(item));
+        } else {
+          dispatch(setJobClicked(undefined));
+        }
+        return {
+          ...item,
+          visualizar: false,
+          editar: false,
+          [field]: !item[field],
+        };
+      }
+      return { ...item, visualizar: false, editar: false };
+    });
+    dispatch(setJobsByFactoryId(updatedItems));
   };
 
   return (
@@ -73,8 +73,7 @@ export default function MinhasVagas(props) {
         </Typography>
       </Top>
 
-{/* factoryJobs */}
-      {[].map((item, index) => (
+      {factoryJobs?.map((item, index) => (
         <div key={item.id}>
           <PaperStyled>
             <DivStyled>
@@ -136,7 +135,6 @@ export default function MinhasVagas(props) {
           <HandleDiv display={item.editar} margin="5vh">
             <EditarVaga />
           </HandleDiv>
-
         </div>
       ))}
     </TabPanel>

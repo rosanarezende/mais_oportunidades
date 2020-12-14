@@ -1,4 +1,7 @@
-import { useState, useEffect } from "react";
+import {
+  useState,
+  // useEffect
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EditorState } from "draft-js";
 
@@ -14,9 +17,6 @@ import EditorInput, {
   formatEditorInput,
 } from "../../../../../components/EditorInput";
 
-const descricaoDaAPI = "<p>Teste</p><ul><li>oie</li></ul>";
-const reqDaAPI = "<p>Teste</p><ul><li>oie</li><li>oie</li></ul>";
-
 export default function EditarVaga() {
   const dispatch = useDispatch();
   const { workerCategories } = useSelector(
@@ -28,7 +28,7 @@ export default function EditarVaga() {
 
   const { jobClicked } = useSelector((state) => state.jobsReducer);
   // console.log(jobClicked);;;;
-  
+
   const [input, setInput] = useState({
     titulo: "",
     tipo: "",
@@ -39,30 +39,33 @@ export default function EditarVaga() {
     // ====================================
     cargo: "", // "ALTERAR DEPOIS", // precisa vir da API
   });
+  console.log(input);
 
-  console.log(input)
   const [chips, setChips] = useState(["aaa", "bbb"]);
+  
+  const descricaoDaAPI = "<p>Teste</p><ul><li>oie</li></ul>";
   const [descricao, setDescricao] = useState(formatEditorInput(descricaoDaAPI));
   const descricaoFormatada = formatEditorOutput(descricao);
-  // ====================================
-
-  useEffect(() => {
-    if(jobClicked){
-      setInput({
-        titulo: jobClicked.title,
-        tipo: jobClicked.category.id,
-        area: jobClicked.area.id,
-        nivel: jobClicked.seniority.id,
-        cidade: jobClicked.address,
-        pcd: jobClicked.isForPCD ? "SIM" : "NÃO",
-        // ====================================
-        cargo: 1, // "ALTERAR DEPOIS", // precisa vir da API
-      })
-    }
-  }, [jobClicked])
-
+  
+  const reqDaAPI = "<p>Teste</p><ul><li>oie</li><li>oie</li></ul>";
   const [requisitos, setRequisitos] = useState(formatEditorInput(reqDaAPI));
   const requisitosFormatado = formatEditorOutput(requisitos);
+  // ====================================
+
+    // useEffect(() => {
+  //   if(jobClicked){
+  //     setInput({
+  //       titulo: jobClicked.title,
+  //       tipo: jobClicked.category.id,
+  //       area: jobClicked.area.id,
+  //       nivel: jobClicked.seniority.id,
+  //       cidade: jobClicked.address,
+  //       pcd: jobClicked.isForPCD ? "SIM" : "NÃO",
+  //       // ====================================
+  //       cargo: 1, // "ALTERAR DEPOIS", // precisa vir da API
+  //     })
+  //   }
+  // }, [jobClicked])
 
   const handleAddChip = (chip) => {
     const newChips = [...chips, chip];
