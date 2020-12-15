@@ -53,7 +53,7 @@ export default function MeuPerfil(props) {
     isActive: publicada,
     segment_id: segmento?.id,
   };
-  console.log("seg", segmento);
+  // console.log("seg", segmento);
 
   useEffect(() => {
     dispatch(getAllSegments());

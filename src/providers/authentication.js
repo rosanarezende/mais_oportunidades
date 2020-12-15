@@ -8,10 +8,10 @@ import * as storage from "./storage";
 
 const KEY = "auth-user";
 
-export function isLogin() {
+export const isLogin = () => {
   const data = storage.getItem(KEY);
   return data === null ? false : true;
-}
+};
 
 /*
 {

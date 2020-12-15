@@ -8,6 +8,7 @@ export const PageContent = styled.div`
   justify-content: center;
   min-height: 82vh;
   padding: 0 12vw;
+  min-width: 50vw;
 
   @media screen and (max-width: 600px) {
     padding: 0 8vw;
@@ -21,13 +22,14 @@ export const PaperStyled = styled(Paper)`
   background: url(${degrade}) no-repeat;
   background-size: cover;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  min-width: 50vw;
 
   form {
     background: #fff;
     border: 3px solid #000000;
     border-radius: 16px;
     border-bottom-right-radius: 11vw;
-    padding: 4vh 50px 12vh;
+    padding: 4vh 100px 12vh;
     margin: 15px;
 
     @media screen and (max-width: 1200px) {
@@ -58,7 +60,7 @@ export const PaperStyled = styled(Paper)`
     #button-wrapper {
       display: flex;
       justify-content: center;
-      margin-top: 4vh;
+      margin-top: 6vh;
     }
   }
 `;

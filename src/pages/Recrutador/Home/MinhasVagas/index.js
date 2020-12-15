@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 
 import { setJobsByFactoryId } from "../../../../actions/jobs";
 
+import { editJob } from "../../../../providers/jobs";
+
 import { Typography, Button } from "@material-ui/core";
 import {
   PaperStyled,
@@ -13,8 +15,10 @@ import {
 } from "./styles";
 
 import { breadcrumbInfo } from "./constants";
+
 import image from "../../../../assets/degrade.png";
 import editar from "../../../../assets/editar.svg";
+import publicar from "../../../../assets/publicar.svg";
 import despublicar from "../../../../assets/despublicar.svg";
 import visualizar from "../../../../assets/visualizar.svg";
 // import download from "../../../../assets/download.svg";
@@ -28,7 +32,8 @@ import EditarVaga from "./EditarVaga";
 
 export default function MinhasVagas(props) {
   const dispatch = useDispatch();
-  const { factoryJobs } = props;
+  const { factoryJobs, factoryId } = props;
+  console.log(factoryJobs);
 
   const [jobClicked, setJobClicked] = useState({});
   const [chips, setChips] = useState([]);
@@ -39,7 +44,6 @@ export default function MinhasVagas(props) {
     const updatedItems = factoryJobs?.map((item) => {
       if (item.id === position) {
         setJobClicked({
-          // ...item,
           titulo: item?.title,
           tipo: item?.category?.id,
           area: item?.area?.id,
@@ -65,6 +69,28 @@ export default function MinhasVagas(props) {
       return { ...item, visualizar: false, editar: false };
     });
     dispatch(setJobsByFactoryId(updatedItems));
+  };
+
+  const changePublish = (vaga) => {
+    // // console.log("publicar", vaga.id);
+    // const updatedItems = factoryJobs?.map((item) => {
+    //   if (item.id === vaga.id) {
+    //     return {
+    //       ...item,
+    //       isPublish: !item.isPublish,
+    //     };
+    //   }
+    //   return item;
+    // });
+    // dispatch(setJobsByFactoryId(updatedItems));
+
+    // ================== publicar
+    // colocar um confirm aqui
+    const info = {
+      ...vaga,
+      isPublish: !vaga.isPublish,
+    };
+    dispatch(editJob(vaga.id, factoryId, info));
   };
 
   return (
@@ -102,13 +128,23 @@ export default function MinhasVagas(props) {
                 </Button>
               </div>
               <div>
-                <Button
-                  color="inherit"
-                  // onClick={() => dispatch(push(routes.login))}
-                  startIcon={<img src={despublicar} alt="ícone" />}
-                >
-                  Despublicar
-                </Button>
+                {item.isPublish ? (
+                  <Button
+                    color="inherit"
+                    onClick={() => changePublish(item)}
+                    startIcon={<img src={despublicar} alt="ícone" />}
+                  >
+                    Despublicar
+                  </Button>
+                ) : (
+                  <Button
+                    color="inherit"
+                    onClick={() => changePublish(item)}
+                    startIcon={<img src={publicar} alt="ícone" />}
+                  >
+                    Publicar
+                  </Button>
+                )}
               </div>
               <div>
                 <Button

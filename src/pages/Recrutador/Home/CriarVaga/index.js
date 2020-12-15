@@ -85,19 +85,20 @@ export default function CriarVaga(props) {
     e.preventDefault();
     const isPublish = false;
     const data = {
-      factory_id: factoryId,
-      isPublish,
       title: input.titulo,
       address: input.cidade,
-      role: 1, // input.cargo, //num - trocar pela API
+      description: descricaoFormatada,
+      role: "Develop", // 1, // num - trocar pela API
+      isPublish,
       isForPCD: input.pcd === "SIM" ? true : false,
+      synonymsArray: chips,
+      requirements: requisitosFormatado,
       categoryofworker_id: input.tipo,
       area_id: input.area,
       seniority_id: input.nivel,
-      synonymsArray: input.chips,
-      description: descricaoFormatada,
-      requirements: requisitosFormatado,
+      factory_id: factoryId,
     };
+    console.log(data);
 
     // validar se descritivo da vaga e requisitos estão vazios?
     if (convertFromHTML(descricaoFormatada).contentBlocks.length === 0) {
@@ -124,7 +125,7 @@ export default function CriarVaga(props) {
       }, 1000);
     });
   };
-  
+
   return (
     <TabPanel value={value} index={index}>
       <Top>

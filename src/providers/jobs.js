@@ -7,11 +7,16 @@ import {
   setAllJobs,
   setJobCreated,
 } from "../actions/jobs";
+import { getToken } from "./storage";
 
 export const createJob = (info) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const response = await axiosProvider.post(`/jobs`, info);
+    const response = await axiosProvider.post(`/jobs`, info, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
     dispatch(setJobCreated(response.data));
     dispatch(setAlert(true, "Vaga cadastrada com sucesso."));
     dispatch(setLoading(false));
@@ -39,8 +44,13 @@ export const getJobById = (jobId) => async (dispatch) => {
 export const editJob = (jobId, factoryId, info) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    await axiosProvider.put(`/jobs/${jobId}/factory/${factoryId}`, info);
-    dispatch(getJobById(jobId));
+    await axiosProvider.put(`/jobs/${jobId}/factory/${factoryId}`, info, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
+    // dispatch(getJobById(jobId)); // não tá funcionando
+    dispatch(getJobsByFactoryId(factoryId));
     dispatch(setAlert(true, "Vaga atualizada com sucesso")); // ver se é esse o texto
     dispatch(setLoading(false));
   } catch (error) {

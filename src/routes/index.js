@@ -13,21 +13,24 @@ import CadastroCandidato from "../pages/Candidato/Cadastro";
 import HomeRecrutador from "../pages/Recrutador/Home";
 import CadastroRecrutador from "../pages/Recrutador/Cadastro";
 
+import PrivateRoute from "../authentication/PrivateRoute";
+
 export const routes = {
   landingPage: "/",
   buscarVagas: "/buscar",
   login: "/login",
   esqueciASenha: "/senha",
 
+  cadastroCandidato: "/cadastro/candidato",
+  cadastroRecrutador: "/cadastro/recrutador",
+
   // TALVEZ + PRA FRENTE
   // sobre: "/sobre",
   // contato: "/contato",
 
   homeCandidato: "/candidato",
-  cadastroCandidato: "/candidato/cadastro",
 
   homeRecrutador: "/recrutador",
-  cadastroRecrutador: "/recrutador/cadastro",
 };
 
 export default function Routes({ history }) {
@@ -38,21 +41,24 @@ export default function Routes({ history }) {
         <Route exact path={routes.buscarVagas} component={BuscarVagas} />
         <Route exact path={routes.login} component={Login} />
         <Route exact path={routes.esqueciASenha} component={EsqueciASenha} />
-
-        {/* PRIVADAS */}
-        <Route exact path={routes.homeCandidato} component={HomeCandidato} />
         <Route
           exact
           path={routes.cadastroCandidato}
           component={CadastroCandidato}
         />
-
-        <Route exact path={routes.homeRecrutador} component={HomeRecrutador} />
         <Route
           exact
           path={routes.cadastroRecrutador}
           component={CadastroRecrutador}
         />
+
+        {/* PRIVADAS */}
+        <Route
+          exact
+          path={routes.homeCandidato}
+          component={HomeCandidato}
+        />
+        <PrivateRoute exact path={routes.homeRecrutador} component={HomeRecrutador} />
 
         <Route path="*" component={PaginaNaoEncontrada} />
       </Switch>

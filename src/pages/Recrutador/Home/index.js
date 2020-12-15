@@ -48,7 +48,7 @@ export default function HomeRecrutador() {
   const { factoryJobs } = useSelector((state) => state.jobsReducer);
   const { factory } = useSelector((state) => state.factoryReducer);
 
-  const factoryId = getItem("auth-user").id;
+  const factoryId = getItem("auth-user")?.id;
   const tabs = ["Criar Vaga", "Minhas Vagas", "Perfil"];
 
   useEffect(() => {
@@ -81,6 +81,9 @@ export default function HomeRecrutador() {
         });
         setPerfilDescricao(descriptionAtAPI)
         setSegmentId(factory.segment?.id)
+      }
+      if (newValue === 1) {
+        dispatch(getJobsByFactoryId(factoryId));
       }
     } else {
       setInput({
@@ -126,7 +129,12 @@ export default function HomeRecrutador() {
           factoryId={factoryId}
         />
 
-        <MinhasVagas value={value} index={1} factoryJobs={factoryJobs} />
+        <MinhasVagas
+          value={value}
+          index={1}
+          factoryJobs={factoryJobs}
+          factoryId={factoryId}
+        />
 
         <MeuPerfil
           value={value}
@@ -134,9 +142,9 @@ export default function HomeRecrutador() {
           factoryId={factoryId}
           perfil={perfil}
           setPerfil={setPerfil}
-          perfilDescricao={perfilDescricao} 
+          perfilDescricao={perfilDescricao}
           setPerfilDescricao={setPerfilDescricao}
-          segmentId={segmentId} 
+          segmentId={segmentId}
           setSegmentId={setSegmentId}
         />
       </PageWrapper>

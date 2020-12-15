@@ -14,4 +14,4 @@ export function getItem(key) {
   return data;
 }
 
-export const getToken = () => getItem("auth-user").token;
+export const getToken = () => getItem("auth-user")?.token;
