@@ -1,8 +1,7 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-import { getJobsByFactoryId } from "../../../../providers/jobs";
-import { setJobClicked, setJobsByFactoryId } from "../../../../actions/jobs";
+import { setJobsByFactoryId } from "../../../../actions/jobs";
 
 import { Typography, Button } from "@material-ui/core";
 import {
@@ -22,36 +21,40 @@ import visualizar from "../../../../assets/visualizar.svg";
 
 import TabPanel from "../../../../components/TabPanel";
 import Breadcrumb from "../../../../components/Breadcrumb";
+import { formatEditorInput } from "../../../../components/EditorInput";
+
 import Candidaturas from "./Candidaturas";
 import EditarVaga from "./EditarVaga";
 
 export default function MinhasVagas(props) {
   const dispatch = useDispatch();
-  const { factoryJobs } = useSelector((state) => state.jobsReducer);
-  console.log("factoryJobs", factoryJobs)
-  
-  // const [candidaturas, setCandidaturas] = useState(
-  //   factoryJobs?.map((item) => ({
-  //     ...item,
-  //     visualizar: false,
-  //     editar: false,
-  //   }))
-  // );
+  const { factoryJobs } = props;
 
-  const factoryId = 1;
-
-  useEffect(() => {
-    dispatch(getJobsByFactoryId(factoryId));
-  }, [dispatch]);
+  const [jobClicked, setJobClicked] = useState({});
+  const [chips, setChips] = useState([]);
+  const [descricao, setDescricao] = useState(formatEditorInput(""));
+  const [requisitos, setRequisitos] = useState(formatEditorInput(""));
 
   const aparece = (position, field) => {
     const updatedItems = factoryJobs?.map((item) => {
       if (item.id === position) {
-        if (item.editar === false) {
-          dispatch(setJobClicked(item));
-        } else {
-          dispatch(setJobClicked(undefined));
-        }
+        setJobClicked({
+          // ...item,
+          titulo: item?.title,
+          tipo: item?.category?.id,
+          area: item?.area?.id,
+          nivel: item?.seniority?.id,
+          cidade: item?.address,
+          pcd: item?.isForPCD ? "SIM" : "NÃO",
+          // ====================================
+          cargo: "", // jobClicked.role, // "ALTERAR DEPOIS", // precisa vir da API
+        });
+        setChips(item?.synonymsArray);
+        const descricaoDaAPI = item?.description;
+        setDescricao(formatEditorInput(descricaoDaAPI));
+        const reqDaAPI = item?.requirements;
+        setRequisitos(formatEditorInput(reqDaAPI));
+
         return {
           ...item,
           visualizar: false,
@@ -73,18 +76,18 @@ export default function MinhasVagas(props) {
         </Typography>
       </Top>
 
-      {factoryJobs?.map((item, index) => (
-        <div key={item.id}>
+      {factoryJobs?.map((item) => (
+        <div key={item?.id}>
           <PaperStyled>
             <DivStyled>
               <div id="img-wrapper">
                 <img src={image} alt="logo empresa" />
               </div>
               <div id="content-wrapper">
-                <Typography variant="h3">{item.title}</Typography>
+                <Typography variant="h3">{item?.title}</Typography>
 
                 <Typography>
-                  zzzz <span id="date">yyyy</span>
+                  {item?.area?.name} <span id="date">yyyy</span>
                 </Typography>
               </div>
             </DivStyled>
@@ -129,11 +132,23 @@ export default function MinhasVagas(props) {
           </PaperStyled>
 
           <HandleDiv display={item.visualizar}>
-            <Candidaturas />
+            <Candidaturas
+              jobClicked={jobClicked}
+              setJobClicked={setJobClicked}
+            />
           </HandleDiv>
 
           <HandleDiv display={item.editar} margin="5vh">
-            <EditarVaga />
+            <EditarVaga
+              jobClicked={jobClicked}
+              setJobClicked={setJobClicked}
+              chips={chips}
+              setChips={setChips}
+              descricao={descricao}
+              setDescricao={setDescricao}
+              requisitos={requisitos}
+              setRequisitos={setRequisitos}
+            />
           </HandleDiv>
         </div>
       ))}

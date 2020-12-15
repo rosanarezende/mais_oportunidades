@@ -44,13 +44,13 @@ export const Form = styled.form`
   }
 
   .dez {
-    width: 10%;
+    width: 16%;
   }
   .vinte {
     width: 20%;
   }
   .trinta {
-    width: 29%;
+    width: 27%;
   }
   .quarenta {
     width: 40%;
@@ -59,7 +59,7 @@ export const Form = styled.form`
     width: 59%;
   }
   .setenta {
-    width: 70%;
+    width: 72%;
   }
   .dez,
   .vinte,

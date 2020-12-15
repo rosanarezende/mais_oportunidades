@@ -1,7 +1,3 @@
-import {
-  useState,
-  // useEffect
-} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EditorState } from "draft-js";
 
@@ -14,58 +10,30 @@ import { PaperStyled, Form, ChipInputStyled } from "../../CriarVaga/styles";
 
 import EditorInput, {
   formatEditorOutput,
-  formatEditorInput,
 } from "../../../../../components/EditorInput";
 
-export default function EditarVaga() {
+export default function EditarVaga(props) {
   const dispatch = useDispatch();
+  const {
+    jobClicked,
+    setJobClicked,
+    chips,
+    setChips,
+    descricao,
+    setDescricao,
+    requisitos,
+    setRequisitos,
+  } = props;
+
+  const descricaoFormatada = formatEditorOutput(descricao);
+  const requisitosFormatado = formatEditorOutput(requisitos);
+
   const { workerCategories } = useSelector(
     (state) => state.workerCategoryReducer
   );
   const { areas } = useSelector((state) => state.areaReducer);
   const { seniorities } = useSelector((state) => state.seniorityReducer);
   const textFields = textFieldsContent(workerCategories, areas, seniorities);
-
-  const { jobClicked } = useSelector((state) => state.jobsReducer);
-  // console.log(jobClicked);;;;
-
-  const [input, setInput] = useState({
-    titulo: "",
-    tipo: "",
-    area: "",
-    nivel: "",
-    cidade: "",
-    pcd: "",
-    // ====================================
-    cargo: "", // "ALTERAR DEPOIS", // precisa vir da API
-  });
-  console.log(input);
-
-  const [chips, setChips] = useState(["aaa", "bbb"]);
-  
-  const descricaoDaAPI = "<p>Teste</p><ul><li>oie</li></ul>";
-  const [descricao, setDescricao] = useState(formatEditorInput(descricaoDaAPI));
-  const descricaoFormatada = formatEditorOutput(descricao);
-  
-  const reqDaAPI = "<p>Teste</p><ul><li>oie</li><li>oie</li></ul>";
-  const [requisitos, setRequisitos] = useState(formatEditorInput(reqDaAPI));
-  const requisitosFormatado = formatEditorOutput(requisitos);
-  // ====================================
-
-    // useEffect(() => {
-  //   if(jobClicked){
-  //     setInput({
-  //       titulo: jobClicked.title,
-  //       tipo: jobClicked.category.id,
-  //       area: jobClicked.area.id,
-  //       nivel: jobClicked.seniority.id,
-  //       cidade: jobClicked.address,
-  //       pcd: jobClicked.isForPCD ? "SIM" : "NÃO",
-  //       // ====================================
-  //       cargo: 1, // "ALTERAR DEPOIS", // precisa vir da API
-  //     })
-  //   }
-  // }, [jobClicked])
 
   const handleAddChip = (chip) => {
     const newChips = [...chips, chip];
@@ -79,8 +47,8 @@ export default function EditarVaga() {
 
   const changeInput = (e) => {
     const { name, value } = e.target;
-    setInput({
-      ...input,
+    setJobClicked({
+      ...jobClicked,
       [name]: value,
     });
   };
@@ -88,10 +56,10 @@ export default function EditarVaga() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(input, chips, descricaoFormatada, requisitosFormatado);
+    console.log(jobClicked, chips, descricaoFormatada, requisitosFormatado);
 
     //limpar campos
-    setInput({});
+    setJobClicked({});
     setChips([]);
     setDescricao(EditorState.createEmpty());
     setRequisitos(EditorState.createEmpty());
@@ -112,7 +80,7 @@ export default function EditarVaga() {
               select={item.select}
               type={item.tipo}
               name={item.name}
-              value={input[item.name] || ""}
+              value={jobClicked[item.name] || ""}
               onChange={changeInput}
               variant="outlined"
               size="small"

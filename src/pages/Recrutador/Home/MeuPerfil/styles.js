@@ -66,18 +66,27 @@ export const Form = styled.form`
         margin-bottom: 2vh;
         gap: 15px;
 
-        .sessenta {
-          width: 59%;
-          @media screen and (max-width: 900px) {
-            width: 100%;
-          }
-        }
         .quarenta {
           width: 38%;
           @media screen and (max-width: 900px) {
             width: 100%;
           }
         }
+
+        .cinquenta {
+          width: 48.5%;
+          @media screen and (max-width: 900px) {
+            width: 100%;
+          }
+        }
+
+        .sessenta {
+          width: 59%;
+          @media screen and (max-width: 900px) {
+            width: 100%;
+          }
+        }
+        
         #autocomplete {
           text-align: center;
         }

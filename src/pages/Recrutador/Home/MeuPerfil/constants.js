@@ -4,7 +4,6 @@ export const breadcrumbInfo = [
   { nome: "Meu Peril" },
 ];
 
-
 export const textFieldsContent = [
   {
     name: "empresa",
@@ -24,6 +23,6 @@ export const textFieldsContent = [
     name: "localizacao",
     label: "LOCALIZAÇÃO",
     type: "email",
-    className: "sessenta",
+    className: "cinquenta",
   },
 ];

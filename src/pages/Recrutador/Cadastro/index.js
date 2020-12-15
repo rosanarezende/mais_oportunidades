@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 
 import { setAlert } from "../../../actions/alert";
 
+import { createFactory } from "../../../providers/factory";
+
 import { textFieldsContent } from "./constants";
 
 import { Button, TextField, Typography } from "@material-ui/core";
@@ -60,13 +62,14 @@ function CadastroRecrutador() {
       dispatch(setAlert(true, "Senhas não conferem!"));
     } else {
       const data = {
-        nome,
-        email,
+        name: nome,
         cnpj: cnpjFormatted,
-        senha,
+        email,
+        password: senha,
+        confirmPassword: confirmacao,
       };
-      console.log(data);
-      // setInput({});
+      dispatch(createFactory(data));
+      setInput({});
     }
   };
 

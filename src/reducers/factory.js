@@ -1,5 +1,5 @@
 const initialState = {
-  factory: {},
+  factory: undefined,
   factories: [],
 };
 

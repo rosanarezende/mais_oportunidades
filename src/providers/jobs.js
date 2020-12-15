@@ -54,28 +54,15 @@ export const getJobsByFactoryId = (factoryId) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
     const response = await axiosProvider.get(`/jobs?factoryID=${factoryId}`);
-    //apagar quando consertar
     if (response.data.error) {
-      dispatch(
-        setJobsByFactoryId(
-          [
-            { id: 1, title: "aaa" },
-            { id: 2, title: "bbb" },
-            { id: 3, title: "ccc" },
-          ].map((item) => ({
-            ...item,
-            visualizar: false,
-            editar: false,
-          }))
-          // []
-        )
-      );
+      dispatch(setJobsByFactoryId([]));
     } else {
       const formatResponse = response.data.map((item) => ({
         ...item,
         visualizar: false,
         editar: false,
       }));
+      // console.log("formatado", formatResponse);
       dispatch(setJobsByFactoryId(formatResponse));
     }
     dispatch(setLoading(false));

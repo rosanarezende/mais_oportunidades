@@ -1,6 +1,7 @@
 const initialState = {
   // segment: {},
   segments: [],
+  segmentCreated: undefined,
 };
 
 const segmentReducer = (state = initialState, action) => {
@@ -15,6 +16,12 @@ const segmentReducer = (state = initialState, action) => {
       return {
         ...state,
         segments: action.payload.segments,
+      };
+
+    case "SET_CREATED_SEGMENT":
+      return {
+        ...state,
+        segmentCreated: action.payload.segment,
       };
 
     default:

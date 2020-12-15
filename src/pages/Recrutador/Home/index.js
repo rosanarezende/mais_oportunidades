@@ -1,8 +1,14 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { EditorState } from "draft-js";
 
-import { setJobCreated } from "../../../actions/jobs"
+import { setJobCreated } from "../../../actions/jobs";
+
+import { getItem } from "../../../providers/storage";
+import { getJobsByFactoryId } from "../../../providers/jobs";
+import { getFactoryById } from "../../../providers/factory";
+
+import { cnpjMask } from "./constants";
 
 import { Paper } from "@material-ui/core";
 import { TabStyled, TabsStyled } from "./styles";
@@ -10,6 +16,7 @@ import { TabStyled, TabsStyled } from "./styles";
 import NavBar from "../../../components/NavBar";
 import PageWrapper from "../../../components/PageWrapper";
 import Footer from "../../../components/Footer";
+import { formatEditorInput } from "../../../components/EditorInput";
 
 import CriarVaga from "./CriarVaga";
 import MeuPerfil from "./MeuPerfil";
@@ -24,16 +31,33 @@ function a11yProps(index) {
 
 export default function HomeRecrutador() {
   const dispatch = useDispatch();
+
   const [value, setValue] = useState(0);
+
   const [input, setInput] = useState({});
+
+  const [perfil, setPerfil] = useState({});  
+  const [perfilDescricao, setPerfilDescricao] = useState(EditorState.createEmpty());
+  const [segmentId, setSegmentId] = useState(undefined);
+
   const [chips, setChips] = useState([]);
   const [buttonActive, setButtonctive] = useState(false);
   const [descricao, setDescricao] = useState(EditorState.createEmpty());
   const [requisitos, setRequisitos] = useState(EditorState.createEmpty());
+
+  const { factoryJobs } = useSelector((state) => state.jobsReducer);
+  const { factory } = useSelector((state) => state.factoryReducer);
+
+  const factoryId = getItem("auth-user").id;
   const tabs = ["Criar Vaga", "Minhas Vagas", "Perfil"];
 
-  const handleChange = (event, newValue) => {
+  useEffect(() => {
+    dispatch(getJobsByFactoryId(factoryId));
+    dispatch(getFactoryById(factoryId));
+  }, [dispatch, factoryId]);
 
+  const handleChange = (event, newValue) => {
+    // console.log(newValue);
     setValue(newValue);
     if (newValue !== 0) {
       setInput({});
@@ -42,10 +66,27 @@ export default function HomeRecrutador() {
       setRequisitos(EditorState.createEmpty());
       setButtonctive(false);
       dispatch(setJobCreated(undefined));
+      if (newValue === 2) {
+        const descriptionAtAPI = factory.description
+          ? formatEditorInput(factory.description)
+          : EditorState.createEmpty();
+          // console.log(factory, "essa")
+        setPerfil({
+          cnpj: cnpjMask(factory.cnpj),
+          empresa: factory.name,
+          localizacao: factory.address,
+          descricao: descriptionAtAPI,
+          segmento: factory.segment,
+          publicada: factory.isActive,
+        });
+        setPerfilDescricao(descriptionAtAPI)
+        setSegmentId(factory.segment?.id)
+      }
     } else {
       setInput({
         ...input,
-        cidade: "São Paulo"
+        factory_id: factoryId,
+        cidade: "São Paulo",
       });
     }
   };
@@ -82,9 +123,22 @@ export default function HomeRecrutador() {
           setInput={setInput}
           chips={chips}
           setChips={setChips}
+          factoryId={factoryId}
         />
-        <MinhasVagas value={value} index={1}  />
-        <MeuPerfil value={value} index={2}  />
+
+        <MinhasVagas value={value} index={1} factoryJobs={factoryJobs} />
+
+        <MeuPerfil
+          value={value}
+          index={2}
+          factoryId={factoryId}
+          perfil={perfil}
+          setPerfil={setPerfil}
+          perfilDescricao={perfilDescricao} 
+          setPerfilDescricao={setPerfilDescricao}
+          segmentId={segmentId} 
+          setSegmentId={setSegmentId}
+        />
       </PageWrapper>
 
       <Footer />

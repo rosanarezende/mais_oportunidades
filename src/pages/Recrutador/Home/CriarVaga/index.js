@@ -42,6 +42,7 @@ export default function CriarVaga(props) {
     setInput,
     chips,
     setChips,
+    factoryId,
   } = props;
 
   const { jobCreated } = useSelector((state) => state.jobsReducer);
@@ -84,7 +85,7 @@ export default function CriarVaga(props) {
     e.preventDefault();
     const isPublish = false;
     const data = {
-      factory_id: 1, //num - trocar pela API
+      factory_id: factoryId,
       isPublish,
       title: input.titulo,
       address: input.cidade,
@@ -111,8 +112,7 @@ export default function CriarVaga(props) {
       isPublish: true,
       title: input.titulo,
     };
-    // tô colocando factory_id mocado ainda
-    dispatch(editJob(jobCreated.id, 1, data)).then(() => {
+    dispatch(editJob(jobCreated.id, factoryId, data)).then(() => {
       setInput({});
       setChips([]);
       setDescricao(EditorState.createEmpty());
