@@ -64,7 +64,7 @@ export default function LandingPage() {
             <Typography variant="h2" gutterBottom>
               QUEM SOMOS
             </Typography>
-            <Typography variant="h5" component="body1">
+            <Typography variant="h5" component="p">
               Somos uma plataforma de intermediação exclusiva para a comunidade
               LGBTQ+, que conecta esses profissionais a empresas comprometidas
               em receber e acolhe-los através de vagas inclusivas.

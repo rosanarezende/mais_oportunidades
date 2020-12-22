@@ -123,20 +123,14 @@ function Resultados(props) {
                     {job.factory?.name?.toUpperCase()}
                   </FactoryName>
                   <Typography variant="body2" component="p">
-                    
-                    
-                    
                     {job.address}
-                  
-                  
-                  
                   </Typography>
                 </div>
                 <DetailButton
                   variant="contained"
                   color="primary"
                   onClick={() => verDetalhes(job?.id)}
-                  gutterBottom
+                  // gutterBottom
                 >
                   Ver detalhes
                 </DetailButton>

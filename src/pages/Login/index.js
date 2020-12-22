@@ -85,7 +85,7 @@ function Login() {
               id="link-wrapper"
               onClick={() => dispatch(push(routes.esqueciASenha))}
             >
-              <Typography variant="overline" align="center">
+              <Typography variant="overline" component="p" align="center">
                 Esqueci minha senha
               </Typography>
             </div>

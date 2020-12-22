@@ -17,11 +17,15 @@ import Filtros from "./Filtros";
 
 export default function BuscarVagas() {
   const dispatch = useDispatch();
-
   const { inputSearch } = useSelector((state) => state.search);
   const { jobs } = useSelector((state) => state.jobsReducer);
 
   const [open, setOpen] = useState(false);
+  const [buscar, setBuscar] = useState(false);
+  const [pararBusca, setPararBusca] = useState(false);
+
+  const [vacancyIdSelected, setVacancyIdSelected] = useState("");
+  const [isPDC, setIsPDC] = useState(false);
   const [alert, setAlert] = useState({
     open: false,
     message: "",
@@ -32,12 +36,6 @@ export default function BuscarVagas() {
     empresa: "",
     area: "",
   });
-  const [vacancyIdSelected, setVacancyIdSelected] = useState("");
-  const [buscar, setBuscar] = useState(false);
-  const [pararBusca, setPararBusca] = useState(false);
-  const [isPDC, setIsPDC] = useState(false);
-
-  let result = [];
 
   useEffect(() => {
     dispatch(getAllJobs());
@@ -50,13 +48,14 @@ export default function BuscarVagas() {
       .replace(/[\u0300-\u036f]/g, "");
   };
 
+  let result = [];
   if (inputSearch !== "") {
     result = jobs?.filter((job) => {
       const roleInAPI = formatString(job?.role).includes(
         formatString(inputSearch)
       );
-      const synonymInAPI = job.synonymsArray
-        .map((synonym) =>
+      const synonymInAPI = job?.synonymsArray
+        ?.map((synonym) =>
           formatString(synonym).includes(formatString(inputSearch))
         )
         .filter((result) => result === true)[0];
@@ -78,8 +77,8 @@ export default function BuscarVagas() {
         const roleInAPI = formatString(job?.role).includes(
           formatString(input.cargo)
         );
-        const synonymInAPI = job.synonymsArray
-          .map((synonym) =>
+        const synonymInAPI = job?.synonymsArray
+          ?.map((synonym) =>
             formatString(synonym).includes(formatString(input.cargo))
           )
           .filter((result) => result === true)[0];
@@ -110,12 +109,9 @@ export default function BuscarVagas() {
     result = resultAll;
   }
 
-  const handleClose = (event, reason) => {
+  const handleClose = (e, reason) => {
     if (reason === "clickaway") return;
-    setAlert({
-      ...alert,
-      open: false,
-    });
+    setAlert({ ...alert, open: false });
   };
 
   return (

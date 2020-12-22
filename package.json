@@ -14,6 +14,7 @@
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "history": "^4.10.1",
+    "html-react-parser": "^1.0.0",
     "material-ui-chip-input": "^2.0.0-beta.2",
     "material-ui-markdown-editor": "^1.0.10",
     "react": "^17.0.1",
