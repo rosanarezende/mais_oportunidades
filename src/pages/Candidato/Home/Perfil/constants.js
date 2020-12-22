@@ -1,4 +1,23 @@
 import { InputAdornment } from "@material-ui/core";
+import axios from "axios";
+
+export const cepMask = (value) => {
+  return value
+    .replace(/\D/g, "")
+    .replace(/(\d{5})(\d{1,2})/, "$1-$2")
+    .replace(/(-\d{3})\d+?$/, "$1");
+};
+
+export const removecepMask = (value) => value.replace(/[-]/g, "");
+
+export const getAdress = async (value) => {
+  try {
+    return await axios.get(`https://viacep.com.br/ws/${value}/json/`);
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
+};
 
 export const dadosContent = [
   {
@@ -27,54 +46,48 @@ export const dadosContent = [
   },
 ];
 
-export const enderecoContent = [
+export const enderecoContent = (errorCEP) => [
   {
     name: "cep",
     label: "CEP",
     type: "text",
     className: "four",
-    // required: true,
-    // shrink: true,
+    pattern: "[0-9]{5,}[-]{1,}[0-9]{3,}",
+    title: "Digite seu CEP com números e traço.",
+    helperText: errorCEP
+      ? "CEP inválido! São necessários 8 números e traço"
+      : "",
+    error: errorCEP,
   },
   {
     name: "logradouro",
     label: "LOGRADOURO",
     type: "text",
     className: "two",
-    // required: true,
-    // shrink: true,
   },
   {
     name: "numero",
     label: "NÚMERO",
     type: "text",
     className: "four",
-    // required: true,
-    // shrink: true,
   },
   {
     name: "bairro",
     label: "BAIRRO",
     type: "text",
     className: "three",
-    // required: true,
-    // shrink: true,
   },
   {
     name: "cidade",
     label: "CIDADE",
     type: "text",
     className: "three",
-    // required: true,
-    // shrink: true,
   },
   {
     name: "estado",
     label: "ESTADO",
     type: "text",
     className: "three",
-    // required: true,
-    // shrink: true,
   },
 ];
 

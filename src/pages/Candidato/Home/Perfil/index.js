@@ -3,7 +3,14 @@ import { useDispatch } from "react-redux";
 
 import { setAlert } from "../../../../actions/alert";
 
-import { dadosContent, enderecoContent, acessoContent } from "./constants";
+import {
+  dadosContent,
+  enderecoContent,
+  acessoContent,
+  cepMask,
+  removecepMask,
+  getAdress,
+} from "./constants";
 
 import { Typography, TextField, Button } from "@material-ui/core";
 import { PaperStyled, Top, Form } from "./styles";
@@ -26,11 +33,11 @@ export default function PerfilCandidato(props) {
     bairro: "",
     cidade: "",
     estado: "",
-    
+
     email: "email@email.com",
     senhaAtual: "",
     novaSenha: "",
-    confirm: ""
+    confirm: "",
   });
 
   const [hidenOldPassword, setHidenOldPassword] = useState(false);
@@ -44,6 +51,8 @@ export default function PerfilCandidato(props) {
     hidenConfirm,
     setHidenConfirm
   );
+  const [errorCEP, setErrorCEP] = useState(false);
+  const enderecoInputs = enderecoContent(errorCEP);
 
   const breadcrumbInfo = [
     { nome: "Home", rota: "/" },
@@ -53,15 +62,57 @@ export default function PerfilCandidato(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    //limpar campos
-    // setInput({})
     dispatch(setAlert(true, "Cadastro atualizado com sucesso."));
+  };
+
+  const validateCep = (value) => {
+    const cepNumbers = removecepMask(value);
+    if (cepNumbers?.length === 8) {
+      getAdress(cepNumbers).then((result) => {
+        if (result.data.erro === undefined) {
+          // console.log(result.data);
+          const { logradouro, bairro, localidade, uf, cep } = result.data;
+          setInput({
+            ...input,
+            cep,
+            logradouro,
+            bairro,
+            cidade: localidade,
+            estado: uf,
+            // numero: "",
+          });
+        } else {
+          dispatch(setAlert(true, "CEP não encontrado."));
+          setInput({
+            ...input,
+            cep: "", // value,
+            logradouro: "",
+            numero: "",
+            bairro: "",
+            cidade: "",
+            estado: "",
+          });
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const changeInput = (e) => {
     const { name, value } = e.target;
-    setInput({ ...input, [name]: value });
+    if (name === "cep") {
+      console.log(cepMask(value));
+      setInput({ ...input, cep: cepMask(value) });
+      if (!validateCep(value)) {
+        setErrorCEP(true);
+      } else {
+        setErrorCEP(false);
+      }
+    } else {
+      setInput({ ...input, [name]: value });
+    }
   };
 
   return (
@@ -78,8 +129,9 @@ export default function PerfilCandidato(props) {
             DADOS PESSOAIS
           </Typography>
           <div>
-            {dadosContent.map((item) => (
+            {dadosContent.map((item, index) => (
               <TextField
+                key={index}
                 required
                 disabled={item.disabled}
                 className={item.className}
@@ -110,8 +162,9 @@ export default function PerfilCandidato(props) {
             ENDEREÇO
           </Typography>
           <div>
-            {enderecoContent.map((item) => (
+            {enderecoInputs.map((item, index) => (
               <TextField
+                key={index}
                 required={item.required}
                 disabled={item.disabled}
                 className={item.className}
@@ -134,6 +187,8 @@ export default function PerfilCandidato(props) {
                     },
                   },
                 }}
+                error={item.error}
+                helperText={item.helperText}
               />
             ))}
           </div>
@@ -142,8 +197,9 @@ export default function PerfilCandidato(props) {
             ACESSO
           </Typography>
           <div>
-            {acessoInputs.map((item) => (
+            {acessoInputs.map((item, index) => (
               <TextField
+                key={index}
                 required={item.required}
                 disabled={item.disabled}
                 className={item.className}

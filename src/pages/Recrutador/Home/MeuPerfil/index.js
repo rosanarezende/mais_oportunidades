@@ -8,12 +8,7 @@ import { editFactory } from "../../../../providers/factory";
 import { breadcrumbInfo, textFieldsContent } from "./constants";
 
 import image from "../../../../assets/image.jpg";
-import {
-  Typography,
-  TextField,
-  Button,
-  // Tooltip
-} from "@material-ui/core";
+import { Typography, TextField, Button } from "@material-ui/core";
 import Autocomplete, {
   createFilterOptions,
 } from "@material-ui/lab/Autocomplete";
@@ -68,7 +63,6 @@ export default function MeuPerfil(props) {
       isActive: publicada,
       segment_id: segmentId,
     };
-    // console.log(newData);
     dispatch(editFactory(factoryId, newData)).then(() =>
       dispatch(setAlert(true, "Perfil atualizado com sucesso."))
     );
@@ -93,7 +87,6 @@ export default function MeuPerfil(props) {
       isActive: false,
       segment_id: segmentId,
     };
-    // console.log(newData);
     dispatch(editFactory(factoryId, newData)).then(() =>
       dispatch(setAlert(true, "Perfil despublicado com sucesso."))
     );
@@ -110,7 +103,6 @@ export default function MeuPerfil(props) {
 
       <PaperStyled>
         <Form>
-          {/* onSubmit={handleSubmit} */}
           <div id="content-wrapper">
             <div id="img-wrapper">
               <img src={image} alt="logo empresa" />
@@ -229,12 +221,6 @@ export default function MeuPerfil(props) {
                 PUBLICAR
               </Button>
             )}
-
-            {/* <Tooltip title="Salve o perfil antes de publicar">
-              <span> */}
-
-            {/* </span>
-            </Tooltip> */}
           </div>
         </Form>
       </PaperStyled>
