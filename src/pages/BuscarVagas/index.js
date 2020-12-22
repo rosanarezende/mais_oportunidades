@@ -124,14 +124,14 @@ export default function BuscarVagas() {
       <PageWrapper>
         <Top>
           <div>
-            <Typography variant="body2" gutterBottom>
+            <Typography variant="body2" component="p" gutterBottom>
               Resultado para "busca"
             </Typography>
             <Typography variant="h4" component="h2">
               <strong>BUSCAR VAGAS</strong>
             </Typography>
           </div>
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" component="p" gutterBottom>
             {result?.length > 0
               ? `${result.length} vagas encontradas`
               : result?.length === 1

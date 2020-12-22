@@ -29,7 +29,7 @@ export default function Footer() {
         onClick={() => dispatch(push(routes.landingPage))}
       />
 
-      <TypographyStyled variant="body2">
+      <TypographyStyled variant="body2" component="p">
         Termos e condições | Politica de privacidade
       </TypographyStyled>
 

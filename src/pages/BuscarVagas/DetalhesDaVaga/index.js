@@ -57,30 +57,30 @@ export default function DetalhesDaVaga(props) {
             gap: "5px",
           }}
         >
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" component="p" gutterBottom>
             <span>
               <Span>Nível</Span>: {job.seniority?.name}
             </span>
           </Typography>
 
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" component="p" gutterBottom>
             <span>
               <Span>Tipo de contratação</Span>: {job.category?.name}
             </span>
           </Typography>
 
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" component="p" gutterBottom>
             <span>
               <Span>Área</Span>: {job.area?.name}
             </span>
           </Typography>
         </div>
 
-        <Typography variant="body1" gutterBottom>
+        <Typography variant="body1" component="p" gutterBottom>
           {job.description}
         </Typography>
 
-        <Typography variant="body1" gutterBottom>
+        <Typography variant="body1" component="p" gutterBottom>
           <span>
             <Span>Requisitos</Span>:
           </span>
@@ -88,7 +88,7 @@ export default function DetalhesDaVaga(props) {
         </Typography>
 
         {job.isForPCD && (
-          <Typography variant="body2" gutterBottom align="center">
+          <Typography variant="body2" component="p" gutterBottom align="center">
             Aceita candidaturas <strong>PDC</strong>
           </Typography>
         )}
