@@ -11,3 +11,11 @@ export const setAllSegments = (segments) => ({
     segments,
   },
 });
+
+export const setCreatedSegment = (segment) => ({
+  type: "SET_CREATED_SEGMENT",
+  payload: {
+    segment,
+  },
+});
+

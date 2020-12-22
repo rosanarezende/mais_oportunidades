@@ -117,6 +117,6 @@ export const ButtonsWrapper = styled.div`
 `;
 
 export const HandleDiv = styled.div`
-  display: ${(props) => (props.display ? "flex" : "none")};
+  display: ${(props) => props.display};
   margin-bottom: ${(props) => props.margin};
 `;

@@ -1,7 +1,9 @@
 import { Button, Typography } from "@material-ui/core";
 import { PaperStyled, NumbersWrapper, ItensWrapper } from "./styles";
 
-function Candidaturas() {
+function Candidaturas({ jobClicked, setJobClicked }) {
+  // console.log("cand", jobClicked);
+
   return (
     <PaperStyled>
       <NumbersWrapper>
@@ -11,8 +13,8 @@ function Candidaturas() {
         </Typography>
       </NumbersWrapper>
       <ItensWrapper>
-        {[1, 2, 3, 4, 5, 6].map((item) => (
-          <div id="item">
+        {[1, 2, 3, 4, 5, 6].map((item, index) => (
+          <div id="item" key={index}>
             <Typography variant="h4" component="p">
               Fulano de Tal
             </Typography>

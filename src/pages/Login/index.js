@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 
-// import { setAlert } from "../../../actions/alert";
-
 import { routes } from "../../routes";
+
+import { userLogin } from "../../providers/authentication";
 
 import { Button, TextField, Typography } from "@material-ui/core";
 import { PageContent, PaperStyled } from "./styles";
@@ -32,10 +32,13 @@ function Login() {
   const handleSubmission = (e) => {
     e.preventDefault();
     const { email, senha } = input;
-
-    console.log(email, senha);
-    // setInput({});
-    // dispatch(setAlert(true, "Senhas não conferem!"));
+    dispatch(
+      userLogin({
+        email,
+        password: senha,
+      })
+    );
+    setInput({});
   };
 
   return (

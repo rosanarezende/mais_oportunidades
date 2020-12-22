@@ -36,7 +36,7 @@ function Resultados(props) {
   };
 
   const enviarEmail = () => {
-    console.log(email);
+    // console.log(email);
     if (email === "") {
       setAlert({
         open: true,
@@ -77,10 +77,10 @@ function Resultados(props) {
       <Typography align="center" variant="h6" component="h6" gutterBottom>
         Nenhuma vaga encontrada :(
       </Typography>
-      <Typography variant="body1" align="center" gutterBottom>
+      <Typography variant="body1" component="p" align="center" gutterBottom>
         Sentimos muito, não foi possível encontrar vagas com o termo buscado.
       </Typography>
-      <Typography variant="body1" align="center" gutterBottom>
+      <Typography variant="body1" component="p" align="center" gutterBottom>
         Deixe seu e-mail abaixo que assim que tivermos uma vaga publicada de
         acordo com a sua pesquisa, você será notificado.
       </Typography>
@@ -119,10 +119,18 @@ function Resultados(props) {
                   <Typography variant="h6" component="h2">
                     {job.role?.toUpperCase()}
                   </Typography>
-                  <FactoryName variant="body1">
+                  <FactoryName variant="body1" component="p">
                     {job.factory?.name?.toUpperCase()}
                   </FactoryName>
-                  <Typography variant="body2">{job.address}</Typography>
+                  <Typography variant="body2" component="p">
+                    
+                    
+                    
+                    {job.address}
+                  
+                  
+                  
+                  </Typography>
                 </div>
                 <DetailButton
                   variant="contained"

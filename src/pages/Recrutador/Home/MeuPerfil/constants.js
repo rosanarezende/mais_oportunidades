@@ -1,9 +1,8 @@
 export const breadcrumbInfo = [
   { nome: "Home", rota: "/" },
   { nome: "Sou Recrutador", rota: "/recrutador" },
-  { nome: "Meu Peril" },
+  { nome: "Meu PerFil" },
 ];
-
 
 export const textFieldsContent = [
   {
@@ -24,6 +23,6 @@ export const textFieldsContent = [
     name: "localizacao",
     label: "LOCALIZAÇÃO",
     type: "email",
-    className: "sessenta",
+    className: "cinquenta",
   },
 ];

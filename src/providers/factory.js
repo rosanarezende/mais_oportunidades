@@ -1,25 +1,20 @@
 import axiosProvider from "./axios";
+import { userLogin } from "./authentication";
 import { setAlert } from "../actions/alert";
 import { setLoading } from "../actions/loading";
 import { setAllFactories, setFactoryById } from "../actions/factory";
+import { getToken } from "./storage";
 
-/*
-{
-  "name": "Evandra empresa",
-  "cnpj": "1234545",
-  "description": "Empresa mais top de todas do mundo",
-  "mobilephone": "13997747643",
-  "address": "rua cidade de osasco",
-  "isActive": false,
-  "segment_id": 1
-}
-Obs: Não está sendo utilizado email e senha durante a criação por enquanto.
-*/
 export const createFactory = (info) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    await axiosProvider.post(`/factory`, info);
+    const response = await axiosProvider.post(`/factory`, info);
     dispatch(setAlert(true, "Empresa cadastrada com sucesso!"));
+    const data = {
+      email: response.data.email,
+      password: response.data.password,
+    };
+    dispatch(userLogin(data));
   } catch (error) {
     dispatch(setAlert(true, "Ocorreu um erro no cadastro da empresa.")); // colocar mensagem correta
     throw error;
@@ -38,26 +33,37 @@ export const getFactoryById = (factoryId) => async (dispatch) => {
   dispatch(setLoading(false));
 };
 
+
 /*
 {
-  "nameFactory": "nome"
+     --- "id": 1,
+    "name": "IBM teste",
+    "cnpj": "12345678912645",
+    "description": "a descrição é esssa bla bla bla bla dskdihdisdwfd  jebnfcbnerihncirnr fdfdrfreferrredfverfv gtrgrtgrtgrgvb",
+    --- "mobilephone": null,
+    "address": "rua cidade de osasco 486",
+    "isActive": false,
+    "segment": null
 }
-Atualmente é possível apenas alterar o nome da empresa.
-(Rota sofrerá muitas atualizações)
 */
 export const editFactory = (factoryId, info) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    await axiosProvider.put(`/factory/${factoryId}`, info);
+    await axiosProvider.put(`/factory/${factoryId}`, info, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
     dispatch(getFactoryById(factoryId));
-    dispatch(setAlert(true, "Informações da empresa atualizadas com sucesso")); // ver se é esse o texto
+    // dispatch(setAlert(true, "Informações da empresa atualizadas com sucesso")); // ver se é esse o texto
+    dispatch(setLoading(false));
   } catch (error) {
     dispatch(
       setAlert(true, "Problema na atualização das informações da empresa")
     ); // ver se é isso mesmo
+    dispatch(setLoading(false));
     throw error;
   }
-  dispatch(setLoading(false));
 };
 
 // TODO: mudar pra true quando tiver alguma empresa ativa

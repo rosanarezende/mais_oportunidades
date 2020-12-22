@@ -8,7 +8,12 @@ import {
 import draftToHtml from "draftjs-to-html";
 import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-export default function EditorInput({ editorState, setEditorState, text }) {
+export default function EditorInput({
+  editorState,
+  setEditorState,
+  text,
+  readOnly,
+}) {
   const onEditorStateChange = (newEditorState) => {
     setEditorState(newEditorState);
   };
@@ -31,6 +36,7 @@ export default function EditorInput({ editorState, setEditorState, text }) {
         borderRadius: "6px",
       }}
       placeholder={text || ""}
+      readOnly={readOnly}
     />
   );
 }
@@ -38,10 +44,6 @@ export default function EditorInput({ editorState, setEditorState, text }) {
 export const formatEditorOutput = (data) => {
   return draftToHtml(convertToRaw(data.getCurrentContent()));
 };
-/* <textarea 
-  disabled
-  value={}
-/>; */
 
 export const formatEditorInput = (data) => {
   const blocksFromHTML = convertFromHTML(data);

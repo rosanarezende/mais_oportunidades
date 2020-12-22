@@ -1,25 +1,23 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { isLogin } from "../providers/authentication";
-// import Login from '../containers/Login/Login';
+import { routes } from "../routes";
 
-const PrivateRoute = ({
-  component: Component,
-  routeParameters,
-  key,
-  ...rest
-}) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const getRedirectProps = (location) => ({
+    pathname: routes.login,
+    from: location,
+  });
   return (
     <Route
       {...rest}
-      render={(props) =>
-        isLogin() ? (
-          <Component {...props} routeParameters={routeParameters} key={key} />
+      render={(props) => {
+        return isLogin() ? (
+          <Component {...props} />
         ) : (
-          // <Login />
-          <div></div>
-        )
-      }
+          <Redirect to={getRedirectProps(props.location)} />
+        );
+      }}
     />
   );
 };

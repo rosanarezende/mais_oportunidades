@@ -1,14 +1,19 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { EditorState } from "draft-js";
 
 import { setAlert } from "../../../../actions/alert";
 import { getAllSegments, createSegment } from "../../../../providers/segment";
+import { editFactory } from "../../../../providers/factory";
 
 import { breadcrumbInfo, textFieldsContent } from "./constants";
 
 import image from "../../../../assets/image.jpg";
-import { Typography, TextField, Button, Tooltip } from "@material-ui/core";
+import {
+  Typography,
+  TextField,
+  Button,
+  // Tooltip
+} from "@material-ui/core";
 import Autocomplete, {
   createFilterOptions,
 } from "@material-ui/lab/Autocomplete";
@@ -24,19 +29,28 @@ const filter = createFilterOptions();
 
 export default function MeuPerfil(props) {
   const dispatch = useDispatch();
+  const {
+    factoryId,
+    perfil,
+    setPerfil,
+    perfilDescricao,
+    setPerfilDescricao,
+    segmentId,
+    setSegmentId,
+  } = props;
+  const { empresa, cnpj, localizacao, publicada, segmento } = perfil;
+  const { segments, segmentCreated } = useSelector((s) => s.segmentReducer);
+  const cnpjFormatado = Number(cnpj?.replace(/[./-]/g, ""));
+  const descricaoFormatada = formatEditorOutput(perfilDescricao);
 
-  const [buttonActive, setButtonctive] = useState(false);
-  const [descricao, setDescricao] = useState(EditorState.createEmpty());
-  const descricaoFormatada = formatEditorOutput(descricao);
-
-  const [perfil, setPerfil] = useState({
-    cnpj: "00.000.000/0000-00",
-    empresa: "Empresa X",
-    local: "",
-  });
-  const [value, setValue] = useState(null);
-
-  const { segments } = useSelector((state) => state.segmentReducer);
+  const data = {
+    name: empresa,
+    cnpj: cnpjFormatado,
+    description: descricaoFormatada,
+    address: localizacao,
+    isActive: publicada,
+    segment_id: segmento?.id,
+  };
 
   useEffect(() => {
     dispatch(getAllSegments());
@@ -49,18 +63,40 @@ export default function MeuPerfil(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(perfil, value, descricaoFormatada);
-
-    // setDescricao(EditorState.createEmpty());
-    // setPerfil({})
-
-    dispatch(setAlert(true, "Perfil cadastrado com sucesso."));
-
-    setButtonctive(true);
+    const newData = {
+      ...data,
+      isActive: publicada,
+      segment_id: segmentId,
+    };
+    // console.log(newData);
+    dispatch(editFactory(factoryId, newData)).then(() =>
+      dispatch(setAlert(true, "Perfil atualizado com sucesso."))
+    );
   };
 
-  const publicarVaga = () => {
-    dispatch(setAlert(true, "Perfil publicado com sucesso."));
+  const publicarPerfil = () => {
+    setPerfil({ ...perfil, publicada: true });
+    const newData = {
+      ...data,
+      isActive: true,
+      segment_id: segmentId,
+    };
+    dispatch(editFactory(factoryId, newData)).then(() =>
+      dispatch(setAlert(true, "Perfil publicado com sucesso."))
+    );
+  };
+
+  const despublicarPerfil = () => {
+    setPerfil({ ...perfil, publicada: false });
+    const newData = {
+      ...data,
+      isActive: false,
+      segment_id: segmentId,
+    };
+    // console.log(newData);
+    dispatch(editFactory(factoryId, newData)).then(() =>
+      dispatch(setAlert(true, "Perfil despublicado com sucesso."))
+    );
   };
 
   return (
@@ -73,7 +109,7 @@ export default function MeuPerfil(props) {
       </Top>
 
       <PaperStyled>
-        <Form > 
+        <Form>
           {/* onSubmit={handleSubmit} */}
           <div id="content-wrapper">
             <div id="img-wrapper">
@@ -102,22 +138,24 @@ export default function MeuPerfil(props) {
                 ))}
 
                 <Autocomplete
-                  className="quarenta"
+                  className="cinquenta"
                   id="autocomplete"
-                  value={value}
-                  onChange={(event, newValue) => {
+                  value={perfil.segmento}
+                  onChange={(e, newValue) => {
                     if (typeof newValue === "string") {
-                      setValue({
-                        name: newValue,
-                      });
-                      dispatch(createSegment(newValue))
+                      setPerfil({ ...perfil, segmento: newValue });
+                      dispatch(createSegment(newValue));
+                      // console.log("enter", segmentCreated?.id);
+                      setSegmentId(segmentCreated?.id + 1);
                     } else if (newValue && newValue.inputValue) {
-                      setValue({
-                        name: newValue.inputValue,
-                      });
-                      dispatch(createSegment(newValue.inputValue))
+                      setPerfil({ ...perfil, segmento: newValue.inputValue });
+                      dispatch(createSegment(newValue.inputValue));
+                      // console.log("add",      segmentCreated?.id);
+                      setSegmentId(segmentCreated?.id + 1);
                     } else {
-                      setValue(newValue);
+                      setPerfil({ ...perfil, segmento: newValue?.name });
+                      // console.log(newValue?.id);
+                      setSegmentId(newValue?.id);
                     }
                   }}
                   filterOptions={(options, params) => {
@@ -156,32 +194,47 @@ export default function MeuPerfil(props) {
                   )}
                 />
               </div>
-              
+
               <EditorInput
-                editorState={descricao}
-                setEditorState={setDescricao}
+                editorState={perfilDescricao}
+                setEditorState={setPerfilDescricao}
                 text="DESCRITIVO"
               />
             </div>
           </div>
 
           <div id="button-wrapper">
-            <Button onClick={handleSubmit} variant="contained" color="secondary" type="button">
+            <Button
+              onClick={handleSubmit}
+              variant="contained"
+              color="secondary"
+              type="button"
+            >
               SALVAR
             </Button>
+            {perfil.publicada ? (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={despublicarPerfil}
+              >
+                DESPUBLICAR
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={publicarPerfil}
+              >
+                PUBLICAR
+              </Button>
+            )}
 
-            <Tooltip title="Salve o perfil antes de publicar">
-              <span>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={publicarVaga}
-                  disabled={!buttonActive}
-                >
-                  PUBLICAR
-                </Button>
-              </span>
-            </Tooltip>
+            {/* <Tooltip title="Salve o perfil antes de publicar">
+              <span> */}
+
+            {/* </span>
+            </Tooltip> */}
           </div>
         </Form>
       </PaperStyled>

@@ -15,6 +15,7 @@ const jobsReducer = (state = initialState, action) => {
       };
 
     case "SET_JOBS_BY_FACTORY_ID":
+      // console.log("payload", action.payload.jobs);
       return {
         ...state,
         factoryJobs: action.payload.jobs,

@@ -26,30 +26,28 @@ import EditorInput, {
   formatEditorOutput,
 } from "../../../../components/EditorInput";
 
-export default function CriarVaga(props) {
+export default function CriarVaga({
+  value,
+  index,
+  changeTab,
+  buttonActive,
+  setButtonctive,
+  descricao,
+  setDescricao,
+  requisitos,
+  setRequisitos,
+  input,
+  setInput,
+  chips,
+  setChips,
+  factoryId,
+}) {
   const dispatch = useDispatch();
-  const {
-    value,
-    index,
-    changeTab,
-    buttonActive,
-    setButtonctive,
-    descricao,
-    setDescricao,
-    requisitos,
-    setRequisitos,
-    input,
-    setInput,
-    chips,
-    setChips,
-  } = props;
 
-  const { jobCreated } = useSelector((state) => state.jobsReducer);
-  const { workerCategories } = useSelector(
-    (state) => state.workerCategoryReducer
-  );
-  const { areas } = useSelector((state) => state.areaReducer);
-  const { seniorities } = useSelector((state) => state.seniorityReducer);
+  const { jobCreated } = useSelector((s) => s.jobsReducer);
+  const { workerCategories } = useSelector((s) => s.workerCategoryReducer);
+  const { areas } = useSelector((s) => s.areaReducer);
+  const { seniorities } = useSelector((s) => s.seniorityReducer);
   const textFields = textFieldsContent(workerCategories, areas, seniorities);
 
   const descricaoFormatada = formatEditorOutput(descricao);
@@ -82,20 +80,19 @@ export default function CriarVaga(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isPublish = false;
     const data = {
-      factory_id: 1, //num - trocar pela API
-      isPublish,
       title: input.titulo,
       address: input.cidade,
-      role: 1, // input.cargo, //num - trocar pela API
+      description: descricaoFormatada,
+      role: input.cargo,
+      isPublish: false,
       isForPCD: input.pcd === "SIM" ? true : false,
+      synonymsArray: chips,
+      requirements: requisitosFormatado,
       categoryofworker_id: input.tipo,
       area_id: input.area,
       seniority_id: input.nivel,
-      synonymsArray: input.chips,
-      description: descricaoFormatada,
-      requirements: requisitosFormatado,
+      factory_id: factoryId,
     };
 
     // validar se descritivo da vaga e requisitos estão vazios?
@@ -107,12 +104,8 @@ export default function CriarVaga(props) {
   };
 
   const publicarVaga = () => {
-    const data = {
-      isPublish: true,
-      title: input.titulo,
-    };
-    // tô colocando factory_id mocado ainda
-    dispatch(editJob(jobCreated.id, 1, data)).then(() => {
+    const data = { isPublish: true };
+    dispatch(editJob(jobCreated.id, factoryId, data)).then(() => {
       setInput({});
       setChips([]);
       setDescricao(EditorState.createEmpty());
@@ -124,7 +117,7 @@ export default function CriarVaga(props) {
       }, 1000);
     });
   };
-  
+
   return (
     <TabPanel value={value} index={index}>
       <Top>
@@ -138,6 +131,7 @@ export default function CriarVaga(props) {
           <div id="inputs">
             {textFields.map((item, index) => (
               <TextField
+                disabled={buttonActive}
                 required
                 key={index}
                 className={item.className}
@@ -166,6 +160,7 @@ export default function CriarVaga(props) {
             ))}
 
             <ChipInputStyled
+              disabled={buttonActive}
               className="sessenta"
               size="small"
               placeholder="SINÔNIMOS"
@@ -182,12 +177,14 @@ export default function CriarVaga(props) {
             editorState={descricao}
             setEditorState={setDescricao}
             text="DESCRITIVO DA VAGA"
+            readOnly={buttonActive}
           />
 
           <EditorInput
             editorState={requisitos}
             setEditorState={setRequisitos}
             text="REQUISITOS E DIFERENCIAIS LGBTQ+"
+            readOnly={buttonActive}
           />
 
           <div id="button-wrapper">
