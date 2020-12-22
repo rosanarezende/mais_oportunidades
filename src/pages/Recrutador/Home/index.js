@@ -56,8 +56,7 @@ export default function HomeRecrutador() {
     dispatch(getFactoryById(factoryId));
   }, [dispatch, factoryId]);
 
-  const handleChange = (event, newValue) => {
-    // console.log(newValue);
+  const handleChange = (e, newValue) => {
     setValue(newValue);
     if (newValue !== 0) {
       setInput({});
@@ -70,7 +69,6 @@ export default function HomeRecrutador() {
         const descriptionAtAPI = factory.description
           ? formatEditorInput(factory.description)
           : EditorState.createEmpty();
-          // console.log(factory, "essa")
         setPerfil({
           cnpj: cnpjMask(factory.cnpj),
           empresa: factory.name,
@@ -79,8 +77,8 @@ export default function HomeRecrutador() {
           segmento: factory.segment,
           publicada: factory.isActive,
         });
-        setPerfilDescricao(descriptionAtAPI)
-        setSegmentId(factory.segment?.id)
+        setPerfilDescricao(descriptionAtAPI);
+        setSegmentId(factory.segment?.id);
       }
       if (newValue === 1) {
         dispatch(getJobsByFactoryId(factoryId));

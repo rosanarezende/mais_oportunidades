@@ -36,7 +36,7 @@ function Resultados(props) {
   };
 
   const enviarEmail = () => {
-    console.log(email);
+    // console.log(email);
     if (email === "") {
       setAlert({
         open: true,

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { setJobsByFactoryId } from "../../../../actions/jobs";
+import { setAlert } from "../../../../actions/alert";
 
 import { editJob } from "../../../../providers/jobs";
 
@@ -33,7 +34,6 @@ import EditarVaga from "./EditarVaga";
 export default function MinhasVagas(props) {
   const dispatch = useDispatch();
   const { factoryJobs, factoryId } = props;
-  console.log(factoryJobs);
 
   const [jobClicked, setJobClicked] = useState({});
   const [chips, setChips] = useState([]);
@@ -50,8 +50,7 @@ export default function MinhasVagas(props) {
           nivel: item?.seniority?.id,
           cidade: item?.address,
           pcd: item?.isForPCD ? "SIM" : "NÃO",
-          // ====================================
-          cargo: "", // jobClicked.role, // "ALTERAR DEPOIS", // precisa vir da API
+          cargo: item?.role,
         });
         setChips(item?.synonymsArray);
         const descricaoDaAPI = item?.description;
@@ -72,25 +71,15 @@ export default function MinhasVagas(props) {
   };
 
   const changePublish = (vaga) => {
-    // // console.log("publicar", vaga.id);
-    // const updatedItems = factoryJobs?.map((item) => {
-    //   if (item.id === vaga.id) {
-    //     return {
-    //       ...item,
-    //       isPublish: !item.isPublish,
-    //     };
-    //   }
-    //   return item;
-    // });
-    // dispatch(setJobsByFactoryId(updatedItems));
-
-    // ================== publicar
-    // colocar um confirm aqui
-    const info = {
-      ...vaga,
-      isPublish: !vaga.isPublish,
-    };
-    dispatch(editJob(vaga.id, factoryId, info));
+    // TODO: colocar um confirm aqui
+    const info = { isPublish: !vaga.isPublish };
+    dispatch(editJob(vaga.id, factoryId, info)).then(() => {
+      if (vaga.isPublish) {
+        dispatch(setAlert(true, "Vaga despublicada com sucesso."));
+      } else {
+        dispatch(setAlert(true, "Vaga publicada com sucesso."));
+      }
+    });
   };
 
   return (
@@ -167,14 +156,14 @@ export default function MinhasVagas(props) {
             </ButtonsWrapper>
           </PaperStyled>
 
-          <HandleDiv display={item.visualizar}>
+          <HandleDiv display={item.visualizar ? "flex" : "none"}>
             <Candidaturas
               jobClicked={jobClicked}
               setJobClicked={setJobClicked}
             />
           </HandleDiv>
 
-          <HandleDiv display={item.editar} margin="5vh">
+          <HandleDiv display={item.editar ? "flex" : "none"} margin="5vh">
             <EditarVaga
               jobClicked={jobClicked}
               setJobClicked={setJobClicked}

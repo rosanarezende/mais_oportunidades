@@ -51,7 +51,7 @@ export const editJob = (jobId, factoryId, info) => async (dispatch) => {
     });
     // dispatch(getJobById(jobId)); // não tá funcionando
     dispatch(getJobsByFactoryId(factoryId));
-    dispatch(setAlert(true, "Vaga atualizada com sucesso")); // ver se é esse o texto
+    // dispatch(setAlert(true, "Vaga atualizada com sucesso")); // ver se é esse o texto
     dispatch(setLoading(false));
   } catch (error) {
     dispatch(setAlert(true, "Problema na atualização da vaga")); // ver se é isso mesmo

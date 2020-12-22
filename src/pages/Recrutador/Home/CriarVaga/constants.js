@@ -4,23 +4,9 @@ export const breadcrumbInfo = [
   { nome: "Criar vaga" },
 ];
 
-// export const areas = [
-//   { id: 9, name: "COMUNICAÇÃO/MARKETING" },
-// ];
-
 export const pdc = [
   { id: "SIM", name: "SIM" },
   { id: "NÃO", name: "NÃO" },
-];
-
-export const cargos = [
-  { id: 1, name: "ASSISTENTE" },
-  { id: 2, name: "ANALISTA" },
-  { id: 3, name: "COORDENADOR" },
-  { id: 4, name: "GERENTE" },
-  { id: 5, name: "DIRETOR" },
-  { id: 6, name: "VICE-PRESIDENTE" },
-  { id: 7, name: "PRESIDENTE" },
 ];
 
 export const textFieldsContent = (workerCategories, areas, seniorities) => [
@@ -69,13 +55,10 @@ export const textFieldsContent = (workerCategories, areas, seniorities) => [
     select: true,
     data: pdc,
   },
-  // ainda não tem endpoint
   {
     name: "cargo",
     label: "CARGO",
     type: "text",
     className: "quarenta",
-    select: true,
-    data: cargos,
   },
 ];

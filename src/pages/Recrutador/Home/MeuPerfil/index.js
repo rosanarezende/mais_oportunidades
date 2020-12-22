@@ -29,9 +29,6 @@ const filter = createFilterOptions();
 
 export default function MeuPerfil(props) {
   const dispatch = useDispatch();
-  const { segments, segmentCreated } = useSelector(
-    (state) => state.segmentReducer
-  );
   const {
     factoryId,
     perfil,
@@ -42,9 +39,10 @@ export default function MeuPerfil(props) {
     setSegmentId,
   } = props;
   const { empresa, cnpj, localizacao, publicada, segmento } = perfil;
-
+  const { segments, segmentCreated } = useSelector((s) => s.segmentReducer);
   const cnpjFormatado = Number(cnpj?.replace(/[./-]/g, ""));
   const descricaoFormatada = formatEditorOutput(perfilDescricao);
+
   const data = {
     name: empresa,
     cnpj: cnpjFormatado,
@@ -53,7 +51,6 @@ export default function MeuPerfil(props) {
     isActive: publicada,
     segment_id: segmento?.id,
   };
-  // console.log("seg", segmento);
 
   useEffect(() => {
     dispatch(getAllSegments());
@@ -71,33 +68,32 @@ export default function MeuPerfil(props) {
       isActive: publicada,
       segment_id: segmentId,
     };
-    console.log(newData);
+    // console.log(newData);
     dispatch(editFactory(factoryId, newData)).then(() =>
       dispatch(setAlert(true, "Perfil atualizado com sucesso."))
     );
   };
 
-  const publicarVaga = () => {
+  const publicarPerfil = () => {
     setPerfil({ ...perfil, publicada: true });
     const newData = {
       ...data,
       isActive: true,
       segment_id: segmentId,
     };
-    console.log(newData);
     dispatch(editFactory(factoryId, newData)).then(() =>
       dispatch(setAlert(true, "Perfil publicado com sucesso."))
     );
   };
 
-  const despublicarVaga = () => {
+  const despublicarPerfil = () => {
     setPerfil({ ...perfil, publicada: false });
     const newData = {
       ...data,
       isActive: false,
       segment_id: segmentId,
     };
-    console.log(newData);
+    // console.log(newData);
     dispatch(editFactory(factoryId, newData)).then(() =>
       dispatch(setAlert(true, "Perfil despublicado com sucesso."))
     );
@@ -145,29 +141,20 @@ export default function MeuPerfil(props) {
                   className="cinquenta"
                   id="autocomplete"
                   value={perfil.segmento}
-                  onChange={(event, newValue) => {
+                  onChange={(e, newValue) => {
                     if (typeof newValue === "string") {
-                      setPerfil({
-                        ...perfil,
-                        segmento: newValue,
-                      });
+                      setPerfil({ ...perfil, segmento: newValue });
                       dispatch(createSegment(newValue));
                       // console.log("enter", segmentCreated?.id);
                       setSegmentId(segmentCreated?.id + 1);
                     } else if (newValue && newValue.inputValue) {
-                      setPerfil({
-                        ...perfil,
-                        segmento: newValue.inputValue,
-                      });
+                      setPerfil({ ...perfil, segmento: newValue.inputValue });
                       dispatch(createSegment(newValue.inputValue));
-                      // console.log("add",segmentCreated?.id);
+                      // console.log("add",      segmentCreated?.id);
                       setSegmentId(segmentCreated?.id + 1);
                     } else {
-                      setPerfil({
-                        ...perfil,
-                        segmento: newValue?.name,
-                      });
-                      console.log(newValue?.id);
+                      setPerfil({ ...perfil, segmento: newValue?.name });
+                      // console.log(newValue?.id);
                       setSegmentId(newValue?.id);
                     }
                   }}
@@ -229,7 +216,7 @@ export default function MeuPerfil(props) {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={despublicarVaga}
+                onClick={despublicarPerfil}
               >
                 DESPUBLICAR
               </Button>
@@ -237,7 +224,7 @@ export default function MeuPerfil(props) {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={publicarVaga}
+                onClick={publicarPerfil}
               >
                 PUBLICAR
               </Button>
