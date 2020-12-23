@@ -29,7 +29,6 @@ export default createMuiTheme({
       hint: "rgba(0, 0, 0, 0.38)",
     },
   },
-
   typography: {
     fontSize: 14,
     h1: { fontSize: "min(28px, 7.5vw)", fontWeight: "bold" },

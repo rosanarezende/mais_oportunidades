@@ -4,7 +4,7 @@ export const breadcrumbInfo = [
   { nome: "Criar vaga" },
 ];
 
-export const pdc = [
+export const pcd = [
   { id: "SIM", name: "SIM" },
   { id: "NÃO", name: "NÃO" },
 ];
@@ -53,7 +53,7 @@ export const textFieldsContent = (workerCategories, areas, seniorities) => [
     type: "text",
     className: "dez",
     select: true,
-    data: pdc,
+    data: pcd,
   },
   {
     name: "cargo",

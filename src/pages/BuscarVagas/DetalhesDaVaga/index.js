@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import parse from "html-react-parser";
 
 import { getJobById } from "../../../providers/jobs";
 
@@ -11,7 +12,9 @@ export default function DetalhesDaVaga(props) {
   const dispatch = useDispatch();
   const { open, setOpen, vacancyIdSelected } = props;
   const { job } = useSelector((state) => state.jobsReducer);
-  // console.log(job);
+  const jobEmpty = Object.keys(job).length === 0;
+  const descriptionHTML = jobEmpty ? "" : parse(job?.description);
+  const requirementsHTML = jobEmpty ? "" : parse(job?.requirements);
 
   const candidatar = () => {
     setOpen(false);
@@ -76,20 +79,23 @@ export default function DetalhesDaVaga(props) {
           </Typography>
         </div>
 
-        <Typography variant="body1" component="p" gutterBottom>
-          {job.description}
-        </Typography>
+        <div>
+          <Typography variant="body1" component="div" gutterBottom>
+            <Span>Descrição</Span>:
+          </Typography>
+          <div>{descriptionHTML}</div>
+        </div>
 
-        <Typography variant="body1" component="p" gutterBottom>
-          <span>
+        <div>
+          <Typography variant="body1" component="div" gutterBottom>
             <Span>Requisitos</Span>:
-          </span>
-          <div>{job.requirements}</div>
-        </Typography>
+          </Typography>
+          <div>{requirementsHTML}</div>
+        </div>
 
         {job.isForPCD && (
           <Typography variant="body2" component="p" gutterBottom align="center">
-            Aceita candidaturas <strong>PDC</strong>
+            Aceita candidaturas <strong>PcD</strong>
           </Typography>
         )}
 

@@ -191,7 +191,7 @@ export default function CriarVaga({
             <Button
               disabled={buttonActive}
               variant="contained"
-              color="secondary"
+              color="primary"
               type="submit"
             >
               SALVAR

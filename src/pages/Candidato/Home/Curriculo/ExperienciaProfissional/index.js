@@ -145,7 +145,7 @@ function ExperienciaProfissional(props) {
               </div>
               {!experiencia?.atual && (
                 <div>
-                  <Typography>Previsão de término</Typography>
+                  <Typography>Data de término</Typography>
                   <TextField
                     margin="dense"
                     name="fim"

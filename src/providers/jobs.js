@@ -82,10 +82,11 @@ export const getJobsByFactoryId = (factoryId) => async (dispatch) => {
   }
 };
 
+// coloquei um filtro pra voltar apenas as publicadas
 export const getAllJobs = () => async (dispatch) => {
-  dispatch(setLoading(true));
   try {
-    const response = await axiosProvider.get(`/jobs`);
+    dispatch(setLoading(true));
+    const response = await axiosProvider.get(`/jobs?publish=true`);
     dispatch(setAllJobs(response.data));
     dispatch(setLoading(false));
   } catch (error) {

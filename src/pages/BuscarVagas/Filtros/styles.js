@@ -34,11 +34,7 @@ export const FiltersContent = styled.div`
   padding: 4vh 15px 20vh;
   height: 100%;
   max-height: 60vh;
-
   @media screen and (max-width: 800px) {
-    height: 42vh;
-  }
-  @media screen and (max-width: 500px) {
     height: 48vh;
   }
   @media screen and (max-width: 350px) {
