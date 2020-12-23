@@ -199,7 +199,7 @@ export default function MeuPerfil(props) {
             <Button
               onClick={handleSubmit}
               variant="contained"
-              color="secondary"
+              color="primary"
               type="button"
             >
               SALVAR
@@ -207,7 +207,7 @@ export default function MeuPerfil(props) {
             {perfil.publicada ? (
               <Button
                 variant="contained"
-                color="primary"
+                color="secondary"
                 onClick={despublicarPerfil}
               >
                 DESPUBLICAR

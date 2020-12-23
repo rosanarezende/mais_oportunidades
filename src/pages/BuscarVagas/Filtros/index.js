@@ -33,11 +33,22 @@ function Filtros(props) {
     setAlert,
     isPDC,
     setIsPDC,
+    jobs,
   } = props;
+
   const { areas } = useSelector((state) => state.areaReducer);
+
   const { factories } = useSelector((state) => state.factoryReducer);
   const factoriesOrdered = factories?.sort((a, b) =>
     a.name.localeCompare(b.name)
+  );
+
+  const roles = jobs?.map((job) => job.role.toUpperCase());
+  const synonyms = jobs
+    ?.map((job) => job.synonymsArray.map((i) => i.toUpperCase()))
+    .flat(1);
+  const rolesAndSynonyms = [...new Set([...roles, ...synonyms])].sort((a, b) =>
+    a.localeCompare(b)
   );
 
   useEffect(() => {
@@ -54,6 +65,16 @@ function Filtros(props) {
       empresa: "",
       area: "",
       [name]: value,
+    });
+  };
+
+  const changeRole = (value) => {
+    setBuscar(false);
+    setPararBusca(true);
+    setInput({
+      cargo: value,
+      area: "",
+      empresa: "",
     });
   };
 
@@ -100,15 +121,22 @@ function Filtros(props) {
           <Typography variant="h6" component="h3" gutterBottom>
             CARGO
           </Typography>
-          <TextField
-            variant="outlined"
-            fullWidth
-            size="small"
-            name="cargo"
-            value={input.cargo || ""}
-            onChange={changeInput}
-            onClick={() => dispatch(setInputSearch(undefined))}
-            onKeyDown={(e) => e.key === "Enter" && clickBuscar()}
+          <Autocomplete
+            freeSolo
+            options={rolesAndSynonyms}
+            getOptionLabel={(option) => option}
+            inputValue={input.cargo || ""}
+            onInputChange={(e, newInputValue) => changeRole(newInputValue)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                fullWidth
+                size="small"
+                onClick={() => dispatch(setInputSearch(undefined))}
+                onKeyDown={(e) => e.key === "Enter" && clickBuscar()}
+              />
+            )}
           />
         </FilterBox>
         <FilterBox>
@@ -156,7 +184,7 @@ function Filtros(props) {
         </FilterBox>
         <FilterBox>
           <Typography variant="h6" component="h3" gutterBottom>
-            ACEITA PDC
+            ACEITA PcD
           </Typography>
           <Typography component="div">
             <Grid component="label" container alignItems="center" spacing={1}>
@@ -166,6 +194,7 @@ function Filtros(props) {
                   checked={isPDC}
                   onChange={() => setIsPDC(!isPDC)}
                   name="checkedC"
+                  color="primary"
                 />
               </Grid>
               <Grid item>Sim</Grid>

@@ -145,6 +145,7 @@ export default function BuscarVagas() {
             setInput={setInput}
             isPDC={isPDC}
             setIsPDC={setIsPDC}
+            jobs={jobs}
           />
 
           <Resultados

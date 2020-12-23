@@ -95,7 +95,7 @@ export default function DetalhesDaVaga(props) {
 
         {job.isForPCD && (
           <Typography variant="body2" component="p" gutterBottom align="center">
-            Aceita candidaturas <strong>PDC</strong>
+            Aceita candidaturas <strong>PcD</strong>
           </Typography>
         )}
 
